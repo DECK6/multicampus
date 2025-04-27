@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 16</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 40px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .code-section {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .code-block {
+            background: #1a1a1a;
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Consolas', monospace;
+            font-size: 14px;
+            color: #e2e8f0;
+            margin-bottom: 20px;
+        }
+        .step {
+            margin-bottom: 25px;
+        }
+        .prompt-box {
+            background: rgba(75, 139, 190, 0.1);
+            border-left: 4px solid #FFD43B;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 0 8px 8px 0;
+        }
+        .notes {
+            background: rgba(255, 212, 59, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">6</div>
+                <div class="title">이메일 자동 전송하기</div>
+            </div>
+
+            <div class="prompt-box">
+                <div class="text-[#FFD43B] font-bold mb-2">ChatGPT 프롬프트:</div>
+                <div>"Create a Python script to send email with attachments using smtplib"</div>
+            </div>
+
+            <div class="code-section">
+                <div class="code-block">
+                    <pre>
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from email.mime.application import MIMEApplication
+
+def send_email(subject, body, to_email, files=[]):
+    # 이메일 기본 설정
+    from_email = "<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f980968c8ba69c94989095b99e94989095d79a9694">[email&#160;protected]</a>"
+    app_password = "your_app_password"
+    
+    # 메일 객체 생성
+    msg = MIMEMultipart()
+    msg['Subject'] = subject
+    msg['From'] = from_email
+    msg['To'] = to_email
+    
+    # 본문 추가
+    msg.attach(MIMEText(body, 'plain'))
+    
+    # 첨부파일 추가
+    for file in files:
+        with open(file, 'rb') as f:
+            part = MIMEApplication(f.read(), Name=file)
+            part['Content-Disposition'] = f'attachment; filename="{file}"'
+            msg.attach(part)
+    
+    # 메일 전송
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:
+        server.login(from_email, app_password)
+        server.send_message(msg)</pre>
+                </div>
+            </div>
+
+            <div class="notes">
+                <h3 class="text-xl font-semibold text-[#FFD43B] mb-3">주요 설정사항</h3>
+                <ul class="space-y-2">
+                    <li><i class="fas fa-check-circle text-[#4B8BBE] mr-2"></i>Gmail 계정의 2단계 인증 활성화 필요</li>
+                    <li><i class="fas fa-check-circle text-[#4B8BBE] mr-2"></i>앱 비밀번호 생성하여 사용</li>
+                    <li><i class="fas fa-check-circle text-[#4B8BBE] mr-2"></i>SSL 보안 연결 사용 (포트 465)</li>
+                    <li><i class="fas fa-check-circle text-[#4B8BBE] mr-2"></i>첨부파일은 리스트 형태로 전달</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body>
+    

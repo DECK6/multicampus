@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 6</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 44px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .subtitle {
+            font-size: 24px;
+            font-weight: 500;
+            color: #e2e8f0;
+            margin-bottom: 30px;
+        }
+        .selector-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .selector-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+        .selector-card:hover {
+            transform: translateY(-5px);
+            background-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+        }
+        .selector-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .selector-title i {
+            color: #FFD43B;
+            margin-right: 12px;
+            font-size: 22px;
+        }
+        .selector-description {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #cbd5e0;
+            margin-bottom: 20px;
+        }
+        .selector-example {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 14px;
+            color: #8BE9FD;
+            margin-top: 15px;
+        }
+        .code-container {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 16px;
+            color: #e2e8f0;
+            position: relative;
+        }
+        .language-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 4px 8px;
+            background-color: #4B8BBE;
+            color: white;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .prompt {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-left: 3px solid #4B8BBE;
+            padding: 10px 15px;
+            margin-bottom: 15px;
+            font-style: italic;
+            color: #cbd5e0;
+        }
+        .keyword {
+            color: #FF79C6;
+        }
+        .string {
+            color: #F1FA8C;
+        }
+        .comment {
+            color: #6272A4;
+        }
+        .function {
+            color: #50FA7B;
+        }
+        .selector-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            overflow: visible;
+            margin-top: 20px;
+        }
+        .selector-table th {
+            background-color: rgba(75, 139, 190, 0.3);
+            color: #FFD43B;
+            text-align: left;
+            padding: 12px 15px;
+            font-weight: 600;
+        }
+        .selector-table td {
+            padding: 10px 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #e2e8f0;
+        }
+        .selector-table tr:hover td {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .footer {
+            margin-top: 30px;
+            font-size: 18px;
+            color: #a0aec0;
+            text-align: center;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">4</div>
+                <div class="title">HTML 선택자의 이해</div>
+            </div>
+            
+            <div class="subtitle">웹 자동화에서 요소를 찾기 위한 선택자(Selector)의 종류와 활용법</div>
+            
+            <div class="selector-cards">
+                <div class="selector-card">
+                    <h3 class="selector-title"><i class="fab fa-css3"></i>CSS 선택자</h3>
+                    <p class="selector-description">
+                        웹페이지에서 스타일을 적용할 요소를 선택하는 패턴으로, 자동화 도구에서도 요소를 찾는 데 널리 사용됩니다.
+                    </p>
+                    <table class="selector-table">
+                        <tr>
+                            <th>선택자</th>
+                            <th>설명</th>
+                            <th>예시</th>
+                        </tr>
+                        <tr>
+                            <td>#id</td>
+                            <td>ID로 요소 선택</td>
+                            <td>#login-button</td>
+                        </tr>
+                        <tr>
+                            <td>.class</td>
+                            <td>클래스로 요소 선택</td>
+                            <td>.navbar-item</td>
+                        </tr>
+                        <tr>
+                            <td>tag</td>
+                            <td>태그로 요소 선택</td>
+                            <td>div</td>
+                        </tr>
+                        <tr>
+                            <td>[attr=value]</td>
+                            <td>속성으로 요소 선택</td>
+                            <td>[type="submit"]</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="selector-card">
+                    <h3 class="selector-title"><i class="fas fa-sitemap"></i>XPath 선택자</h3>
+                    <p class="selector-description">
+                        XML 문서의 노드를 선택하는 경로 표현식으로, HTML 구조를 탐색하는 강력한 방법을 제공합니다.
+                    </p>
+                    <table class="selector-table">
+                        <tr>
+                            <th>선택자</th>
+                            <th>설명</th>
+                            <th>예시</th>
+                        </tr>
+                        <tr>
+                            <td>//tag</td>
+                            <td>모든 태그 선택</td>
+                            <td>//div</td>
+                        </tr>
+                        <tr>
+                            <td>//tag[@attr='value']</td>
+                            <td>속성값으로 선택</td>
+                            <td>//button[@id='submit']</td>
+                        </tr>
+                        <tr>
+                            <td>//tag[contains(text(),'내용')]</td>
+                            <td>텍스트로 선택</td>
+                            <td>//a[contains(text(),'로그인')]</td>
+                        </tr>
+                        <tr>
+                            <td>//parent/child</td>
+                            <td>부모-자식 관계로 선택</td>
+                            <td>//ul/li</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="prompt">
+                파이썬으로 셀레니움에서 CSS 선택자와 XPath를 사용하는 방법을 알려줘
+            </div>
+            
+            <div class="code-container">
+                <span class="language-badge">Python</span>
+                <span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver<br>
+                <span class="keyword">from</span> selenium.webdriver.common.by <span class="keyword">import</span> By<br>
+                <br>
+                <span class="comment"># 브라우저 드라이버 초기화</span><br>
+                driver = webdriver.Chrome()<br>
+                driver.get(<span class="string">"https://example.com"</span>)<br>
+                <br>
+                <span class="comment"># CSS 선택자로 요소 찾기</span><br>
+                login_button = driver.<span class="function">find_element</span>(By.CSS_SELECTOR, <span class="string">"#login-button"</span>)<br>
+                items = driver.<span class="function">find_elements</span>(By.CSS_SELECTOR, <span class="string">".item"</span>)<br>
+                <br>
+                <span class="comment"># XPath로 요소 찾기</span><br>
+                search_box = driver.<span class="function">find_element</span>(By.XPATH, <span class="string">"//input[@name='search']"</span>)<br>
+                nav_links = driver.<span class="function">find_elements</span>(By.XPATH, <span class="string">"//nav//a"</span>)<br>
+                <br>
+                <span class="comment"># 텍스트로 요소 찾기 (XPath 이용)</span><br>
+                signup_link = driver.<span class="function">find_element</span>(By.XPATH, <span class="string">"//a[contains(text(), '회원가입')]"</span>)
+            </div>
+            
+            <div class="footer">
+                "선택자를 활용한 웹 요소 탐색은 효과적인 웹 자동화의 핵심입니다."
+            </div>
+        </div>
+    </div>
+</body>
+    

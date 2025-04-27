@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 3</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 40px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 38px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .subtitle {
+            font-size: 20px;
+            font-weight: 400;
+            color: #e2e8f0;
+            margin-bottom: 25px;
+        }
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        .section {
+            background: rgba(75, 139, 190, 0.15);
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        .section:hover {
+            background: rgba(75, 139, 190, 0.25);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #FFD43B;
+            display: flex;
+            align-items: center;
+        }
+        .section-icon {
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        .section-content {
+            font-size: 15px;
+            line-height: 1.5;
+            color: #e2e8f0;
+        }
+        .code-block {
+            margin-top: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 13px;
+            color: #e2e8f0;
+            position: relative;
+        }
+        .code-prompt {
+            background: #4B8BBE;
+            border-radius: 4px;
+            padding: 6px 10px;
+            margin-bottom: 8px;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 12px;
+            color: white;
+        }
+        .code-prompt i {
+            margin-right: 6px;
+            color: #FFD43B;
+        }
+        .code-line {
+            margin-bottom: 4px;
+        }
+        .highlight {
+            color: #FFD43B;
+        }
+        .string {
+            color: #9cdcfe;
+        }
+        .comment {
+            color: #a0aec0;
+            font-style: italic;
+        }
+        .indent {
+            margin-left: 20px;
+        }
+        .output-preview {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin-top: 8px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 12px;
+            color: #cbd5e0;
+        }
+        .output-title {
+            color: #a0aec0;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+        .footer {
+            margin-top: 25px;
+            font-size: 16px;
+            color: #a0aec0;
+            text-align: center;
+            font-style: italic;
+        }
+        .note {
+            background: rgba(255, 212, 59, 0.1);
+            border-left: 3px solid #FFD43B;
+            padding: 10px 15px;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #e2e8f0;
+        }
+        .note-title {
+            color: #FFD43B;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        .badge-yellow {
+            background-color: rgba(255, 212, 59, 0.2);
+            color: #FFD43B;
+            border: 1px solid #FFD43B;
+        }
+        .step-container {
+            background: rgba(75, 139, 190, 0.2);
+            border-radius: 8px;
+            padding: 10px 15px;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background: #4B8BBE;
+            color: #fff;
+            font-weight: bold;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .step-title {
+            display: inline-block;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 5px;
+        }
+        .step-content {
+            margin-left: 34px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">9</div>
+                <div class="title">데이터 구조와 제어문 통합 활용</div>
+            </div>
+            
+            <p class="subtitle">조건문과 반복문을 데이터 구조와 함께 사용하여 더 강력한 업무 자동화 솔루션을 구축하는 방법을 알아봅니다.</p>
+            
+            <div class="main-content">
+                <div class="left-column">
+                    <div class="section">
+                        <div class="section-title">
+                            <i class="fas fa-file-excel section-icon"></i>
+                            엑셀 데이터 분석 자동화
+                        </div>
+                        <div class="section-content">
+                            <p>여러 엑셀 파일에서 데이터를 추출하고 조건에 맞게 필터링하여 분석 보고서를 자동으로 생성하는 예제입니다.</p>
+                            
+                            <div class="code-block">
+                                <div class="code-prompt">
+                                    <i class="fas fa-robot"></i>여러 엑셀 파일을 읽고 조건에 맞는 데이터만 추출하는 코드를 작성해줘
+                                </div>
+                                <div class="code-line"><span class="highlight">import</span> pandas <span class="highlight">as</span> pd</div>
+                                <div class="code-line"><span class="highlight">import</span> os</div>
+                                <div class="code-line"><span class="highlight">import</span> glob</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 모든 엑셀 파일 경로 가져오기</span></div>
+                                <div class="code-line">파일_경로 = glob.glob(<span class="string">"./판매데이터/*.xlsx"</span>)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 결합할 데이터프레임 초기화</span></div>
+                                <div class="code-line">결합_데이터 = pd.DataFrame()</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="highlight">for</span> 파일 <span class="highlight">in</span> 파일_경로:</div>
+                                <div class="code-line indent">파일명 = os.path.basename(파일)</div>
+                                <div class="code-line indent">print(f<span class="string">"처리 중: {파일명}"</span>)</div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent"><span class="comment"># 엑셀 파일 읽기</span></div>
+                                <div class="code-line indent">df = pd.read_excel(파일)</div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent"><span class="comment"># 조건에 맞는 데이터만 필터링 (판매액 1만원 이상)</span></div>
+                                <div class="code-line indent">필터링_데이터 = df[df[<span class="string">'판매액'</span>] >= 10000]</div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent"><span class="comment"># 파일 정보 추가</span></div>
+                                <div class="code-line indent">필터링_데이터[<span class="string">'파일출처'</span>] = 파일명</div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent"><span class="comment"># 결합 데이터프레임에 추가</span></div>
+                                <div class="code-line indent">결합_데이터 = pd.concat([결합_데이터, 필터링_데이터])</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 결과 요약</span></div>
+                                <div class="code-line">print(f<span class="string">"총 {len(결합_데이터)}개 행이 추출되었습니다."</span>)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 부서별 판매액 합계</span></div>
+                                <div class="code-line">부서별_합계 = 결합_데이터.groupby(<span class="string">'부서'</span>)[<span class="string">'판매액'</span>].sum()</div>
+                                <div class="code-line">print(부서별_합계)</div>
+                            </div>
+                            
+                            <div class="step-container">
+                                <div class="step-number">1</div>
+                                <div class="step-title">데이터 수집</div>
+                                <div class="step-content">glob 패턴 매칭으로 모든 엑셀 파일 수집</div>
+                            </div>
+                            <div class="step-container">
+                                <div class="step-number">2</div>
+                                <div class="step-title">데이터 처리</div>
+                                <div class="step-content">for 루프로 각 파일을 읽고 조건문으로 필터링</div>
+                            </div>
+                            <div class="step-container">
+                                <div class="step-number">3</div>
+                                <div class="step-title">데이터 통합</div>
+                                <div class="step-content">pandas를 사용해 모든 처리된 데이터를 결합</div>
+                            </div>
+                            <div class="step-container">
+                                <div class="step-number">4</div>
+                                <div class="step-title">결과 분석</div>
+                                <div class="step-content">groupby로 통계 분석 및 시각화</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="right-column">
+                    <div class="section">
+                        <div class="section-title">
+                            <i class="fas fa-tasks section-icon"></i>
+                            조건부 데이터 처리 자동화
+                        </div>
+                        <div class="section-content">
+                            <p>데이터의 조건에 따라 서로 다른 처리 로직을 적용하는 자동화 예제입니다.</p>
+                            
+                            <div class="code-block">
+                                <div class="code-prompt">
+                                    <i class="fas fa-robot"></i>고객 데이터를 세그먼트별로 분류하고 다른 처리를 하는 코드를 작성해줘
+                                </div>
+                                <div class="code-line"><span class="highlight">import</span> pandas <span class="highlight">as</span> pd</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 고객 데이터 로드</span></div>
+                                <div class="code-line">고객_df = pd.DataFrame({</div>
+                                <div class="code-line indent"><span class="string">'고객번호'</span>: [1001, 1002, 1003, 1004, 1005],</div>
+                                <div class="code-line indent"><span class="string">'이름'</span>: [<span class="string">'김고객'</span>, <span class="string">'이고객'</span>, <span class="string">'박고객'</span>, <span class="string">'최고객'</span>, <span class="string">'정고객'</span>],</div>
+                                <div class="code-line indent"><span class="string">'구매액'</span>: [50000, 120000, 35000, 200000, 80000],</div>
+                                <div class="code-line indent"><span class="string">'방문횟수'</span>: [2, 8, 1, 5, 3]</div>
+                                <div class="code-line">})</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 고객 세그먼트 분류 함수</span></div>
+                                <div class="code-line"><span class="highlight">def</span> 고객_분류(row):</div>
+                                <div class="code-line indent"><span class="highlight">if</span> row[<span class="string">'구매액'</span>] >= 100000 and row[<span class="string">'방문횟수'</span>] >= 5:</div>
+                                <div class="code-line indent indent"><span class="highlight">return</span> <span class="string">'VIP'</span></div>
+                                <div class="code-line indent"><span class="highlight">elif</span> row[<span class="string">'구매액'</span>] >= 50000 or row[<span class="string">'방문횟수'</span>] >= 3:</div>
+                                <div class="code-line indent indent"><span class="highlight">return</span> <span class="string">'우수고객'</span></div>
+                                <div class="code-line indent"><span class="highlight">else</span>:</div>
+                                <div class="code-line indent indent"><span class="highlight">return</span> <span class="string">'일반고객'</span></div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># apply로 각 행에 함수 적용</span></div>
+                                <div class="code-line">고객_df[<span class="string">'세그먼트'</span>] = 고객_df.apply(고객_분류, axis=1)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 세그먼트별 마케팅 메시지 생성</span></div>
+                                <div class="code-line"><span class="highlight">for</span> index, row <span class="highlight">in</span> 고객_df.iterrows():</div>
+                                <div class="code-line indent"><span class="highlight">if</span> row[<span class="string">'세그먼트'</span>] == <span class="string">'VIP'</span>:</div>
+                                <div class="code-line indent indent">print(f<span class="string">"{row['이름']}님, 특별 VIP 할인 쿠폰이 발급되었습니다."</span>)</div>
+                                <div class="code-line indent"><span class="highlight">elif</span> row[<span class="string">'세그먼트'</span>] == <span class="string">'우수고객'</span>:</div>
+                                <div class="code-line indent indent">print(f<span class="string">"{row['이름']}님, 우수고객 감사 이벤트에 초대합니다."</span>)</div>
+                                <div class="code-line indent"><span class="highlight">else</span>:</div>
+                                <div class="code-line indent indent">print(f<span class="string">"{row['이름']}님, 첫 구매 할인 쿠폰을 보내드립니다."</span>)</div>
+                            </div>
+                            
+                            <div class="output-preview">
+                                <div class="output-title">출력 결과:</div>
+                                김고객님, 우수고객 감사 이벤트에 초대합니다.<br>
+                                이고객님, 특별 VIP 할인 쿠폰이 발급되었습니다.<br>
+                                박고객님, 첫 구매 할인 쿠폰을 보내드립니다.<br>
+                                최고객님, 특별 VIP 할인 쿠폰이 발급되었습니다.<br>
+                                정고객님, 우수고객 감사 이벤트에 초대합니다.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">
+                            <i class="fas fa-file-alt section-icon"></i>
+                            자동 보고서 생성
+                        </div>
+                        <div class="section-content">
+                            <p>조건문과 반복문을 활용해 데이터를 분석하고 자동으로 보고서를 생성하는 예제입니다.</p>
+                            
+                            <div class="code-block">
+                                <div class="code-prompt">
+                                    <i class="fas fa-robot"></i>판매 데이터를 분석하여 요약 보고서를 생성하는 코드를 작성해줘
+                                </div>
+                                <div class="code-line"><span class="highlight">import</span> pandas <span class="highlight">as</span> pd</div>
+                                <div class="code-line"><span class="highlight">from</span> datetime <span class="highlight">import</span> datetime</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 월별 판매 데이터</span></div>
+                                <div class="code-line">판매_데이터 = pd.DataFrame({</div>
+                                <div class="code-line indent"><span class="string">'날짜'</span>: pd.date_range(start=<span class="string">'2023-01-01'</span>, periods=12, freq=<span class="string">'M'</span>),</div>
+                                <div class="code-line indent"><span class="string">'제품A'</span>: [120, 150, 130, 160, 190, 210, 200, 180, 150, 140, 160, 190],</div>
+                                <div class="code-line indent"><span class="string">'제품B'</span>: [90, 100, 85, 110, 120, 130, 140, 135, 125, 115, 130, 140]</div>
+                                <div class="code-line">})</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 년월 컬럼 추가</span></div>
+                                <div class="code-line">판매_데이터[<span class="string">'년'</span>] = 판매_데이터[<span class="string">'날짜'</span>].dt.year</div>
+                                <div class="code-line">판매_데이터[<span class="string">'월'</span>] = 판매_데이터[<span class="string">'날짜'</span>].dt.month</div>
+                                <div class="code-line">판매_데이터[<span class="string">'분기'</span>] = (판매_데이터[<span class="string">'월'</span>] - 1) // 3 + 1</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 보고서 생성</span></div>
+                                <div class="code-line">보고서 = [<span class="string">f"판매 분석 보고서 - 생성일: {datetime.now().strftime('%Y-%m-%d')}\n"</span>]</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 분기별 데이터 분석</span></div>
+                                <div class="code-line"><span class="highlight">for</span> 분기 <span class="highlight">in</span> [1, 2, 3, 4]:</div>
+                                <div class="code-line indent">분기_데이터 = 판매_데이터[판매_데이터[<span class="string">'분기'</span>] == 분기]</div>
+                                <div class="code-line indent">제품A_합계 = 분기_데이터[<span class="string">'제품A'</span>].sum()</div>
+                                <div class="code-line indent">제품B_합계 = 분기_데이터[<span class="string">'제품B'</span>].sum()</div>
+                                <div class="code-line indent">총합계 = 제품A_합계 + 제품B_합계</div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent">보고서.append(f<span class="string">"\n{분기}분기 판매 실적:"</span>)</div>
+                                <div class="code-line indent">보고서.append(f<span class="string">"- 제품A: {제품A_합계}개"</span>)</div>
+                                <div class="code-line indent">보고서.append(f<span class="string">"- 제품B: {제품B_합계}개"</span>)</div>
+                                <div class="code-line indent">보고서.append(f<span class="string">"- 총합계: {총합계}개"</span>)</div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent"><span class="comment"># 목표 달성 여부 확인 (목표: 제품별 250개)</span></div>
+                                <div class="code-line indent"><span class="highlight">if</span> 제품A_합계 >= 250 <span class="highlight">and</span> 제품B_합계 >= 250:</div>
+                                <div class="code-line indent indent">보고서.append(<span class="string">"✅ 분기 목표 달성: 두 제품 모두 목표 달성"</span>)</div>
+                                <div class="code-line indent"><span class="highlight">elif</span> 제품A_합계 >= 250:</div>
+                                <div class="code-line indent indent">보고서.append(<span class="string">"⚠️ 분기 목표 부분 달성: 제품A만 목표 달성"</span>)</div>
+                                <div class="code-line indent"><span class="highlight">elif</span> 제품B_합계 >= 250:</div>
+                                <div class="code-line indent indent">보고서.append(<span class="string">"⚠️ 분기 목표 부분 달성: 제품B만 목표 달성"</span>)</div>
+                                <div class="code-line indent"><span class="highlight">else</span>:</div>
+                                <div class="code-line indent indent">보고서.append(<span class="string">"❌ 분기 목표 미달성: 두 제품 모두 목표 미달"</span>)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 보고서 파일로 저장</span></div>
+                                <div class="code-line"><span class="highlight">with</span> open(<span class="string">'판매보고서.txt'</span>, <span class="string">'w'</span>, encoding=<span class="string">'utf-8'</span>) <span class="highlight">as</span> f:</div>
+                                <div class="code-line indent">f.write(<span class="string">'\n'</span>.join(보고서))</div>
+                                <div class="code-line"></div>
+                                <div class="code-line">print(<span class="string">"보고서가 생성되었습니다: 판매보고서.txt"</span>)</div>
+                            </div>
+                            
+                            <div class="note">
+                                <div class="note-title">자동화의 핵심</div>
+                                <p>조건문과 반복문, 데이터 구조를 결합하면 다양한 업무 시나리오에 대응할 수 있는 유연한 자동화 솔루션을 구축할 수 있습니다. 정기 보고서 생성, 데이터 변환, 파일 처리 등 다양한 업무를 효율적으로 자동화할 수 있습니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                "데이터 구조, 조건문, 반복문의 조합은 무한한 자동화 가능성을 열어줍니다"
+            </div>
+        </div>
+    </div>
+</body>
+    

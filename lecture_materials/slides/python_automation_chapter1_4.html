@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 1</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 40px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 42px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .intro-text {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #e2e8f0;
+            margin-bottom: 25px;
+        }
+        .two-column {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        .left-column {
+            flex: 1;
+        }
+        .right-column {
+            flex: 1;
+        }
+        .libraries-section {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section-title i {
+            color: #FFD43B;
+            margin-right: 10px;
+            font-size: 20px;
+        }
+        .library-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        .library-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            transition: all 0.3s ease;
+        }
+        .library-card:hover {
+            transform: translateY(-3px);
+            background-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+        .library-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #90caf9;
+            margin-bottom: 8px;
+        }
+        .library-description {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #cbd5e0;
+        }
+        .code-section {
+            background-color: rgba(40, 44, 52, 0.8);
+            border-radius: 12px;
+            padding: 20px;
+            font-family: 'Consolas', 'Monaco', monospace;
+        }
+        .prompt {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-radius: 8px;
+            padding: 10px 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #FFD43B;
+        }
+        .prompt-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 5px;
+        }
+        .prompt-text {
+            font-size: 14px;
+            color: #e2e8f0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .code-block {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #e2e8f0;
+            white-space: pre;
+            overflow-x: auto;
+        }
+        .keyword { color: #c678dd; }
+        .string { color: #98c379; }
+        .comment { color: #7f848e; font-style: italic; }
+        .function { color: #61afef; }
+        .variable { color: #e06c75; }
+        .library { color: #e5c07b; }
+        .usage-list {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 15px;
+        }
+        .usage-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 10px 15px;
+        }
+        .usage-icon {
+            color: #FFD43B;
+            margin-right: 12px;
+            font-size: 18px;
+            min-width: 24px;
+        }
+        .usage-text {
+            font-size: 15px;
+            color: #e2e8f0;
+            line-height: 1.4;
+        }
+        .notes {
+            font-size: 14px;
+            color: #a0aec0;
+            margin-top: 20px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">5</div>
+                <div class="title">웹 크롤링 소개</div>
+            </div>
+            
+            <div class="intro-text">
+                웹 크롤링은 웹사이트에서 자동으로 데이터를 수집하는 기술로, 다양한 정보를 효율적으로 추출할 수 있습니다. 파이썬은 간결한 문법과 강력한 라이브러리 덕분에 웹 크롤링 작업에 매우 적합합니다.
+            </div>
+            
+            <div class="two-column">
+                <div class="left-column">
+                    <div class="libraries-section">
+                        <h3 class="section-title">
+                            <i class="fas fa-tools"></i>주요 라이브러리
+                        </h3>
+                        <div class="library-cards">
+                            <div class="library-card">
+                                <div class="library-name">BeautifulSoup</div>
+                                <div class="library-description">HTML 및 XML 파일에서 데이터를 추출하기 위한 파서 라이브러리로, 복잡한 웹 페이지에서도 필요한 정보를 쉽게 찾을 수 있습니다.</div>
+                            </div>
+                            
+                            <div class="library-card">
+                                <div class="library-name">Requests</div>
+                                <div class="library-description">HTTP 요청을 보내고 응답을 받는 데 사용되는 라이브러리로, 웹 페이지 내용을 가져오는 데 필수적입니다.</div>
+                            </div>
+                            
+                            <div class="library-card">
+                                <div class="library-name">Selenium</div>
+                                <div class="library-description">실제 브라우저를 제어하여 JavaScript로 동적 생성되는 콘텐츠도 스크래핑할 수 있는 자동화 도구입니다.</div>
+                            </div>
+                            
+                            <div class="library-card">
+                                <div class="library-name">Scrapy</div>
+                                <div class="library-description">대규모 웹 크롤링 프로젝트를 위한 프레임워크로, 분산 크롤링, 파이프라인 처리 등 고급 기능을 제공합니다.</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="section-title">
+                            <i class="fas fa-lightbulb"></i>활용 사례
+                        </h3>
+                        <ul class="usage-list">
+                            <li class="usage-item">
+                                <span class="usage-icon"><i class="fas fa-shopping-cart"></i></span>
+                                <span class="usage-text">가격 비교 자동화 - 여러 쇼핑몰의 상품 가격 수집 및 비교</span>
+                            </li>
+                            <li class="usage-item">
+                                <span class="usage-icon"><i class="fas fa-newspaper"></i></span>
+                                <span class="usage-text">뉴스 모니터링 - 특정 키워드 관련 뉴스 기사 자동 수집</span>
+                            </li>
+                            <li class="usage-item">
+                                <span class="usage-icon"><i class="fas fa-chart-bar"></i></span>
+                                <span class="usage-text">데이터 분석 - 웹사이트의 통계 데이터 수집 및 분석</span>
+                            </li>
+                            <li class="usage-item">
+                                <span class="usage-icon"><i class="fas fa-building"></i></span>
+                                <span class="usage-text">기업 정보 수집 - 경쟁사 제품 정보, 채용 정보 등 수집</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="right-column">
+                    <div class="code-section">
+                        <div class="prompt">
+                            <div class="prompt-title">ChatGPT 프롬프트:</div>
+                            <div class="prompt-text">"뉴스 웹사이트에서 최신 기사 제목과 링크를 추출하는 BeautifulSoup과 Requests를 활용한 간단한 파이썬 코드를 작성해주세요."</div>
+                        </div>
+                        
+                        <div class="code-block"><span class="comment"># 웹 크롤링 기본 예제 - 뉴스 기사 제목 수집</span>
+<span class="keyword">import</span> <span class="library">requests</span>
+<span class="keyword">from</span> <span class="library">bs4</span> <span class="keyword">import</span> BeautifulSoup
+
+<span class="comment"># 웹 페이지 가져오기</span>
+<span class="variable">url</span> = <span class="string">'https://news.example.com'</span>
+<span class="variable">response</span> = <span class="function">requests.get</span>(<span class="variable">url</span>)
+
+<span class="comment"># HTML 파싱</span>
+<span class="variable">soup</span> = <span class="function">BeautifulSoup</span>(<span class="variable">response</span>.text, <span class="string">'html.parser'</span>)
+
+<span class="comment"># 뉴스 기사 제목 요소 찾기 (예: h2 태그의 .article-title 클래스)</span>
+<span class="variable">article_titles</span> = <span class="variable">soup</span>.<span class="function">find_all</span>(<span class="string">'h2'</span>, <span class="variable">class_</span>=<span class="string">'article-title'</span>)
+
+<span class="comment"># 결과 출력</span>
+<span class="keyword">print</span>(<span class="string">'수집된 기사 제목:'</span>)
+<span class="keyword">for</span> <span class="variable">title</span> <span class="keyword">in</span> <span class="variable">article_titles</span>:
+    <span class="variable">link</span> = <span class="variable">title</span>.<span class="function">find</span>(<span class="string">'a'</span>)
+    <span class="keyword">if</span> <span class="variable">link</span>:
+        <span class="keyword">print</span>(<span class="string">f'제목: {</span><span class="variable">title</span>.text.strip()<span class="string">}'</span>)
+        <span class="keyword">print</span>(<span class="string">f'링크: {</span><span class="variable">link</span>[<span class="string">'href'</span>]<span class="string">}'</span>)
+        <span class="keyword">print</span>(<span class="string">'-' * 50</span>)</div>
+                    </div>
+                    
+                    <div class="notes">
+                        <p><strong>참고:</strong> 웹 크롤링을 수행할 때는 해당 웹사이트의 robots.txt 파일을 확인하고 이용약관을 준수해야 합니다. 과도한 요청은 서버에 부담을 줄 수 있으므로 적절한 시간 간격을 두고 크롤링하는 것이 좋습니다.</p>
+                        <p>실제 환경에서는 웹사이트 구조에 맞게 선택자(selector)를 수정해야 합니다. 개발자 도구(F12)를 활용하여 필요한 요소의 구조를 파악하는 것이 중요합니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+    

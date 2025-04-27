@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 1</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 40px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 42px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .intro-text {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #e2e8f0;
+            margin-bottom: 25px;
+        }
+        .two-column {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        .left-column {
+            flex: 1;
+        }
+        .right-column {
+            flex: 1;
+        }
+        .libraries-section {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section-title i {
+            color: #FFD43B;
+            margin-right: 10px;
+            font-size: 20px;
+        }
+        .library-cards {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 15px;
+        }
+        .library-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            transition: all 0.3s ease;
+        }
+        .library-card:hover {
+            transform: translateY(-3px);
+            background-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+        .library-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #90caf9;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        .library-name i {
+            margin-right: 8px;
+        }
+        .library-description {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #cbd5e0;
+        }
+        .use-cases {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .use-case-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        .use-case-card {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            align-items: flex-start;
+        }
+        .use-case-icon {
+            background: linear-gradient(45deg, #4B8BBE, #306998);
+            min-width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+        .use-case-icon i {
+            font-size: 16px;
+            color: #FFD43B;
+        }
+        .use-case-content {
+            flex: 1;
+        }
+        .use-case-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 5px;
+        }
+        .use-case-description {
+            font-size: 14px;
+            line-height: 1.4;
+            color: #cbd5e0;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .comparison-table th, .comparison-table td {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            text-align: left;
+            font-size: 14px;
+        }
+        .comparison-table th {
+            background-color: rgba(75, 139, 190, 0.4);
+            color: #e2e8f0;
+            font-weight: 600;
+        }
+        .comparison-table tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        .comparison-table td:first-child {
+            font-weight: 600;
+            color: #90caf9;
+        }
+        .code-section {
+            background-color: rgba(40, 44, 52, 0.8);
+            border-radius: 12px;
+            padding: 20px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            margin-bottom: 20px;
+        }
+        .prompt {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-radius: 8px;
+            padding: 10px 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #FFD43B;
+        }
+        .prompt-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 5px;
+        }
+        .prompt-text {
+            font-size: 14px;
+            color: #e2e8f0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .code-block {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #e2e8f0;
+            white-space: pre;
+            overflow-x: auto;
+        }
+        .keyword { color: #c678dd; }
+        .string { color: #98c379; }
+        .comment { color: #7f848e; font-style: italic; }
+        .function { color: #61afef; }
+        .variable { color: #e06c75; }
+        .library { color: #e5c07b; }
+        .tips {
+            font-size: 14px;
+            color: #a0aec0;
+            margin-top: 15px;
+            font-style: italic;
+            padding: 10px;
+            border-left: 3px solid #FFD43B;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 0 8px 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">8</div>
+                <div class="title">메신저/문자/메일 자동화</div>
+            </div>
+            
+            <div class="intro-text">
+                이메일, 문자 메시지, 메신저 등을 통한 자동 알림 및 메시지 전송 시스템을 구축하여 알림, 보고서 전송, 마케팅 메시지 등을 자동화할 수 있습니다. 파이썬의 여러 라이브러리를 활용하면 다양한 통신 채널을 통합적으로 관리할 수 있습니다.
+            </div>
+            
+            <div class="two-column">
+                <div class="left-column">
+                    <div class="libraries-section">
+                        <h3 class="section-title">
+                            <i class="fas fa-puzzle-piece"></i>주요 라이브러리
+                        </h3>
+                        <div class="library-cards">
+                            <div class="library-card">
+                                <div class="library-name">
+                                    <i class="fas fa-envelope"></i>SMTPLIB
+                                </div>
+                                <div class="library-description">
+                                    파이썬 표준 라이브러리로, SMTP(Simple Mail Transfer Protocol) 서버를 통해 이메일을 전송할 수 있습니다. 텍스트 메일부터 HTML 형식, 첨부 파일이 있는 메일까지 다양한 형태의 이메일을 보낼 수 있습니다.
+                                </div>
+                            </div>
+                            
+                            <div class="library-card">
+                                <div class="library-name">
+                                    <i class="fab fa-windows"></i>win32com.client
+                                </div>
+                                <div class="library-description">
+                                    Windows COM(Component Object Model) 인터페이스를 통해 Microsoft Office 제품과 통합할 수 있는 라이브러리입니다. Outlook을 통한 이메일 전송, 자동 응답, 메일 읽기 등 다양한 이메일 자동화가 가능합니다.
+                                </div>
+                            </div>
+                            
+                            <div class="library-card">
+                                <div class="library-name">
+                                    <i class="fas fa-sms"></i>Twilio
+                                </div>
+                                <div class="library-description">
+                                    클라우드 기반 통신 플랫폼으로, SMS, 음성 통화, WhatsApp 등을 통해 메시지를 보낼 수 있습니다. 간단한 API를 통해 전 세계 어디서나 문자 메시지를 전송할 수 있어 알림 시스템에 적합합니다.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="use-cases">
+                        <h3 class="section-title">
+                            <i class="fas fa-lightbulb"></i>활용 사례
+                        </h3>
+                        <div class="use-case-grid">
+                            <div class="use-case-card">
+                                <div class="use-case-icon">
+                                    <i class="fas fa-bell"></i>
+                                </div>
+                                <div class="use-case-content">
+                                    <div class="use-case-title">자동 알림 시스템</div>
+                                    <div class="use-case-description">재고 부족, 시스템 오류, 중요 이벤트 발생 시 자동 알림 전송</div>
+                                </div>
+                            </div>
+                            
+                            <div class="use-case-card">
+                                <div class="use-case-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <div class="use-case-content">
+                                    <div class="use-case-title">보고서 자동 배포</div>
+                                    <div class="use-case-description">일/주/월간 보고서를 자동으로 생성하여 관련자에게 이메일 전송</div>
+                                </div>
+                            </div>
+                            
+                            <div class="use-case-card">
+                                <div class="use-case-icon">
+                                    <i class="fas fa-calendar-check"></i>
+                                </div>
+                                <div class="use-case-content">
+                                    <div class="use-case-title">일정 알림</div>
+                                    <div class="use-case-description">회의, 마감일, 중요 이벤트 등에 대한 알림 메시지 자동 전송</div>
+                                </div>
+                            </div>
+                            
+                            <div class="use-case-card">
+                                <div class="use-case-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="use-case-content">
+                                    <div class="use-case-title">고객 커뮤니케이션</div>
+                                    <div class="use-case-description">견적서 발송, 주문 확인, 배송 알림 등 고객 소통 자동화</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>라이브러리</th>
+                                <th>장점</th>
+                                <th>단점</th>
+                                <th>적합한 상황</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>SMTPLIB</td>
+                                <td>표준 라이브러리, 설치 불필요</td>
+                                <td>기본 기능만 제공</td>
+                                <td>간단한 이메일 자동화</td>
+                            </tr>
+                            <tr>
+                                <td>win32com</td>
+                                <td>Outlook 기능 완벽 활용</td>
+                                <td>Windows 환경에서만 작동</td>
+                                <td>Outlook 통합 필요 시</td>
+                            </tr>
+                            <tr>
+                                <td>Twilio</td>
+                                <td>글로벌 SMS 지원, 안정적</td>
+                                <td>유료 서비스</td>
+                                <td>SMS 알림 필요 시</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="right-column">
+                    <div class="code-section">
+                        <div class="prompt">
+                            <div class="prompt-title">ChatGPT 프롬프트:</div>
+                            <div class="prompt-text">"파이썬의 smtplib를 사용하여 HTML 형식의 이메일을 첨부 파일과 함께 보내는 코드를 작성해주세요."</div>
+                        </div>
+                        
+                        <div class="code-block"><span class="comment"># SMTPLIB를 활용한 이메일 전송 예제</span>
+<span class="keyword">import</span> <span class="library">smtplib</span>
+<span class="keyword">from</span> <span class="library">email.mime.multipart</span> <span class="keyword">import</span> MIMEMultipart
+<span class="keyword">from</span> <span class="library">email.mime.text</span> <span class="keyword">import</span> MIMEText
+<span class="keyword">from</span> <span class="library">email.mime.application</span> <span class="keyword">import</span> MIMEApplication
+<span class="keyword">import</span> <span class="library">os</span>
+
+<span class="comment"># 이메일 설정</span>
+<span class="variable">sender_email</span> = <span class="string">"<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2c5543595e7349414d45406c4b414d4540024f4341">[email&#160;protected]</a>"</span>
+<span class="variable">receiver_email</span> = <span class="string">"<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="80f2e5e3e9f0e9e5eef4c0e5f8e1edf0ece5aee3efed">[email&#160;protected]</a>"</span>
+<span class="variable">password</span> = <span class="string">"your_password"</span>  <span class="comment"># 앱 비밀번호 권장</span>
+
+<span class="comment"># 메일 객체 생성</span>
+<span class="variable">msg</span> = <span class="function">MIMEMultipart</span>()
+<span class="variable">msg</span>[<span class="string">'Subject'</span>] = <span class="string">'월간 보고서 - 6월'</span>
+<span class="variable">msg</span>[<span class="string">'From'</span>] = <span class="variable">sender_email</span>
+<span class="variable">msg</span>[<span class="string">'To'</span>] = <span class="variable">receiver_email</span>
+
+<span class="comment"># HTML 본문 작성</span>
+<span class="variable">html</span> = <span class="string">'''
+<html>
+  <body>
+    <h2>6월 월간 보고서</h2>
+    <p>안녕하세요,</p>
+    <p>6월 월간 보고서를 첨부합니다.</p>
+    <p>주요 내용:</p>
+    <ul>
+      <li>매출: 전월 대비 15% 상승</li>
+      <li>신규 고객: 23명 유입</li>
+      <li>주요 프로젝트 진행 상황: 85%</li>
+    </ul>
+    <p>자세한 내용은 첨부 파일을 확인해주세요.</p>
+    <p>감사합니다.</p>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body>
+</html>
+'''</span>
+
+<span class="comment"># HTML 본문 추가</span>
+<span class="variable">msg</span>.attach(<span class="function">MIMEText</span>(<span class="variable">html</span>, <span class="string">'html'</span>))
+
+<span class="comment"># 첨부 파일 추가</span>
+<span class="variable">file_path</span> = <span class="string">"월간보고서_6월.xlsx"</span>
+<span class="keyword">with</span> <span class="function">open</span>(<span class="variable">file_path</span>, <span class="string">'rb'</span>) <span class="keyword">as</span> <span class="variable">file</span>:
+    <span class="variable">attachment</span> = <span class="function">MIMEApplication</span>(<span class="variable">file</span>.read(), _subtype=<span class="string">"xlsx"</span>)
+    <span class="variable">attachment</span>.add_header(
+        <span class="string">'Content-Disposition'</span>,
+        <span class="string">'attachment'</span>,
+        <span class="variable">filename</span>=<span class="library">os</span>.path.<span class="function">basename</span>(<span class="variable">file_path</span>)
+    )
+    <span class="variable">msg</span>.attach(<span class="variable">attachment</span>)
+
+<span class="comment"># 메일 서버 연결 및 전송</span>
+<span class="keyword">try</span>:
+    <span class="variable">server</span> = <span class="library">smtplib</span>.<span class="function">SMTP_SSL</span>(<span class="string">'smtp.gmail.com'</span>, 465)
+    <span class="variable">server</span>.<span class="function">login</span>(<span class="variable">sender_email</span>, <span class="variable">password</span>)
+    <span class="variable">server</span>.<span class="function">sendmail</span>(<span class="variable">sender_email</span>, <span class="variable">receiver_email</span>, <span class="variable">msg</span>.as_string())
+    <span class="keyword">print</span>(<span class="string">"이메일이 성공적으로 전송되었습니다!"</span>)
+<span class="keyword">except</span> <span class="function">Exception</span> <span class="keyword">as</span> <span class="variable">e</span>:
+    <span class="keyword">print</span>(<span class="string">f"이메일 전송 중 오류 발생: {</span><span class="variable">e</span><span class="string">}"</span>)
+<span class="keyword">finally</span>:
+    <span class="variable">server</span>.<span class="function">quit</span>()</div>
+                    </div>
+                    
+                    <div class="code-section">
+                        <div class="prompt">
+                            <div class="prompt-title">ChatGPT 프롬프트:</div>
+                            <div class="prompt-text">"win32com.client를 사용하여 Outlook으로 이메일을 자동으로 보내는 코드를 작성해주세요."</div>
+                        </div>
+                        
+                        <div class="code-block"><span class="comment"># win32com을 활용한 Outlook 이메일 전송 예제</span>
+<span class="keyword">import</span> <span class="library">win32com.client</span>
+<span class="keyword">from</span> <span class="library">datetime</span> <span class="keyword">import</span> datetime
+
+<span class="comment"># Outlook 애플리케이션 연결</span>
+<span class="variable">outlook</span> = <span class="library">win32com</span>.client.<span class="function">Dispatch</span>(<span class="string">'Outlook.Application'</span>)
+<span class="variable">namespace</span> = <span class="variable">outlook</span>.<span class="function">GetNamespace</span>(<span class="string">'MAPI'</span>)
+
+<span class="comment"># 새 메일 아이템 생성</span>
+<span class="variable">mail</span> = <span class="variable">outlook</span>.<span class="function">CreateItem</span>(0)  <span class="comment"># 0은 olMailItem</span>
+
+<span class="comment"># 수신자 설정</span>
+<span class="variable">mail</span>.To = <span class="string">'<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ea988f89839a838f849eaa8f928b879a868fc4898587">[email&#160;protected]</a>'</span>
+<span class="variable">mail</span>.CC = <span class="string">'<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ddbebe82afb8beb4adb4b8b3a99db8a5bcb0adb1b8f3beb2b0">[email&#160;protected]</a>'</span>
+
+<span class="comment"># 메일 제목 설정</span>
+<span class="variable">today</span> = <span class="library">datetime</span>.<span class="function">now</span>().strftime(<span class="string">"%Y-%m-%d"</span>)
+<span class="variable">mail</span>.Subject = <span class="string">f'일일 업무 보고 - {</span><span class="variable">today</span><span class="string">}'</span>
+
+<span class="comment"># HTML 본문 작성</span>
+<span class="variable">mail</span>.HTMLBody = <span class="string">'''
+<html>
+<body>
+    <h2 style="color: #4472C4;">일일 업무 보고</h2>
+    <p>안녕하세요,</p>
+    <p>오늘의 주요 업무 내용을 공유드립니다.</p>
+    
+    <h3 style="color: #70AD47;">완료된 작업</h3>
+    <ul>
+        <li>고객 데이터 분석 완료</li>
+        <li>프로젝트 A 문서화 작업</li>
+    </ul>
+    
+    <h3 style="color: #ED7D31;">진행 중인 작업</h3>
+    <ul>
+        <li>시스템 업데이트 (70% 완료)</li>
+        <li>신규 기능 테스트</li>
+    </ul>
+    
+    <p>자세한 내용은 첨부 파일을 참고해 주세요.</p>
+    <p>감사합니다.</p>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body>
+</html>
+'''</span>
+
+<span class="comment"># 첨부 파일 추가</span>
+<span class="variable">attachment_path</span> = <span class="string">r'C:\Reports\Daily_Report.xlsx'</span>
+<span class="variable">mail</span>.Attachments.<span class="function">Add</span>(<span class="variable">attachment_path</span>)
+
+<span class="comment"># 중요도 설정 (1: 낮음, 2: 보통, 3: 높음)</span>
+<span class="variable">mail</span>.Importance = 2
+
+<span class="comment"># 메일 전송</span>
+<span class="keyword">try</span>:
+    <span class="variable">mail</span>.<span class="function">Send</span>()
+    <span class="keyword">print</span>(<span class="string">"이메일이 성공적으로 전송되었습니다!"</span>)
+<span class="keyword">except</span> <span class="function">Exception</span> <span class="keyword">as</span> <span class="variable">e</span>:
+    <span class="keyword">print</span>(<span class="string">f"이메일 전송 중 오류 발생: {</span><span class="variable">e</span><span class="string">}"</span>)</div>
+                    </div>
+                    
+                    <div class="tips">
+                        <strong>Tip:</strong> Gmail을 사용하여 이메일을 전송할 때는 보안을 위해 앱 비밀번호를 사용하는 것이 좋습니다. 구글 계정 설정 → 보안 → 2단계 인증 → 앱 비밀번호에서 생성할 수 있습니다. 또한 민감한 정보(비밀번호 등)는 환경 변수나 별도의 설정 파일에 저장하여 코드와 분리하는 것이 보안에 좋습니다.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+    

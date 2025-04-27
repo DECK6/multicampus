@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 7</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 44px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .intro {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: #e2e8f0;
+            max-width: 90%;
+        }
+        .two-column {
+            display: flex;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .column {
+            flex: 1;
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            background-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+        }
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .card-title i {
+            margin-right: 10px;
+        }
+        .card-content {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #e2e8f0;
+        }
+        .code-block {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: #e2e8f0;
+            overflow: auto;
+        }
+        .highlight {
+            color: #FFD43B;
+        }
+        .comment {
+            color: #718096;
+            font-style: italic;
+        }
+        .info-list {
+            margin-top: 15px;
+        }
+        .info-item {
+            display: flex;
+            margin-bottom: 12px;
+            align-items: flex-start;
+        }
+        .info-icon {
+            color: #FFD43B;
+            margin-right: 12px;
+            font-size: 18px;
+            flex-shrink: 0;
+            margin-top: 3px;
+        }
+        .info-text {
+            font-size: 16px;
+            color: #e2e8f0;
+        }
+        .note {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-left: 4px solid #FFD43B;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .note-title {
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 5px;
+        }
+        .note-content {
+            font-size: 15px;
+            color: #e2e8f0;
+        }
+        .methods-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .method-box {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+        }
+        .method-name {
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 8px;
+        }
+        .method-desc {
+            font-size: 14px;
+            color: #e2e8f0;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">5</div>
+                <div class="title">행동 2: 웹사이트 접속</div>
+            </div>
+            
+            <p class="intro">
+                브라우저를 실행한 후, 다음 단계는 웹사이트에 접속하는 것입니다. Selenium은 다양한 방법으로 웹페이지에 접속하고 페이지 로딩 상태를 확인할 수 있는 기능을 제공합니다.
+            </p>
+            
+            <div class="two-column">
+                <div class="column">
+                    <div class="card">
+                        <h3 class="card-title"><i class="fas fa-globe"></i>기본 웹사이트 접속 방법</h3>
+                        <div class="card-content">
+                            <p>웹사이트에 접속하는 가장 기본적인 방법은 <span class="highlight">get()</span> 메서드를 사용하는 것입니다.</p>
+                            
+                            <div class="code-block">
+                                <span class="comment"># ChatGPT: "셀레니움으로 웹사이트 접속하기"</span><br>
+                                <span class="highlight">from</span> selenium <span class="highlight">import</span> webdriver<br>
+                                <span class="highlight">from</span> webdriver_manager.chrome <span class="highlight">import</span> ChromeDriverManager<br>
+                                <span class="highlight">from</span> selenium.webdriver.chrome.service <span class="highlight">import</span> Service<br>
+                                <br>
+                                <span class="comment"># 브라우저 드라이버 설정</span><br>
+                                service = Service(ChromeDriverManager().install())<br>
+                                driver = webdriver.Chrome(service=service)<br>
+                                <br>
+                                <span class="comment"># 웹사이트 접속</span><br>
+                                driver.get(<span class="highlight">"https://www.example.com"</span>)<br>
+                                <br>
+                                <span class="comment"># 현재 URL 확인</span><br>
+                                current_url = driver.current_url<br>
+                                print(<span class="highlight">f"현재 페이지: {current_url}"</span>)
+                            </div>
+                            
+                            <div class="info-list">
+                                <div class="info-item">
+                                    <div class="info-icon"><i class="fas fa-info-circle"></i></div>
+                                    <div class="info-text">
+                                        <span class="highlight">get()</span> 메서드는 페이지가 완전히 로드될 때까지 대기합니다. 그러나 JavaScript로 로드되는 동적 콘텐츠는 기다리지 않을 수 있습니다.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <h3 class="card-title"><i class="fas fa-history"></i>브라우저 탐색 히스토리 제어</h3>
+                        <div class="card-content">
+                            <div class="methods-grid">
+                                <div class="method-box">
+                                    <div class="method-name">driver.back()</div>
+                                    <div class="method-desc">브라우저 뒤로 가기</div>
+                                </div>
+                                <div class="method-box">
+                                    <div class="method-name">driver.forward()</div>
+                                    <div class="method-desc">브라우저 앞으로 가기</div>
+                                </div>
+                                <div class="method-box">
+                                    <div class="method-name">driver.refresh()</div>
+                                    <div class="method-desc">현재 페이지 새로고침</div>
+                                </div>
+                                <div class="method-box">
+                                    <div class="method-name">driver.title</div>
+                                    <div class="method-desc">현재 페이지의 제목 가져오기</div>
+                                </div>
+                            </div>
+                            
+                            <div class="code-block">
+                                <span class="comment"># ChatGPT: "셀레니움 브라우저 탐색 히스토리 제어"</span><br>
+                                <span class="comment"># 첫 번째 페이지 접속</span><br>
+                                driver.get(<span class="highlight">"https://www.example.com"</span>)<br>
+                                <br>
+                                <span class="comment"># 두 번째 페이지 접속</span><br>
+                                driver.get(<span class="highlight">"https://www.example.com/about"</span>)<br>
+                                <br>
+                                <span class="comment"># 이전 페이지로 돌아가기</span><br>
+                                driver.back()<br>
+                                <br>
+                                <span class="comment"># 다시 앞으로 가기</span><br>
+                                driver.forward()
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="column">
+                    <div class="card">
+                        <h3 class="card-title"><i class="fas fa-hourglass-half"></i>페이지 로딩 기다리기</h3>
+                        <div class="card-content">
+                            <p>웹페이지의 요소가 로드될 때까지 명시적으로 기다리는 방법:</p>
+                            
+                            <div class="code-block">
+                                <span class="comment"># ChatGPT: "셀레니움 페이지 로딩 대기 코드"</span><br>
+                                <span class="highlight">from</span> selenium.webdriver.common.by <span class="highlight">import</span> By<br>
+                                <span class="highlight">from</span> selenium.webdriver.support.ui <span class="highlight">import</span> WebDriverWait<br>
+                                <span class="highlight">from</span> selenium.webdriver.support <span class="highlight">import</span> expected_conditions as EC<br>
+                                <br>
+                                <span class="comment"># 웹사이트 접속</span><br>
+                                driver.get(<span class="highlight">"https://www.example.com"</span>)<br>
+                                <br>
+                                <span class="comment"># 특정 요소가 나타날 때까지 최대 10초 기다림</span><br>
+                                try:<br>
+                                &nbsp;&nbsp;element = WebDriverWait(driver, 10).until(<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;EC.presence_of_element_located((By.ID, <span class="highlight">"example-element-id"</span>))<br>
+                                &nbsp;&nbsp;)<br>
+                                &nbsp;&nbsp;print(<span class="highlight">"페이지가 성공적으로 로드되었습니다!"</span>)<br>
+                                except:<br>
+                                &nbsp;&nbsp;print(<span class="highlight">"페이지 로딩 시간이 초과되었습니다."</span>)
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="note">
+                        <div class="note-title">암시적 대기와 명시적 대기의 차이</div>
+                        <div class="note-content">
+                            <p><span class="highlight">암시적 대기(Implicit Wait)</span>: 모든 요소에 대해 전역적으로 적용되는 대기 시간을 설정합니다.</p>
+                            <div class="code-block" style="margin: 10px 0; padding: 10px;">
+                                driver.implicitly_wait(10)  <span class="comment"># 초 단위</span>
+                            </div>
+                            <p><span class="highlight">명시적 대기(Explicit Wait)</span>: 특정 조건이 만족될 때까지 대기하며, 특정 요소에만 적용됩니다.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <h3 class="card-title"><i class="fas fa-check-circle"></i>페이지 로딩 확인하기</h3>
+                        <div class="card-content">
+                            <div class="code-block">
+                                <span class="comment"># ChatGPT: "셀레니움으로 페이지 로딩 상태 확인하기"</span><br>
+                                <span class="highlight">def</span> <span class="highlight">is_page_loaded</span>(driver):<br>
+                                &nbsp;&nbsp;<span class="comment"># 자바스크립트 실행으로 페이지 로딩 상태 확인</span><br>
+                                &nbsp;&nbsp;return driver.execute_script(<span class="highlight">"return document.readyState"</span>) == <span class="highlight">"complete"</span><br>
+                                <br>
+                                <span class="comment"># 사용 예시</span><br>
+                                driver.get(<span class="highlight">"https://www.example.com"</span>)<br>
+                                <br>
+                                <span class="comment"># 페이지 로딩 확인</span><br>
+                                <span class="highlight">if</span> is_page_loaded(driver):<br>
+                                &nbsp;&nbsp;print(<span class="highlight">"페이지가 완전히 로드되었습니다."</span>)<br>
+                                <span class="highlight">else</span>:<br>
+                                &nbsp;&nbsp;print(<span class="highlight">"페이지 로딩 중..."</span>)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+    

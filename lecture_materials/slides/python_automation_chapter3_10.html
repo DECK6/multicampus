@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 3</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 40px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 38px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .subtitle {
+            font-size: 20px;
+            font-weight: 400;
+            color: #e2e8f0;
+            margin-bottom: 25px;
+        }
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        .section {
+            background: rgba(75, 139, 190, 0.15);
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        .section:hover {
+            background: rgba(75, 139, 190, 0.25);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #FFD43B;
+            display: flex;
+            align-items: center;
+        }
+        .section-icon {
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        .section-content {
+            font-size: 15px;
+            line-height: 1.5;
+            color: #e2e8f0;
+        }
+        .code-block {
+            margin-top: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 13px;
+            color: #e2e8f0;
+            position: relative;
+        }
+        .code-prompt {
+            background: #4B8BBE;
+            border-radius: 4px;
+            padding: 6px 10px;
+            margin-bottom: 8px;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 12px;
+            color: white;
+        }
+        .code-prompt i {
+            margin-right: 6px;
+            color: #FFD43B;
+        }
+        .code-line {
+            margin-bottom: 4px;
+        }
+        .highlight {
+            color: #FFD43B;
+        }
+        .string {
+            color: #9cdcfe;
+        }
+        .comment {
+            color: #a0aec0;
+            font-style: italic;
+        }
+        .indent {
+            margin-left: 20px;
+        }
+        .output-preview {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin-top: 8px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 12px;
+            color: #cbd5e0;
+        }
+        .output-title {
+            color: #a0aec0;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+        .footer {
+            margin-top: 25px;
+            font-size: 16px;
+            color: #a0aec0;
+            text-align: center;
+            font-style: italic;
+        }
+        .note {
+            background: rgba(255, 212, 59, 0.1);
+            border-left: 3px solid #FFD43B;
+            padding: 10px 15px;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #e2e8f0;
+        }
+        .note-title {
+            color: #FFD43B;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        .badge-yellow {
+            background-color: rgba(255, 212, 59, 0.2);
+            color: #FFD43B;
+            border: 1px solid #FFD43B;
+        }
+        .chart-preview {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 10px;
+            text-align: center;
+        }
+        .chart-placeholder {
+            height: 120px;
+            border: 2px dashed rgba(255, 212, 59, 0.3);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFD43B;
+            font-style: italic;
+        }
+        .library-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .library-item {
+            background: rgba(75, 139, 190, 0.2);
+            border-radius: 8px;
+            padding: 10px;
+            transition: all 0.3s ease;
+        }
+        .library-item:hover {
+            background: rgba(75, 139, 190, 0.3);
+        }
+        .library-name {
+            font-weight: 600;
+            color: #FFD43B;
+            font-size: 15px;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+        .library-name i {
+            margin-right: 8px;
+        }
+        .library-desc {
+            font-size: 13px;
+            color: #e2e8f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">11</div>
+                <div class="title">데이터 시각화 기초</div>
+            </div>
+            
+            <p class="subtitle">파이썬을 활용한 데이터 시각화의 기초를 배우고, 업무 자동화 과정에서 데이터를 효과적으로 표현하는 방법을 알아봅니다.</p>
+            
+            <div class="main-content">
+                <div class="left-column">
+                    <div class="section">
+                        <div class="section-title">
+                            <i class="fas fa-chart-bar section-icon"></i>
+                            데이터 시각화 라이브러리
+                        </div>
+                        <div class="section-content">
+                            <p>파이썬에는 강력한 데이터 시각화 라이브러리들이 있으며, 이를 활용하여 다양한 차트와 그래프를 생성할 수 있습니다.</p>
+                            
+                            <div class="library-grid">
+                                <div class="library-item">
+                                    <div class="library-name">
+                                        <i class="fas fa-chart-line"></i>Matplotlib
+                                    </div>
+                                    <div class="library-desc">
+                                        파이썬의 기본 시각화 라이브러리로, 다양한 차트와 그래프를 생성할 수 있습니다. 대부분의 시각화 라이브러리는 Matplotlib을 기반으로 합니다.
+                                    </div>
+                                </div>
+                                <div class="library-item">
+                                    <div class="library-name">
+                                        <i class="fas fa-palette"></i>Seaborn
+                                    </div>
+                                    <div class="library-desc">
+                                        Matplotlib 기반의 고급 시각화 라이브러리로, 통계 데이터 시각화에 최적화되어 있으며 더 아름다운 기본 스타일을 제공합니다.
+                                    </div>
+                                </div>
+                                <div class="library-item">
+                                    <div class="library-name">
+                                        <i class="fas fa-globe"></i>Plotly
+                                    </div>
+                                    <div class="library-desc">
+                                        인터랙티브한 시각화를 위한 라이브러리로, 차트에 마우스를 올리면 상세 정보를 볼 수 있고 확대/축소도 가능합니다.
+                                    </div>
+                                </div>
+                                <div class="library-item">
+                                    <div class="library-name">
+                                        <i class="fas fa-table"></i>Pandas 내장 시각화
+                                    </div>
+                                    <div class="library-desc">
+                                        판다스 데이터프레임에 내장된 plot() 함수를 사용하여 간단하게 데이터 시각화를 생성할 수 있습니다.
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="note">
+                                <div class="note-title">시각화 선택 가이드</div>
+                                <p>적절한 시각화 유형을 선택하는 것이 중요합니다:</p>
+                                <ul class="list-disc pl-5 mt-2">
+                                    <li><strong>막대 차트</strong>: 범주별 비교에 적합</li>
+                                    <li><strong>선 그래프</strong>: 시간에 따른 추세 분석에 적합</li>
+                                    <li><strong>파이 차트</strong>: 전체 대비 비율 표시에 적합</li>
+                                    <li><strong>히스토그램</strong>: 분포 확인에 적합</li>
+                                    <li><strong>산점도</strong>: 두 변수 간의 관계 분석에 적합</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">
+                            <i class="fas fa-chart-pie section-icon"></i>
+                            Matplotlib 기본 사용법
+                        </div>
+                        <div class="section-content">
+                            <div class="code-block">
+                                <div class="code-prompt">
+                                    <i class="fas fa-robot"></i>Matplotlib을 사용하여 간단한 막대 그래프를 그리는 코드를 작성해줘
+                                </div>
+                                <div class="code-line"><span class="highlight">import</span> matplotlib.pyplot <span class="highlight">as</span> plt</div>
+                                <div class="code-line"><span class="highlight">import</span> numpy <span class="highlight">as</span> np</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 데이터 준비</span></div>
+                                <div class="code-line">부서 = [<span class="string">'영업'</span>, <span class="string">'마케팅'</span>, <span class="string">'개발'</span>, <span class="string">'인사'</span>, <span class="string">'재무'</span>]</div>
+                                <div class="code-line">실적 = [85, 67, 92, 55, 70]</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 한글 폰트 설정 (Windows 기준)</span></div>
+                                <div class="code-line">plt.rcParams[<span class="string">'font.family'</span>] = <span class="string">'Malgun Gothic'</span></div>
+                                <div class="code-line">plt.rcParams[<span class="string">'axes.unicode_minus'</span>] = False</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 그래프 생성</span></div>
+                                <div class="code-line">plt.figure(figsize=(10, 6))</div>
+                                <div class="code-line">plt.bar(부서, 실적, color=<span class="string">'#4B8BBE'</span>)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 그래프 제목 및 레이블 설정</span></div>
+                                <div class="code-line">plt.title(<span class="string">'부서별 분기 실적'</span>, fontsize=15)</div>
+                                <div class="code-line">plt.xlabel(<span class="string">'부서'</span>)</div>
+                                <div class="code-line">plt.ylabel(<span class="string">'실적 (단위: 백만원)'</span>)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 데이터 레이블 추가</span></div>
+                                <div class="code-line"><span class="highlight">for</span> i, v <span class="highlight">in</span> enumerate(실적):</div>
+                                <div class="code-line indent">plt.text(i, v+2, str(v), ha=<span class="string">'center'</span>)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line">plt.tight_layout()</div>
+                                <div class="code-line">plt.savefig(<span class="string">'부서별_실적.png'</span>)</div>
+                                <div class="code-line">plt.show()</div>
+                            </div>
+                            
+                            <div class="chart-preview">
+                                <div class="chart-placeholder">
+                                    부서별 분기 실적 그래프 (막대 차트 이미지)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="right-column">
+                    <div class="section">
+                        <div class="section-title">
+                            <i class="fas fa-chart-line section-icon"></i>
+                            판다스로 데이터 시각화하기
+                        </div>
+                        <div class="section-content">
+                            <p>판다스 데이터프레임은 간편한 시각화 기능을 내장하고 있어 빠르게 차트를 생성할 수 있습니다.</p>
+                            
+                            <div class="code-block">
+                                <div class="code-prompt">
+                                    <i class="fas fa-robot"></i>판다스 데이터프레임을 사용해서 판매 데이터를 시각화하는 코드를 작성해줘
+                                </div>
+                                <div class="code-line"><span class="highlight">import</span> pandas <span class="highlight">as</span> pd</div>
+                                <div class="code-line"><span class="highlight">import</span> matplotlib.pyplot <span class="highlight">as</span> plt</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 샘플 데이터 생성</span></div>
+                                <div class="code-line">날짜 = pd.date_range(start=<span class="string">'2023-01-01'</span>, periods=6, freq=<span class="string">'M'</span>)</div>
+                                <div class="code-line">판매_데이터 = pd.DataFrame({</div>
+                                <div class="code-line indent"><span class="string">'날짜'</span>: 날짜,</div>
+                                <div class="code-line indent"><span class="string">'제품A'</span>: [120, 135, 128, 145, 160, 152],</div>
+                                <div class="code-line indent"><span class="string">'제품B'</span>: [85, 90, 88, 95, 102, 98]</div>
+                                <div class="code-line">})</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 날짜를 인덱스로 설정</span></div>
+                                <div class="code-line">판매_데이터.set_index(<span class="string">'날짜'</span>, inplace=True)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 한글 폰트 설정</span></div>
+                                <div class="code-line">plt.rcParams[<span class="string">'font.family'</span>] = <span class="string">'Malgun Gothic'</span></div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 판다스의 plot 메서드로 선 그래프 생성</span></div>
+                                <div class="code-line">판매_데이터.plot(figsize=(10, 5), </div>
+                                <div class="code-line indent">title=<span class="string">'월별 제품 판매량 추이'</span>,</div>
+                                <div class="code-line indent">grid=True,</div>
+                                <div class="code-line indent">style=[<span class="string">'-o'</span>, <span class="string">'-s'</span>],</div>
+                                <div class="code-line indent">colormap=<span class="string">'viridis'</span>)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line">plt.ylabel(<span class="string">'판매량 (단위: 개)'</span>)</div>
+                                <div class="code-line">plt.legend(title=<span class="string">'제품'</span>)</div>
+                                <div class="code-line">plt.tight_layout()</div>
+                                <div class="code-line">plt.savefig(<span class="string">'월별_판매추이.png'</span>)</div>
+                                <div class="code-line">plt.show()</div>
+                            </div>
+                            
+                            <div class="chart-preview">
+                                <div class="chart-placeholder">
+                                    월별 제품 판매량 추이 그래프 (선 그래프 이미지)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">
+                            <i class="fas fa-cogs section-icon"></i>
+                            시각화 자동화 활용
+                            <span class="badge badge-yellow">보고서 작성</span>
+                        </div>
+                        <div class="section-content">
+                            <p>데이터 시각화를 자동화하여 정기 보고서 생성, 데이터 모니터링, 의사결정 지원 등에 활용할 수 있습니다.</p>
+                            
+                            <div class="code-block">
+                                <div class="code-prompt">
+                                    <i class="fas fa-robot"></i>여러 데이터 파일을 읽어서 자동으로 그래프를 생성하는 코드를 작성해줘
+                                </div>
+                                <div class="code-line"><span class="highlight">import</span> pandas <span class="highlight">as</span> pd</div>
+                                <div class="code-line"><span class="highlight">import</span> matplotlib.pyplot <span class="highlight">as</span> plt</div>
+                                <div class="code-line"><span class="highlight">import</span> glob</div>
+                                <div class="code-line"><span class="highlight">import</span> os</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 그래프 저장 폴더 생성</span></div>
+                                <div class="code-line">그래프_폴더 = <span class="string">"./보고서/그래프"</span></div>
+                                <div class="code-line">os.makedirs(그래프_폴더, exist_ok=True)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 모든 CSV 파일 경로 가져오기</span></div>
+                                <div class="code-line">csv_파일목록 = glob.glob(<span class="string">"./데이터/*.csv"</span>)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="highlight">for</span> 파일경로 <span class="highlight">in</span> csv_파일목록:</div>
+                                <div class="code-line indent">파일명 = os.path.basename(파일경로).split(<span class="string">'.'</span>)[0]</div>
+                                <div class="code-line indent">print(f<span class="string">"{파일명} 처리 중..."</span>)</div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent"><span class="highlight">try</span>:</div>
+                                <div class="code-line indent indent"><span class="comment"># CSV 파일 읽기</span></div>
+                                <div class="code-line indent indent">df = pd.read_csv(파일경로)</div>
+                                <div class="code-line indent indent"></div>
+                                <div class="code-line indent indent"><span class="comment"># 그래프 생성 (예: 막대 그래프)</span></div>
+                                <div class="code-line indent indent">plt.figure(figsize=(10, 6))</div>
+                                <div class="code-line indent indent">plt.title(f<span class="string">"{파일명} 데이터 분석"</span>, fontsize=15)</div>
+                                <div class="code-line indent indent"></div>
+                                <div class="code-line indent indent"><span class="comment"># 데이터 유형에 따른 차트 선택</span></div>
+                                <div class="code-line indent indent"><span class="highlight">if</span> <span class="string">'날짜'</span> <span class="highlight">in</span> df.columns:</div>
+                                <div class="code-line indent indent indent">df.set_index(<span class="string">'날짜'</span>).plot(ax=plt.gca())</div>
+                                <div class="code-line indent indent indent">plt.xticks(rotation=45)</div>
+                                <div class="code-line indent indent"><span class="highlight">elif</span> <span class="string">'카테고리'</span> <span class="highlight">in</span> df.columns:</div>
+                                <div class="code-line indent indent indent">df.groupby(<span class="string">'카테고리'</span>).sum().plot(kind=<span class="string">'bar'</span>, ax=plt.gca())</div>
+                                <div class="code-line indent indent"><span class="highlight">else</span>:</div>
+                                <div class="code-line indent indent indent">df.plot(kind=<span class="string">'bar'</span>, ax=plt.gca())</div>
+                                <div class="code-line indent indent"></div>
+                                <div class="code-line indent indent">plt.tight_layout()</div>
+                                <div class="code-line indent indent"></div>
+                                <div class="code-line indent indent"><span class="comment"># 그래프 저장</span></div>
+                                <div class="code-line indent indent">그래프_경로 = os.path.join(그래프_폴더, f<span class="string">"{파일명}_차트.png"</span>)</div>
+                                <div class="code-line indent indent">plt.savefig(그래프_경로)</div>
+                                <div class="code-line indent indent">plt.close()</div>
+                                <div class="code-line indent indent"></div>
+                                <div class="code-line indent indent">print(f<span class="string">"  그래프 저장 완료: {그래프_경로}"</span>)</div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent"><span class="highlight">except</span> Exception <span class="highlight">as</span> e:</div>
+                                <div class="code-line indent indent">print(f<span class="string">"  오류 발생: {e}"</span>)</div>
+                            </div>
+                            
+                            <div class="note">
+                                <div class="note-title">자동화 활용 시나리오</div>
+                                <p>데이터 시각화 자동화는 다음과 같은 업무에 유용합니다:</p>
+                                <ul class="list-disc pl-5 mt-2">
+                                    <li>일일/주간/월간 판매 보고서 자동 생성</li>
+                                    <li>여러 지점/부서의 실적 비교 차트 생성</li>
+                                    <li>KPI 대시보드 업데이트 자동화</li>
+                                    <li>데이터 이상치 시각적 감지 시스템</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                "데이터 시각화는 복잡한 정보를 직관적으로 이해할 수 있게 하는 강력한 도구입니다"
+            </div>
+        </div>
+    </div>
+</body>
+    

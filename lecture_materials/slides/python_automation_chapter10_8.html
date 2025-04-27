@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>고급 사례 연구: 실전 데이터 분석</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .case-study-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .case-study {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+        }
+        .case-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .case-title i {
+            margin-right: 10px;
+        }
+        .code-block {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Consolas', monospace;
+            font-size: 14px;
+            color: #e2e8f0;
+            line-height: 1.6;
+            white-space: pre;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+        .step {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(75, 139, 190, 0.1);
+            border-radius: 8px;
+        }
+        .step-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #4B8BBE;
+            margin-bottom: 10px;
+        }
+        .step-description {
+            color: #cbd5e0;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        .result {
+            background: rgba(255, 211, 59, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+        .result-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">9</div>
+                <div class="title">고급 사례 연구: 실전 데이터 분석</div>
+            </div>
+
+            <div class="case-study-container">
+                <div class="case-study">
+                    <div class="case-title">
+                        <i class="fas fa-project-diagram"></i>
+                        복합 데이터 분석 프로젝트
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-title">1. 데이터 통합 및 전처리</div>
+                        <div class="code-block">
+# 여러 소스의 데이터 통합
+sales_data = pd.read_excel('sales_2023.xlsx')
+customer_data = pd.read_csv('customers.csv')
+product_data = pd.read_json('products.json')
+
+# 데이터 결합
+merged_data = sales_data.merge(
+    customer_data, on='customer_id'
+).merge(
+    product_data, on='product_id'
+)</div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">2. 고급 특성 엔지니어링</div>
+                        <div class="code-block">
+# 시계열 특성 생성
+merged_data['order_month'] = pd.to_datetime(merged_data['order_date']).dt.month
+merged_data['is_weekend'] = merged_data['order_date'].dt.weekday >= 5
+
+# 고객 세그먼트 특성
+merged_data['customer_segment'] = merged_data.groupby('customer_id')['total_amount'].transform(
+    lambda x: pd.qcut(x, q=3, labels=['Low', 'Medium', 'High'])
+)</div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">3. 복합 분석 수행</div>
+                        <div class="code-block">
+# 세그먼트별 매출 분석
+segment_analysis = merged_data.pivot_table(
+    values='total_amount',
+    index=['customer_segment', 'order_month'],
+    aggfunc=['mean', 'sum', 'count']
+)
+
+# 제품 카테고리별 트렌드
+category_trend = merged_data.groupby(
+    ['product_category', pd.Grouper(key='order_date', freq='M')]
+)['total_amount'].sum()</div>
+                    </div>
+
+                    <div class="result">
+                        <div class="result-title">분석 결과 및 인사이트</div>
+                        <ul style="list-style-type: disc; margin-left: 20px; color: #e2e8f0;">
+                            <li>고객 세그먼트별 구매 패턴 식별</li>
+                            <li>시즌별 제품 카테고리 성과 분석</li>
+                            <li>매출 증대를 위한 타겟 마케팅 전략 도출</li>
+                            <li>재고 관리 최적화를 위한 수요 예측</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+    

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatGPT로 금융데이터 처리하기</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 40px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .example-section {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .prompt-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+        }
+        .prompt-card h3 {
+            color: #FFD43B;
+            font-size: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .prompt-card i {
+            margin-right: 10px;
+        }
+        .code-block {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            font-family: 'Consolas', monospace;
+            margin: 15px 0;
+            color: #e2e8f0;
+        }
+        .highlight {
+            color: #FFD43B;
+        }
+        .tips {
+            background: rgba(75, 139, 190, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        .tips h4 {
+            color: #FFD43B;
+            font-size: 18px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .tips ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .tips li {
+            color: #e2e8f0;
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+        .tips li:before {
+            content: "→";
+            color: #4B8BBE;
+            position: absolute;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">3</div>
+                <div class="title">ChatGPT로 금융데이터 처리하기</div>
+            </div>
+            
+            <div class="example-section">
+                <div class="prompt-card">
+                    <h3><i class="fas fa-download"></i>데이터 불러오기</h3>
+                    <div class="code-block">
+                        <span class="highlight"># ChatGPT 프롬프트:</span><br>
+                        "yfinance를 사용해서 삼성전자의 최근 1년 주가 데이터를 가져오고,<br>
+                        pandas 데이터프레임으로 저장하는 파이썬 코드를 작성해주세요."<br><br>
+                        <span class="highlight"># ChatGPT 응답:</span><br>
+                        import yfinance as yf<br>
+                        import pandas as pd<br><br>
+                        # 삼성전자 주식 심볼<br>
+                        symbol = "005930.KS"<br>
+                        # 데이터 다운로드<br>
+                        df = yf.download(symbol, start="2023-01-01", end="2024-01-01")
+                    </div>
+                </div>
+
+                <div class="prompt-card">
+                    <h3><i class="fas fa-chart-line"></i>데이터 분석하기</h3>
+                    <div class="code-block">
+                        <span class="highlight"># ChatGPT 프롬프트:</span><br>
+                        "불러온 데이터에서 20일 이동평균선을 계산하고,<br>
+                        거래량이 가장 많았던 상위 5일을 찾아주세요."<br><br>
+                        <span class="highlight"># ChatGPT 응답:</span><br>
+                        # 20일 이동평균선 계산<br>
+                        df['MA20'] = df['Close'].rolling(window=20).mean()<br><br>
+                        # 거래량 상위 5일 찾기<br>
+                        top_volume = df.sort_values('Volume', ascending=False).head()
+                    </div>
+                </div>
+            </div>
+
+            <div class="tips">
+                <h4><i class="fas fa-lightbulb"></i> 효과적인 프롬프트 작성 팁</h4>
+                <ul>
+                    <li>원하는 라이브러리와 함수를 구체적으로 명시하기</li>
+                    <li>데이터의 기간과 형식을 명확하게 지정하기</li>
+                    <li>원하는 결과물의 형태를 상세히 설명하기</li>
+                    <li>복잡한 작업은 여러 단계로 나누어 요청하기</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+    

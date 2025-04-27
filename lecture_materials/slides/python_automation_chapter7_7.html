@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 7</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 44px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .intro {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: #e2e8f0;
+            max-width: 90%;
+        }
+        .two-column {
+            display: flex;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .column {
+            flex: 1;
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            background-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+        }
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .card-title i {
+            margin-right: 10px;
+        }
+        .card-content {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #e2e8f0;
+        }
+        .code-block {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: #e2e8f0;
+            overflow: auto;
+        }
+        .highlight {
+            color: #FFD43B;
+        }
+        .comment {
+            color: #718096;
+            font-style: italic;
+        }
+        .form-elements {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .element-box {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+        .element-name {
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 8px;
+            font-family: 'Courier New', monospace;
+        }
+        .element-desc {
+            font-size: 14px;
+            color: #e2e8f0;
+            line-height: 1.5;
+        }
+        .tip-box {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-left: 4px solid #FFD43B;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .tip-title {
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+        .tip-title i {
+            margin-right: 8px;
+        }
+        .tip-content {
+            font-size: 15px;
+            color: #e2e8f0;
+        }
+        .form-diagram {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .form-example {
+            width: 100%;
+            max-width: 400px;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .form-field {
+            margin-bottom: 15px;
+            position: relative;
+        }
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            color: #e2e8f0;
+            font-size: 14px;
+        }
+        .form-input {
+            width: 100%;
+            padding: 8px 10px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: none;
+            border-radius: 5px;
+            color: #1a365d;
+            position: relative;
+        }
+        .form-input.with-selenium {
+            border: 2px solid #FFD43B;
+        }
+        .selenium-code {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            padding: 5px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #FFD43B;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            border-radius: 0 0 5px 5px;
+            z-index: 2;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">8</div>
+                <div class="title">행동 5: 데이터 넣기</div>
+            </div>
+            
+            <p class="intro">
+                웹 폼에 데이터를 입력하는 것은 웹 자동화의 핵심 기능 중 하나입니다. Selenium은 다양한 종류의 폼 요소에 데이터를 입력하고 조작하는 방법을 제공합니다.
+            </p>
+            
+            <div class="two-column">
+                <div class="column">
+                    <div class="card">
+                        <h3 class="card-title"><i class="fas fa-keyboard"></i>텍스트 입력하기</h3>
+                        <div class="card-content">
+                            <p>텍스트 입력란에 데이터를 입력하는 가장 기본적인 방법은 <span class="highlight">send_keys()</span> 메서드를 사용하는 것입니다.</p>
+                            
+                            <div class="code-block">
+                                <span class="comment"># ChatGPT: "셀레니움으로 텍스트 입력하기"</span><br>
+                                <span class="highlight">from</span> selenium <span class="highlight">import</span> webdriver<br>
+                                <span class="highlight">from</span> selenium.webdriver.common.by <span class="highlight">import</span> By<br>
+                                <br>
+                                <span class="comment"># 요소 찾기</span><br>
+                                username_field = driver.find_element(By.ID, <span class="highlight">"username"</span>)<br>
+                                password_field = driver.find_element(By.NAME, <span class="highlight">"password"</span>)<br>
+                                <br>
+                                <span class="comment"># 기존 텍스트 지우기</span><br>
+                                username_field.clear()<br>
+                                password_field.clear()<br>
+                                <br>
+                                <span class="comment"># 텍스트 입력하기</span><br>
+                                username_field.send_keys(<span class="highlight">"myusername"</span>)<br>
+                                password_field.send_keys(<span class="highlight">"mypassword"</span>)
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <h3 class="card-title"><i class="fas fa-list-alt"></i>다양한 폼 요소 조작하기</h3>
+                        <div class="card-content">
+                            <div class="form-elements">
+                                <div class="element-box">
+                                    <div class="element-name">체크박스 선택</div>
+                                    <div class="element-desc">
+                                        <div class="code-block" style="margin: 5px 0; padding: 10px;">
+                                            checkbox = driver.find_element(By.ID, <span class="highlight">"terms"</span>)<br>
+                                            <span class="highlight">if not</span> checkbox.is_selected():<br>
+                                            &nbsp;&nbsp;checkbox.click()
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="element-box">
+                                    <div class="element-name">라디오 버튼 선택</div>
+                                    <div class="element-desc">
+                                        <div class="code-block" style="margin: 5px 0; padding: 10px;">
+                                            radio = driver.find_element(By.CSS_SELECTOR, <span class="highlight">"input[value='option2']"</span>)<br>
+                                            radio.click()
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="element-box">
+                                    <div class="element-name">드롭다운 선택</div>
+                                    <div class="element-desc">
+                                        <div class="code-block" style="margin: 5px 0; padding: 10px;">
+                                            <span class="highlight">from</span> selenium.webdriver.support.ui <span class="highlight">import</span> Select<br>
+                                            <br>
+                                            select = Select(driver.find_element(By.ID, <span class="highlight">"country"</span>))<br>
+                                            select.select_by_visible_text(<span class="highlight">"대한민국"</span>)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="element-box">
+                                    <div class="element-name">파일 업로드</div>
+                                    <div class="element-desc">
+                                        <div class="code-block" style="margin: 5px 0; padding: 10px;">
+                                            file_input = driver.find_element(By.ID, <span class="highlight">"file-upload"</span>)<br>
+                                            file_input.send_keys(<span class="highlight">"/path/to/file.jpg"</span>)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="column">
+                    <div class="card">
+                        <h3 class="card-title"><i class="fas fa-paper-plane"></i>폼 제출하기</h3>
+                        <div class="card-content">
+                            <p>폼 데이터를 모두 입력한 후 제출하는 방법에는 여러 가지가 있습니다.</p>
+                            
+                            <div class="code-block">
+                                <span class="comment"># ChatGPT: "셀레니움으로 폼 제출하기"</span><br>
+                                <span class="comment"># 방법 1: 제출 버튼 찾아서 클릭하기</span><br>
+                                submit_button = driver.find_element(By.CSS_SELECTOR, <span class="highlight">"button[type='submit']"</span>)<br>
+                                submit_button.click()<br>
+                                <br>
+                                <span class="comment"># 방법 2: 폼 요소 찾아서 submit() 메서드 사용하기</span><br>
+                                form = driver.find_element(By.ID, <span class="highlight">"login-form"</span>)<br>
+                                form.submit()<br>
+                                <br>
+                                <span class="comment"># 방법 3: Enter 키 입력으로 제출하기</span><br>
+                                <span class="highlight">from</span> selenium.webdriver.common.keys <span class="highlight">import</span> Keys<br>
+                                <br>
+                                password_field = driver.find_element(By.NAME, <span class="highlight">"password"</span>)<br>
+                                password_field.send_keys(<span class="highlight">"mypassword"</span> + Keys.ENTER)
+                            </div>
+                            
+                            <div class="tip-box">
+                                <div class="tip-title"><i class="fas fa-lightbulb"></i>특수 키 입력하기</div>
+                                <div class="tip-content">
+                                    <p>텍스트 외에도 다양한 키보드 키를 입력할 수 있습니다.</p>
+                                    <div class="code-block" style="margin: 10px 0; padding: 10px;">
+                                        <span class="highlight">from</span> selenium.webdriver.common.keys <span class="highlight">import</span> Keys<br>
+                                        <br>
+                                        <span class="comment"># Ctrl+A로 전체 선택 후 삭제</span><br>
+                                        element.send_keys(Keys.CONTROL + <span class="highlight">"a"</span>)<br>
+                                        element.send_keys(Keys.DELETE)<br>
+                                        <br>
+                                        <span class="comment"># TAB 키로 다음 필드로 이동</span><br>
+                                        element.send_keys(Keys.TAB)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <h3 class="card-title"><i class="fas fa-edit"></i>실제 폼 작성 예제</h3>
+                        <div class="card-content">
+                            <div class="code-block">
+                                <span class="comment"># ChatGPT: "셀레니움으로 회원가입 폼 작성하기"</span><br>
+                                <span class="highlight">def</span> <span class="highlight">fill_registration_form</span>(driver, user_data):<br>
+                                &nbsp;&nbsp;<span class="comment"># 페이지 접속</span><br>
+                                &nbsp;&nbsp;driver.get(<span class="highlight">"https://example.com/register"</span>)<br>
+                                &nbsp;&nbsp;<br>
+                                &nbsp;&nbsp;<span class="comment"># 기본 정보 입력</span><br>
+                                &nbsp;&nbsp;driver.find_element(By.ID, <span class="highlight">"first-name"</span>).send_keys(user_data[<span class="highlight">"first_name"</span>])<br>
+                                &nbsp;&nbsp;driver.find_element(By.ID, <span class="highlight">"last-name"</span>).send_keys(user_data[<span class="highlight">"last_name"</span>])<br>
+                                &nbsp;&nbsp;driver.find_element(By.ID, <span class="highlight">"email"</span>).send_keys(user_data[<span class="highlight">"email"</span>])<br>
+                                &nbsp;&nbsp;<br>
+                                &nbsp;&nbsp;<span class="comment"># 비밀번호 입력</span><br>
+                                &nbsp;&nbsp;driver.find_element(By.ID, <span class="highlight">"password"</span>).send_keys(user_data[<span class="highlight">"password"</span>])<br>
+                                &nbsp;&nbsp;driver.find_element(By.ID, <span class="highlight">"confirm-password"</span>).send_keys(user_data[<span class="highlight">"password"</span>])<br>
+                                &nbsp;&nbsp;<br>
+                                &nbsp;&nbsp;<span class="comment"># 드롭다운 선택</span><br>
+                                &nbsp;&nbsp;select = Select(driver.find_element(By.ID, <span class="highlight">"country"</span>))<br>
+                                &nbsp;&nbsp;select.select_by_visible_text(user_data[<span class="highlight">"country"</span>])<br>
+                                &nbsp;&nbsp;<br>
+                                &nbsp;&nbsp;<span class="comment"># 약관 동의 체크</span><br>
+                                &nbsp;&nbsp;terms_checkbox = driver.find_element(By.ID, <span class="highlight">"terms"</span>)<br>
+                                &nbsp;&nbsp;<span class="highlight">if not</span> terms_checkbox.is_selected():<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;terms_checkbox.click()<br>
+                                &nbsp;&nbsp;<br>
+                                &nbsp;&nbsp;<span class="comment"># 폼 제출</span><br>
+                                &nbsp;&nbsp;driver.find_element(By.CSS_SELECTOR, <span class="highlight">"button[type='submit']"</span>).click()
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+    

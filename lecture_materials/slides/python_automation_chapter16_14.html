@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 16</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: calc(100vh - 80px);
+            max-height: 720px;
+        }
+        .title {
+            font-size: 48px;
+            font-weight: 700;
+            color: #FFD43B;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        .message-container {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .message {
+            font-size: 24px;
+            color: #e2e8f0;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+        .quote {
+            font-size: 28px;
+            color: #4B8BBE;
+            font-style: italic;
+            margin: 40px 0;
+        }
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin: 40px 0;
+        }
+        .achievement {
+            text-align: center;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        .achievement-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(75, 139, 190, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            transition: all 0.3s ease;
+        }
+        .achievement-icon:hover {
+            transform: scale(1.1);
+            background: rgba(75, 139, 190, 0.3);
+        }
+        .achievement-icon i {
+            font-size: 36px;
+            color: #FFD43B;
+        }
+        .achievement-title {
+            color: #4B8BBE;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .achievement-desc {
+            color: #e2e8f0;
+            font-size: 16px;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .bottom-message {
+            font-size: 20px;
+            color: #a0aec0;
+            text-align: center;
+            margin-top: 40px;
+            animation: fadeIn 1s ease forwards;
+            animation-delay: 1s;
+            opacity: 0;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <h1 class="title">축하합니다!</h1>
+            
+            <div class="message-container">
+                <p class="message">
+                    2일간의 파이썬 업무 자동화 교육을 성공적으로 마치셨습니다.<br>
+                    이제 당신은 업무 자동화의 새로운 여정을 시작할 준비가 되었습니다.
+                </p>
+            </div>
+
+            <div class="icon-grid">
+                <div class="achievement" style="animation-delay: 0.2s">
+                    <div class="achievement-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 class="achievement-title">자동화 마스터</h3>
+                    <p class="achievement-desc">효율적인 업무 프로세스 구축</p>
+                </div>
+                <div class="achievement" style="animation-delay: 0.4s">
+                    <div class="achievement-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="achievement-title">코드 전문가</h3>
+                    <p class="achievement-desc">파이썬 프로그래밍 실력 향상</p>
+                </div>
+                <div class="achievement" style="animation-delay: 0.6s">
+                    <div class="achievement-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3 class="achievement-title">창의적 문제해결</h3>
+                    <p class="achievement-desc">효과적인 업무 솔루션 개발</p>
+                </div>
+            </div>
+
+            <p class="quote">
+                "자동화의 힘으로 더 나은 업무 환경을 만들어보세요!"
+            </p>
+
+            <p class="bottom-message">
+                앞으로도 계속해서 발전하는 파이썬 자동화 전문가가 되시길 바랍니다.<br>
+                감사합니다.
+            </p>
+        </div>
+    </div>
+</body>
+    

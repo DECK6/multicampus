@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 4</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 44px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .library-categories {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .category {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+        }
+        .category-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .category-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #4B8BBE, #306998);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+        .category-icon i {
+            font-size: 18px;
+            color: #FFD43B;
+        }
+        .category-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+        .libraries {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        .library {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+        }
+        .library-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .library-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #FFD43B;
+        }
+        .library-pip {
+            font-size: 12px;
+            color: #a0aec0;
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 3px 6px;
+            border-radius: 4px;
+            margin-left: 8px;
+        }
+        .library-description {
+            font-size: 14px;
+            color: #e2e8f0;
+            line-height: 1.4;
+            margin-bottom: 8px;
+        }
+        .library-example {
+            font-size: 12px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            padding: 6px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            color: #cbd5e0;
+        }
+        .additional-info {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        .additional-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .additional-title i {
+            margin-right: 10px;
+        }
+        .additional-tips {
+            display: flex;
+            justify-content: space-between;
+        }
+        .tip {
+            width: 31%;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .tip-icon {
+            font-size: 30px;
+            color: #4B8BBE;
+            margin-bottom: 10px;
+        }
+        .tip-text {
+            font-size: 14px;
+            color: #e2e8f0;
+            text-align: center;
+            line-height: 1.5;
+        }
+        .footer {
+            font-size: 16px;
+            color: #a0aec0;
+            text-align: center;
+            margin-top: 20px;
+            font-style: italic;
+        }
+        .highlight {
+            color: #FFD43B;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">6</div>
+                <div class="title">유용한 파이썬 라이브러리</div>
+            </div>
+            
+            <div class="library-categories">
+                <div class="category">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-table"></i>
+                        </div>
+                        <div class="category-title">데이터 처리 라이브러리</div>
+                    </div>
+                    <div class="libraries">
+                        <div class="library">
+                            <div class="library-header">
+                                <div class="library-name">Pandas</div>
+                                <div class="library-pip">pip install pandas</div>
+                            </div>
+                            <div class="library-description">
+                                데이터 분석 및 조작을 위한 강력한 라이브러리로, 엑셀 파일 읽기/쓰기, 데이터 필터링 등의 작업에 유용합니다.
+                            </div>
+                            <div class="library-example">
+                                import pandas as pd<br>
+                                df = pd.read_excel('data.xlsx')<br>
+                                filtered = df[df['금액'] > 10000]
+                            </div>
+                        </div>
+                        <div class="library">
+                            <div class="library-header">
+                                <div class="library-name">NumPy</div>
+                                <div class="library-pip">pip install numpy</div>
+                            </div>
+                            <div class="library-description">
+                                대규모 다차원 배열과 행렬 연산을 지원하며, 수치 계산 작업에 필수적인 라이브러리입니다.
+                            </div>
+                            <div class="library-example">
+                                import numpy as np<br>
+                                data = np.array([1, 2, 3, 4, 5])<br>
+                                result = np.mean(data)  # 평균 계산
+                            </div>
+                        </div>
+                        <div class="library">
+                            <div class="library-header">
+                                <div class="library-name">openpyxl</div>
+                                <div class="library-pip">pip install openpyxl</div>
+                            </div>
+                            <div class="library-description">
+                                엑셀 파일(.xlsx)을 읽고 쓸 수 있는 라이브러리로, 서식과 수식을 포함한 고급 엑셀 작업이 가능합니다.
+                            </div>
+                            <div class="library-example">
+                                from openpyxl import Workbook<br>
+                                wb = Workbook()<br>
+                                wb.save("output.xlsx")
+                            </div>
+                        </div>
+                        <div class="library">
+                            <div class="library-header">
+                                <div class="library-name">python-docx</div>
+                                <div class="library-pip">pip install python-docx</div>
+                            </div>
+                            <div class="library-description">
+                                워드 문서(.docx)를 생성하고 수정할 수 있는 라이브러리로, 보고서 자동 생성에 유용합니다.
+                            </div>
+                            <div class="library-example">
+                                from docx import Document<br>
+                                doc = Document()<br>
+                                doc.add_heading('보고서 제목', 0)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="category">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="category-title">자동화 라이브러리</div>
+                    </div>
+                    <div class="libraries">
+                        <div class="library">
+                            <div class="library-header">
+                                <div class="library-name">Selenium</div>
+                                <div class="library-pip">pip install selenium</div>
+                            </div>
+                            <div class="library-description">
+                                웹 브라우저를 자동화하는 라이브러리로, 웹 크롤링, 폼 자동 제출 등에 사용됩니다.
+                            </div>
+                            <div class="library-example">
+                                from selenium import webdriver<br>
+                                driver = webdriver.Chrome()<br>
+                                driver.get("https://example.com")
+                            </div>
+                        </div>
+                        <div class="library">
+                            <div class="library-header">
+                                <div class="library-name">PyAutoGUI</div>
+                                <div class="library-pip">pip install pyautogui</div>
+                            </div>
+                            <div class="library-description">
+                                마우스와 키보드를 제어하여 GUI 기반 응용 프로그램을 자동화하는 라이브러리입니다.
+                            </div>
+                            <div class="library-example">
+                                import pyautogui<br>
+                                pyautogui.click(100, 100)<br>
+                                pyautogui.write('Hello World')
+                            </div>
+                        </div>
+                        <div class="library">
+                            <div class="library-header">
+                                <div class="library-name">Requests</div>
+                                <div class="library-pip">pip install requests</div>
+                            </div>
+                            <div class="library-description">
+                                HTTP 요청을 간편하게 만들 수 있는 라이브러리로, API 호출 및 웹 서비스 연동에 유용합니다.
+                            </div>
+                            <div class="library-example">
+                                import requests<br>
+                                response = requests.get('https://api.example.com/data')<br>
+                                data = response.json()
+                            </div>
+                        </div>
+                        <div class="library">
+                            <div class="library-header">
+                                <div class="library-name">Beautiful Soup</div>
+                                <div class="library-pip">pip install beautifulsoup4</div>
+                            </div>
+                            <div class="library-description">
+                                HTML 및 XML 파일에서 데이터를 추출하는 라이브러리로, 웹 스크래핑에 널리 사용됩니다.
+                            </div>
+                            <div class="library-example">
+                                from bs4 import BeautifulSoup<br>
+                                soup = BeautifulSoup(html_doc, 'html.parser')<br>
+                                titles = soup.find_all('h2')
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="category">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <div class="category-title">시각화 및 보고서 라이브러리</div>
+                    </div>
+                    <div class="libraries">
+                        <div class="library">
+                            <div class="library-header">
+                                <div class="library-name">Matplotlib</div>
+                                <div class="library-pip">pip install matplotlib</div>
+                            </div>
+                            <div class="library-description">
+                                다양한 차트와 그래프를 생성할 수 있는 기본 시각화 라이브러리입니다.
+                            </div>
+                            <div class="library-example">
+                                import matplotlib.pyplot as plt<br>
+                                plt.plot([1, 2, 3, 4], [10, 20, 25, 30])<br>
+                                plt.savefig('chart.png')
+                            </div>
+                        </div>
+                        <div class="library">
+                            <div class="library-header">
+                                <div class="library-name">Seaborn</div>
+                                <div class="library-pip">pip install seaborn</div>
+                            </div>
+                            <div class="library-description">
+                                Matplotlib 기반의 고급 시각화 라이브러리로, 통계 차트를 쉽게 생성할 수 있습니다.
+                            </div>
+                            <div class="library-example">
+                                import seaborn as sns<br>
+                                sns.set_theme()<br>
+                                sns.barplot(x="부서", y="매출", data=df)
+                            </div>
+                        </div>
+                        <div class="library">
+                            <div class="library-header">
+                                <div class="library-name">ReportLab</div>
+                                <div class="library-pip">pip install reportlab</div>
+                            </div>
+                            <div class="library-description">
+                                PDF 파일을 생성하고 편집할 수 있는 라이브러리로, 복잡한 보고서 자동화에 적합합니다.
+                            </div>
+                            <div class="library-example">
+                                from reportlab.pdfgen import canvas<br>
+                                c = canvas.Canvas("report.pdf")<br>
+                                c.drawString(100, 750, "자동 생성 보고서")
+                            </div>
+                        </div>
+                        <div class="library">
+                            <div class="library-header">
+                                <div class="library-name">Plotly</div>
+                                <div class="library-pip">pip install plotly</div>
+                            </div>
+                            <div class="library-description">
+                                대화형 그래프와 대시보드를 만들 수 있는 라이브러리로, 동적 보고서에 유용합니다.
+                            </div>
+                            <div class="library-example">
+                                import plotly.express as px<br>
+                                fig = px.bar(df, x="월", y="판매량")<br>
+                                fig.write_html("sales_report.html")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="category">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <div class="category-title">기타 유용한 라이브러리</div>
+                    </div>
+                    <div class="libraries">
+                        <div class="library">
+                            <div class="library-header">
+                                <div class="library-name">schedule</div>
+                                <div class="library-pip">pip install schedule</div>
+                            </div>
+                            <div class="library-description">
+                                작업을 예약하고 주기적으로 실행할 수 있는 라이브러리로, 간단한 작업 스케줄링에 적합합니다.
+                            </div>
+                            <div class="library-example">
+                                import schedule<br>
+                                schedule.every().day.at("10:00").do(morning_report)<br>
+                                schedule.every().monday.do(weekly_report)
+                            </div>
+                        </div>
+                        <div class="library">
+                            <div class="library-header">
+                                <div class="library-name">smtplib</div>
+                                <div class="library-pip">파이썬 내장 라이브러리</div>
+                            </div>
+                            <div class="library-description">
+                                SMTP 프로토콜을 사용하여 이메일을 보낼 수 있는 내장 라이브러리입니다.
+                            </div>
+                            <div class="library-example">
+                                import smtplib<br>
+                                with smtplib.SMTP('smtp.gmail.com', 587) as server:<br>
+                                &nbsp;&nbsp;server.send_message(msg)
+                            </div>
+                        </div>
+                        <div class="library">
+                            <div class="library-header">
+                                <div class="library-name">pathlib</div>
+                                <div class="library-pip">파이썬 내장 라이브러리</div>
+                            </div>
+                            <div class="library-description">
+                                파일 경로를 객체로 다루는 현대적인 방식의 파일 시스템 경로 라이브러리입니다.
+                            </div>
+                            <div class="library-example">
+                                from pathlib import Path<br>
+                                data_dir = Path("data")<br>
+                                files = list(data_dir.glob("*.xlsx"))
+                            </div>
+                        </div>
+                        <div class="library">
+                            <div class="library-header">
+                                <div class="library-name">logging</div>
+                                <div class="library-pip">파이썬 내장 라이브러리</div>
+                            </div>
+                            <div class="library-description">
+                                자동화 스크립트에서 로그를 기록하기 위한 내장 라이브러리입니다.
+                            </div>
+                            <div class="library-example">
+                                import logging<br>
+                                logging.basicConfig(filename='app.log', level=logging.INFO)<br>
+                                logging.info('작업이 완료되었습니다')
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="additional-info">
+                <div class="additional-title">
+                    <i class="fas fa-lightbulb"></i>
+                    라이브러리 활용 팁
+                </div>
+                <div class="additional-tips">
+                    <div class="tip">
+                        <div class="tip-icon"><i class="fas fa-book"></i></div>
+                        <div class="tip-text">라이브러리의 공식 문서를 참조하면 더 많은 기능과 활용 예제를 확인할 수 있습니다.</div>
+                    </div>
+                    <div class="tip">
+                        <div class="tip-icon"><i class="fas fa-code-branch"></i></div>
+                        <div class="tip-text">여러 라이브러리를 조합하여 사용하면 복잡한 업무 프로세스도 자동화할 수 있습니다.</div>
+                    </div>
+                    <div class="tip">
+                        <div class="tip-icon"><i class="fas fa-shield-alt"></i></div>
+                        <div class="tip-text">중요한 자동화 스크립트는 <span class="highlight">가상 환경</span>을 통해 라이브러리 버전을 독립적으로 관리하세요.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                "적절한 라이브러리를 활용하면 몇 시간 걸릴 업무를 몇 분 안에 처리할 수 있습니다."
+            </div>
+        </div>
+    </div>
+</body>
+    

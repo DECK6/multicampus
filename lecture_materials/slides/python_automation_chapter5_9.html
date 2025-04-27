@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 자동화 교육 교안 - 챕터 5: 물리자동화의 이해</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .intro-text {
+            color: #e2e8f0;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            max-width: 90%;
+        }
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 25px;
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            background-color: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #FFD43B;
+            display: flex;
+            align-items: center;
+        }
+        .card-title i {
+            margin-right: 10px;
+            font-size: 22px;
+        }
+        .card-content {
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+        .code-block {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            margin: 10px 0;
+            color: #e2e8f0;
+            overflow-x: auto;
+            border-left: 4px solid #4B8BBE;
+        }
+        .code-block pre {
+            margin: 0;
+            white-space: pre-wrap;
+        }
+        .prompt-box {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 15px;
+            border-left: 3px solid #4B8BBE;
+        }
+        .prompt-label {
+            font-size: 14px;
+            font-weight: bold;
+            color: #FFD43B;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+        .prompt-label i {
+            margin-right: 6px;
+        }
+        .prompt-text {
+            font-style: italic;
+            color: #cbd5e0;
+        }
+        .best-practices {
+            margin-top: 30px;
+        }
+        .practices-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .practices-title i {
+            margin-right: 10px;
+        }
+        .practices-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .practice-item {
+            background-color: rgba(75, 139, 190, 0.15);
+            border-radius: 8px;
+            padding: 15px;
+            border: 1px solid rgba(75, 139, 190, 0.3);
+        }
+        .practice-item-title {
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        .practice-item-title i {
+            margin-right: 8px;
+            font-size: 16px;
+        }
+        .practice-item-content {
+            color: #e2e8f0;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .tip-box {
+            background-color: rgba(255, 212, 59, 0.1);
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin-top: 25px;
+            border: 1px solid rgba(255, 212, 59, 0.3);
+        }
+        .tip-title {
+            display: flex;
+            align-items: center;
+            color: #FFD43B;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .tip-title i {
+            margin-right: 8px;
+        }
+        .tip-content {
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+        .flowchart {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .flow-step {
+            background-color: rgba(75, 139, 190, 0.2);
+            border: 1px solid rgba(75, 139, 190, 0.4);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            width: 22%;
+        }
+        .flow-step-title {
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 5px;
+        }
+        .flow-step-desc {
+            font-size: 13px;
+            color: #e2e8f0;
+        }
+        .flow-arrow {
+            color: #4B8BBE;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">10</div>
+                <div class="title">고급 자동화 기법과 통합 예제</div>
+            </div>
+            
+            <p class="intro-text">
+                단순한 자동화를 넘어서 다양한 기술을 조합하여 더 강력하고 유연한 자동화 솔루션을 구축하는 방법을 알아봅니다.
+                PyAutoGUI, 윈도우 제어, 이미지 인식, ChatGPT를 통합하여 복잡한 작업을 효율적으로 처리하는 고급 기법을 살펴보겠습니다.
+            </p>
+            
+            <div class="flowchart">
+                <div class="flow-step">
+                    <div class="flow-step-title">데이터 수집</div>
+                    <div class="flow-step-desc">스크린샷 촬영과 이미지 인식을 통한 데이터 추출</div>
+                </div>
+                <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="flow-step">
+                    <div class="flow-step-title">데이터 처리</div>
+                    <div class="flow-step-desc">Python으로 수집된 정보 가공 및 분석</div>
+                </div>
+                <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="flow-step">
+                    <div class="flow-step-title">의사 결정</div>
+                    <div class="flow-step-desc">조건에 따른 자동화 로직 분기 처리</div>
+                </div>
+                <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="flow-step">
+                    <div class="flow-step-title">작업 실행</div>
+                    <div class="flow-step-desc">GUI 조작을 통한 최종 작업 수행</div>
+                </div>
+            </div>
+            
+            <div class="two-column">
+                <div class="card">
+                    <h3 class="card-title"><i class="fas fa-layer-group"></i>다중 프로그램 통합 자동화</h3>
+                    <div class="card-content">
+                        <p>여러 프로그램을 오가며 데이터를 주고받는 복잡한 워크플로우를 자동화합니다.</p>
+                        <div class="code-block">
+<pre>import pyautogui as pag
+import time
+import pyperclip
+import os
+
+def automate_data_transfer():
+    # 엑셀에서 데이터 복사
+    excel_app = pag.getWindowsWithTitle('Excel')[0]
+    excel_app.activate()
+    time.sleep(0.5)
+    
+    # 셀 선택 및 복사
+    pag.click(x=200, y=300)
+    pag.hotkey('ctrl', 'c')
+    data = pyperclip.paste()
+    
+    # 웹 브라우저로 전환
+    browser = pag.getWindowsWithTitle('Chrome')[0]
+    browser.activate()
+    time.sleep(0.5)
+    
+    # 데이터 검색
+    pag.click(x=500, y=80)  # 주소창 클릭
+    pag.hotkey('ctrl', 'a')  # 전체 선택
+    pag.write('https://example.com/search')
+    pag.press('enter')
+    time.sleep(2)
+    
+    # 검색창에 데이터 입력
+    search_btn = pag.locateCenterOnScreen('search_icon.png')
+    if search_btn:
+        pag.click(search_btn)
+        pag.write(data)
+        pag.press('enter')
+        
+    # 결과 스크린샷으로 저장
+    time.sleep(3)
+    pag.screenshot('search_result.png')</pre>
+                        </div>
+                        <div class="prompt-box">
+                            <div class="prompt-label"><i class="fas fa-comment-alt"></i>ChatGPT 프롬프트</div>
+                            <p class="prompt-text">"PyAutoGUI로 엑셀에서 데이터를 복사하여 웹 브라우저에서 검색하고 결과를 저장하는 코드를 작성해줘"</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3 class="card-title"><i class="fas fa-magic"></i>조건부 자동화 로직</h3>
+                    <div class="card-content">
+                        <p>화면 상태를 인식하고 상황에 따라 다른 작업을 수행하는 지능형 자동화를 구현합니다.</p>
+                        <div class="code-block">
+<pre>import pyautogui as pag
+import time
+import logging
+
+# 로깅 설정
+logging.basicConfig(level=logging.INFO, 
+                   format='%(asctime)s - %(message)s',
+                   filename='automation.log')
+
+def smart_automation():
+    # 상태 확인 및 조건부 처리
+    try:
+        # 로그인 상태 확인
+        login_btn = pag.locateOnScreen('login_button.png', 
+                                     confidence=0.8)
+        if login_btn:
+            logging.info("로그인 필요 상태 감지")
+            pag.click(login_btn)
+            time.sleep(1)
+            
+            # 아이디/비밀번호 입력
+            pag.write('username')
+            pag.press('tab')
+            pag.write('password')
+            pag.press('enter')
+            time.sleep(3)
+        
+        # 업데이트 창 확인 및 처리
+        update_popup = pag.locateOnScreen('update_popup.png', 
+                                        confidence=0.8)
+        if update_popup:
+            logging.info("업데이트 알림창 감지")
+            # 나중에 업데이트 버튼 클릭
+            later_btn = pag.locateOnScreen('later_button.png')
+            if later_btn:
+                pag.click(later_btn)
+            else:
+                # 찾지 못하면 ESC로 닫기 시도
+                pag.press('esc')
+            time.sleep(1)
+        
+        # 메인 작업 수행
+        main_btn = pag.locateOnScreen('main_button.png')
+        if main_btn:
+            logging.info("주요 기능 버튼 감지 및 클릭")
+            pag.click(main_btn)
+            # 추가 작업 계속...
+        else:
+            logging.error("주요 버튼을 찾을 수 없음")
+            
+    except Exception as e:
+        logging.error(f"자동화 오류: {str(e)}")
+        # 오류 스크린샷 저장
+        pag.screenshot('error_state.png')</pre>
+                        </div>
+                        <div class="prompt-box">
+                            <div class="prompt-label"><i class="fas fa-comment-alt"></i>ChatGPT 프롬프트</div>
+                            <p class="prompt-text">"PyAutoGUI로 화면 상태를 인식하여 로그인 여부, 팝업 확인 등 다양한 상황에 대응하는 지능형 자동화 스크립트를 작성해줘"</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="best-practices">
+                <h3 class="practices-title"><i class="fas fa-check-double"></i>고급 자동화 모범 사례</h3>
+                <div class="practices-grid">
+                    <div class="practice-item">
+                        <div class="practice-item-title"><i class="fas fa-shield-alt"></i>안정성 확보</div>
+                        <div class="practice-item-content">
+                            try-except 블록을 사용하여 예외를 처리하고, 타임아웃을 설정하여 무한 대기 상태를 방지하세요. 로깅 시스템을 구축하여 실패 원인을 추적할 수 있게 하세요.
+                        </div>
+                    </div>
+                    
+                    <div class="practice-item">
+                        <div class="practice-item-title"><i class="fas fa-sync"></i>복원력 있는 설계</div>
+                        <div class="practice-item-content">
+                            오류 발생 시 원래 상태로 돌아가거나 다시 시작할 수 있는 메커니즘을 포함하세요. 중요한 단계마다 상태를 확인하고 조정하는 검증 과정을 추가하세요.
+                        </div>
+                    </div>
+                    
+                    <div class="practice-item">
+                        <div class="practice-item-title"><i class="fas fa-cogs"></i>모듈화 및 재사용</div>
+                        <div class="practice-item-content">
+                            반복되는 패턴은 함수로 분리하여 재사용 가능하게 만드세요. 구성 파일을 사용하여 하드코딩된 값 대신 설정을 외부화하여 유연성을 높이세요.
+                        </div>
+                    </div>
+                    
+                    <div class="practice-item">
+                        <div class="practice-item-title"><i class="fas fa-sort-amount-up"></i>점진적 개발</div>
+                        <div class="practice-item-content">
+                            전체 워크플로우를 한 번에 자동화하지 말고, 작은 단위로 나누어 개발하고 테스트하세요. 각 단계가 안정적으로 작동하는지 확인 후 다음 단계로 진행하세요.
+                        </div>
+                    </div>
+                    
+                    <div class="practice-item">
+                        <div class="practice-item-title"><i class="fas fa-eye"></i>다중 인식 방법</div>
+                        <div class="practice-item-content">
+                            이미지 인식, 좌표 기반 클릭, OCR 텍스트 인식 등 여러 방법을 조합하여 하나의 방법이 실패해도 대체 방법으로 진행할 수 있게 하세요.
+                        </div>
+                    </div>
+                    
+                    <div class="practice-item">
+                        <div class="practice-item-title"><i class="fas fa-stopwatch"></i>적응형 타이밍</div>
+                        <div class="practice-item-content">
+                            고정된 대기 시간 대신 화면에서 특정 요소가 나타날 때까지 기다리는 방식을 사용하여 시스템 속도 변화에 적응하세요.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <div class="tip-title"><i class="fas fa-lightbulb"></i> 고급 팁</div>
+                <div class="tip-content">
+                    로컬에서의 자동화 스크립트를 클라우드 환경에서 실행하려면 Docker나 가상 데스크톱과 같은 도구를 활용할 수 있습니다. Selenium과 PyAutoGUI를 조합하여 웹과 데스크톱 환경을 모두 자동화하는 하이브리드 솔루션도 고려해보세요.
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+    

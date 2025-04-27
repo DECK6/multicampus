@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pandas 기본 문법 - 데이터프레임 연산</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 40px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .methods-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .method-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+        .method-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        .method-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .method-title i {
+            margin-right: 10px;
+        }
+        .code-block {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Consolas', monospace;
+            font-size: 14px;
+            color: #e2e8f0;
+            margin: 10px 0;
+        }
+        .output {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            color: #a0aec0;
+            font-family: 'Consolas', monospace;
+            margin-top: 10px;
+        }
+        .description {
+            color: #cbd5e0;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">7</div>
+                <div class="title">Pandas 기본 문법 - 데이터프레임 연산</div>
+            </div>
+
+            <div class="methods-grid">
+                <div class="method-card">
+                    <div class="method-title">
+                        <i class="fas fa-calculator"></i>
+                        기본 통계 함수
+                    </div>
+                    <div class="description">
+                        데이터프레임의 기본적인 통계값을 계산하는 메서드들
+                    </div>
+                    <div class="code-block">
+                        # 기술 통계량 확인
+                        df.describe()<br><br>
+                        # 평균값 계산
+                        df['컬럼'].mean()<br><br>
+                        # 최대/최소값
+                        df.max(), df.min()
+                    </div>
+                    <div class="output">
+                        >>> df['나이'].describe()<br>
+                        count    3.0<br>
+                        mean     27.7<br>
+                        std      2.5<br>
+                        min      25.0<br>
+                        max      30.0
+                    </div>
+                </div>
+
+                <div class="method-card">
+                    <div class="method-title">
+                        <i class="fas fa-random"></i>
+                        데이터 병합
+                    </div>
+                    <div class="description">
+                        여러 데이터프레임을 하나로 결합하는 방법
+                    </div>
+                    <div class="code-block">
+                        # 세로 방향 결합
+                        pd.concat([df1, df2])<br><br>
+                        # 특정 키를 기준으로 병합
+                        pd.merge(df1, df2, on='key')<br><br>
+                        # 인덱스 기준 결합
+                        df1.join(df2)
+                    </div>
+                </div>
+
+                <div class="method-card">
+                    <div class="method-title">
+                        <i class="fas fa-table"></i>
+                        피벗 테이블
+                    </div>
+                    <div class="description">
+                        데이터를 재구성하여 요약된 정보를 얻는 방법
+                    </div>
+                    <div class="code-block">
+                        # 피벗 테이블 생성
+                        df.pivot_table(<br>
+                        &nbsp;&nbsp;values='매출',<br>
+                        &nbsp;&nbsp;index='부서',<br>
+                        &nbsp;&nbsp;columns='년도',<br>
+                        &nbsp;&nbsp;aggfunc='sum'<br>
+                        )
+                    </div>
+                </div>
+
+                <div class="method-card">
+                    <div class="method-title">
+                        <i class="fas fa-exchange-alt"></i>
+                        데이터 변환
+                    </div>
+                    <div class="description">
+                        데이터 타입 변환과 형식 변경 방법
+                    </div>
+                    <div class="code-block">
+                        # 데이터 타입 변환
+                        df['숫자'].astype('int')<br><br>
+                        # 날짜 형식 변환
+                        pd.to_datetime(df['날짜'])<br><br>
+                        # 문자열 처리
+                        df['이름'].str.upper()
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+    

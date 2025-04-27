@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 3</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 40px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 38px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .subtitle {
+            font-size: 20px;
+            font-weight: 400;
+            color: #e2e8f0;
+            margin-bottom: 25px;
+        }
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        .section {
+            background: rgba(75, 139, 190, 0.15);
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        .section:hover {
+            background: rgba(75, 139, 190, 0.25);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #FFD43B;
+            display: flex;
+            align-items: center;
+        }
+        .section-icon {
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        .section-content {
+            font-size: 15px;
+            line-height: 1.5;
+            color: #e2e8f0;
+        }
+        .code-block {
+            margin-top: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 13px;
+            color: #e2e8f0;
+            position: relative;
+        }
+        .code-prompt {
+            background: #4B8BBE;
+            border-radius: 4px;
+            padding: 6px 10px;
+            margin-bottom: 8px;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 12px;
+            color: white;
+        }
+        .code-prompt i {
+            margin-right: 6px;
+            color: #FFD43B;
+        }
+        .code-line {
+            margin-bottom: 4px;
+        }
+        .highlight {
+            color: #FFD43B;
+        }
+        .string {
+            color: #9cdcfe;
+        }
+        .comment {
+            color: #a0aec0;
+            font-style: italic;
+        }
+        .indent {
+            margin-left: 20px;
+        }
+        .output-preview {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin-top: 8px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 12px;
+            color: #cbd5e0;
+        }
+        .output-title {
+            color: #a0aec0;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+        .footer {
+            margin-top: 25px;
+            font-size: 16px;
+            color: #a0aec0;
+            text-align: center;
+            font-style: italic;
+        }
+        .note {
+            background: rgba(255, 212, 59, 0.1);
+            border-left: 3px solid #FFD43B;
+            padding: 10px 15px;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #e2e8f0;
+        }
+        .note-title {
+            color: #FFD43B;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        .badge-yellow {
+            background-color: rgba(255, 212, 59, 0.2);
+            color: #FFD43B;
+            border: 1px solid #FFD43B;
+        }
+        .library-item {
+            background: rgba(75, 139, 190, 0.2);
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+        .library-item:hover {
+            background: rgba(75, 139, 190, 0.3);
+        }
+        .library-name {
+            font-weight: 600;
+            color: #FFD43B;
+            font-size: 15px;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+        .library-name i {
+            margin-right: 8px;
+        }
+        .library-desc {
+            font-size: 13px;
+            color: #e2e8f0;
+        }
+        .flow-diagram {
+            display: flex;
+            justify-content: space-between;
+            margin: 15px 0;
+            position: relative;
+        }
+        .flow-diagram::after {
+            content: '';
+            position: absolute;
+            left: 12%;
+            right: 12%;
+            top: 50%;
+            height: 2px;
+            background: rgba(75, 139, 190, 0.6);
+            z-index: 0;
+        }
+        .flow-step {
+            width: 20%;
+            background: rgba(75, 139, 190, 0.3);
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            font-size: 14px;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .flow-step i {
+            display: block;
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #FFD43B;
+        }
+        .use-case-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        .use-case-item {
+            background: rgba(75, 139, 190, 0.2);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+        }
+        .use-case-item i {
+            margin-right: 6px;
+            font-size: 10px;
+            color: #FFD43B;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">13</div>
+                <div class="title">웹 자동화와 API 활용</div>
+            </div>
+            
+            <p class="subtitle">파이썬으로 웹 데이터를 수집하고 처리하는 자동화 방법을 알아봅니다. 웹 스크래핑과 API 연동을 통해 다양한 데이터 소스를 자동으로 활용할 수 있습니다.</p>
+            
+            <div class="main-content">
+                <div class="left-column">
+                    <div class="section">
+                        <div class="section-title">
+                            <i class="fas fa-globe section-icon"></i>
+                            웹 자동화 라이브러리
+                        </div>
+                        <div class="section-content">
+                            <p>파이썬에는 웹 페이지 데이터를 수집하고 처리하기 위한 다양한 라이브러리가 있습니다.</p>
+                            
+                            <div class="library-item">
+                                <div class="library-name">
+                                    <i class="fas fa-paper-plane"></i>Requests
+                                </div>
+                                <div class="library-desc">
+                                    HTTP 요청을 쉽게 보낼 수 있는 라이브러리로, 웹 페이지 가져오기, API 호출 등에 사용됩니다. 직관적인 인터페이스로 웹 자동화의 기본이 됩니다.
+                                </div>
+                            </div>
+                            
+                            <div class="library-item">
+                                <div class="library-name">
+                                    <i class="fas fa-utensils"></i>BeautifulSoup
+                                </div>
+                                <div class="library-desc">
+                                    HTML 및 XML 파일에서 데이터를 추출하는 라이브러리로, 웹 스크래핑에 필수적입니다. 웹 페이지의 구조를 파싱하여 원하는 정보를 쉽게 찾을 수 있습니다.
+                                </div>
+                            </div>
+                            
+                            <div class="library-item">
+                                <div class="library-name">
+                                    <i class="fas fa-robot"></i>Selenium
+                                </div>
+                                <div class="library-desc">
+                                    브라우저를 직접 제어할 수 있는 라이브러리로, 동적 웹 페이지 처리, 폼 작성, 버튼 클릭 등 사용자 상호작용이 필요한 경우에 사용됩니다.
+                                </div>
+                            </div>
+                            
+                            <div class="flow-diagram">
+                                <div class="flow-step">
+                                    <i class="fas fa-download"></i>
+                                    데이터 수집
+                                </div>
+                                <div class="flow-step">
+                                    <i class="fas fa-filter"></i>
+                                    데이터 추출
+                                </div>
+                                <div class="flow-step">
+                                    <i class="fas fa-sync-alt"></i>
+                                    데이터 변환
+                                </div>
+                                <div class="flow-step">
+                                    <i class="fas fa-database"></i>
+                                    데이터 저장
+                                </div>
+                            </div>
+                            
+                            <div class="note">
+                                <div class="note-title">웹 스크래핑 주의사항</div>
+                                <p>웹 스크래핑 시 다음 사항을 항상 고려해야 합니다:</p>
+                                <ul class="list-disc pl-5 mt-2">
+                                    <li>웹사이트의 이용약관 및 robots.txt 확인</li>
+                                    <li>과도한 요청으로 서버에 부담주지 않기</li>
+                                    <li>개인정보 수집 관련 법적 문제 주의</li>
+                                    <li>API가 제공되는 경우 API 우선 사용하기</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">
+                            <i class="fas fa-code section-icon"></i>
+                            웹 스크래핑 기본 예제
+                        </div>
+                        <div class="section-content">
+                            <p>Requests와 BeautifulSoup을 활용한 기본 웹 스크래핑 예제입니다.</p>
+                            
+                            <div class="code-block">
+                                <div class="code-prompt">
+                                    <i class="fas fa-robot"></i>파이썬으로 웹페이지에서 뉴스 헤드라인을 수집하는 코드를 작성해줘
+                                </div>
+                                <div class="code-line"><span class="highlight">import</span> requests</div>
+                                <div class="code-line"><span class="highlight">from</span> bs4 <span class="highlight">import</span> BeautifulSoup</div>
+                                <div class="code-line"><span class="highlight">import</span> pandas <span class="highlight">as</span> pd</div>
+                                <div class="code-line"><span class="highlight">import</span> datetime</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 뉴스 사이트 URL (예시)</span></div>
+                                <div class="code-line">url = <span class="string">"https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=101"</span></div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># User-Agent 설정 (필수 - 접근 제한 방지)</span></div>
+                                <div class="code-line">headers = {</div>
+                                <div class="code-line indent"><span class="string">"User-Agent"</span>: <span class="string">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"</span></div>
+                                <div class="code-line">}</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 웹 페이지 요청</span></div>
+                                <div class="code-line">response = requests.get(url, headers=headers)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 응답 확인</span></div>
+                                <div class="code-line"><span class="highlight">if</span> response.status_code == 200:</div>
+                                <div class="code-line indent"><span class="comment"># HTML 파싱</span></div>
+                                <div class="code-line indent">soup = BeautifulSoup(response.text, <span class="string">'html.parser'</span>)</div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent"><span class="comment"># 헤드라인 뉴스 선택 (가상의 선택자, 실제 사이트에 맞게 수정 필요)</span></div>
+                                <div class="code-line indent">headlines = soup.select(<span class="string">'.sh_text_headline'</span>)</div>
+                                <div class="code-line indent">summaries = soup.select(<span class="string">'.sh_text_lede'</span>)</div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent"><span class="comment"># 데이터 저장용 리스트</span></div>
+                                <div class="code-line indent">news_data = []</div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent"><span class="comment"># 최대 10개 뉴스 추출</span></div>
+                                <div class="code-line indent"><span class="highlight">for</span> i <span class="highlight">in</span> range(min(10, len(headlines))):</div>
+                                <div class="code-line indent indent">news_data.append({</div>
+                                <div class="code-line indent indent indent"><span class="string">'제목'</span>: headlines[i].text.strip(),</div>
+                                <div class="code-line indent indent indent"><span class="string">'요약'</span>: summaries[i].text.strip() <span class="highlight">if</span> i < len(summaries) <span class="highlight">else</span> <span class="string">"-"</span>,</div>
+                                <div class="code-line indent indent indent"><span class="string">'수집일시'</span>: datetime.datetime.now().strftime(<span class="string">"%Y-%m-%d %H:%M:%S"</span>)</div>
+                                <div class="code-line indent indent">})</div>
+                                <div class="code-line indent indent">print(f<span class="string">"수집: {headlines[i].text.strip()}"</span>)</div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent"><span class="comment"># 데이터프레임 변환 및 엑셀 저장</span></div>
+                                <div class="code-line indent">df = pd.DataFrame(news_data)</div>
+                                <div class="code-line indent">df.to_excel(<span class="string">f"경제뉴스_{datetime.datetime.now().strftime('%Y%m%d')}.xlsx"</span>, index=False)</div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent">print(f<span class="string">"총 {len(news_data)}개의 뉴스 헤드라인을 저장했습니다."</span>)</div>
+                                <div class="code-line"><span class="highlight">else</span>:</div>
+                                <div class="code-line indent">print(f<span class="string">"오류 발생: 상태 코드 {response.status_code}"</span>)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="right-column">
+                    <div class="section">
+                        <div class="section-title">
+                            <i class="fas fa-plug section-icon"></i>
+                            API 활용 기본
+                            <span class="badge badge-yellow">데이터 연동</span>
+                        </div>
+                        <div class="section-content">
+                            <p>API(Application Programming Interface)는 다른 서비스의 데이터나 기능을 쉽게 활용할 수 있게 해주는 인터페이스입니다.</p>
+                            
+                            <div class="code-block">
+                                <div class="code-prompt">
+                                    <i class="fas fa-robot"></i>공공 API를 사용해 날씨 정보를 가져오는 파이썬 코드를 작성해줘
+                                </div>
+                                <div class="code-line"><span class="highlight">import</span> requests</div>
+                                <div class="code-line"><span class="highlight">import</span> pandas <span class="highlight">as</span> pd</div>
+                                <div class="code-line"><span class="highlight">import</span> json</div>
+                                <div class="code-line"><span class="highlight">from</span> datetime <span class="highlight">import</span> datetime</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># OpenWeatherMap API 예제 (실제 사용 시 API 키 필요)</span></div>
+                                <div class="code-line">API_KEY = <span class="string">"your_api_key_here"</span></div>
+                                <div class="code-line">city = <span class="string">"Seoul"</span></div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># API 엔드포인트 URL</span></div>
+                                <div class="code-line">url = f<span class="string">"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={API_KEY}&units=metric"</span></div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># API 요청</span></div>
+                                <div class="code-line">response = requests.get(url)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="highlight">if</span> response.status_code == 200:</div>
+                                <div class="code-line indent"><span class="comment"># JSON 응답 파싱</span></div>
+                                <div class="code-line indent">weather_data = response.json()</div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent"><span class="comment"># 필요한 데이터 추출</span></div>
+                                <div class="code-line indent">weather = {</div>
+                                <div class="code-line indent indent"><span class="string">'도시'</span>: weather_data[<span class="string">'name'</span>],</div>
+                                <div class="code-line indent indent"><span class="string">'날씨'</span>: weather_data[<span class="string">'weather'</span>][0][<span class="string">'description'</span>],</div>
+                                <div class="code-line indent indent"><span class="string">'현재기온'</span>: weather_data[<span class="string">'main'</span>][<span class="string">'temp'</span>],</div>
+                                <div class="code-line indent indent"><span class="string">'체감기온'</span>: weather_data[<span class="string">'main'</span>][<span class="string">'feels_like'</span>],</div>
+                                <div class="code-line indent indent"><span class="string">'습도'</span>: weather_data[<span class="string">'main'</span>][<span class="string">'humidity'</span>],</div>
+                                <div class="code-line indent indent"><span class="string">'풍속'</span>: weather_data[<span class="string">'wind'</span>][<span class="string">'speed'</span>],</div>
+                                <div class="code-line indent indent"><span class="string">'수집시간'</span>: datetime.now().strftime(<span class="string">"%Y-%m-%d %H:%M:%S"</span>)</div>
+                                <div class="code-line indent">}</div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent">print(<span class="string">f"{weather['도시']}의 현재 날씨: {weather['날씨']}"</span>)</div>
+                                <div class="code-line indent">print(<span class="string">f"현재기온: {weather['현재기온']}°C, 체감기온: {weather['체감기온']}°C"</span>)</div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent"><span class="comment"># 데이터프레임으로 변환</span></div>
+                                <div class="code-line indent">df = pd.DataFrame([weather])</div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent"><span class="comment"># 엑셀로 저장 (기존 파일에 추가)</span></div>
+                                <div class="code-line indent"><span class="highlight">try</span>:</div>
+                                <div class="code-line indent indent">기존_데이터 = pd.read_excel(<span class="string">'날씨_데이터.xlsx'</span>)</div>
+                                <div class="code-line indent indent">df = pd.concat([기존_데이터, df], ignore_index=True)</div>
+                                <div class="code-line indent"><span class="highlight">except</span> FileNotFoundError:</div>
+                                <div class="code-line indent indent">pass  <span class="comment"># 파일이 없으면 새로 생성</span></div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent">df.to_excel(<span class="string">'날씨_데이터.xlsx'</span>, index=False)</div>
+                                <div class="code-line"><span class="highlight">else</span>:</div>
+                                <div class="code-line indent">print(<span class="string">f"오류: {response.status_code}, {response.text}"</span>)</div>
+                            </div>
+                            
+                            <div class="use-case-list">
+                                <div class="use-case-item"><i class="fas fa-check"></i>금융 데이터 수집</div>
+                                <div class="use-case-item"><i class="fas fa-check"></i>날씨 정보 모니터링</div>
+                                <div class="use-case-item"><i class="fas fa-check"></i>환율 변동 추적</div>
+                                <div class="use-case-item"><i class="fas fa-check"></i>공공데이터 수집</div>
+                                <div class="use-case-item"><i class="fas fa-check"></i>소셜 미디어 데이터 분석</div>
+                                <div class="use-case-item"><i class="fas fa-check"></i>경쟁사 가격 모니터링</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">
+                            <i class="fas fa-robot section-icon"></i>
+                            셀레니움을 활용한 자동화
+                        </div>
+                        <div class="section-content">
+                            <p>Selenium은 웹 브라우저를 프로그래밍으로 제어하여 복잡한 웹 자동화 작업을 수행할 수 있습니다.</p>
+                            
+                            <div class="code-block">
+                                <div class="code-prompt">
+                                    <i class="fas fa-robot"></i>셀레니움으로 웹사이트에 로그인하고 데이터를 수집하는 코드를 작성해줘
+                                </div>
+                                <div class="code-line"><span class="highlight">from</span> selenium <span class="highlight">import</span> webdriver</div>
+                                <div class="code-line"><span class="highlight">from</span> selenium.webdriver.chrome.service <span class="highlight">import</span> Service</div>
+                                <div class="code-line"><span class="highlight">from</span> selenium.webdriver.common.by <span class="highlight">import</span> By</div>
+                                <div class="code-line"><span class="highlight">from</span> selenium.webdriver.support.ui <span class="highlight">import</span> WebDriverWait</div>
+                                <div class="code-line"><span class="highlight">from</span> selenium.webdriver.support <span class="highlight">import</span> expected_conditions <span class="highlight">as</span> EC</div>
+                                <div class="code-line"><span class="highlight">import</span> time</div>
+                                <div class="code-line"><span class="highlight">import</span> pandas <span class="highlight">as</span> pd</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 웹드라이버 설정 (Chrome 드라이버 필요)</span></div>
+                                <div class="code-line">driver_path = <span class="string">"./chromedriver"</span>  <span class="comment"># 크롬 드라이버 경로</span></div>
+                                <div class="code-line">service = Service(driver_path)</div>
+                                <div class="code-line">driver = webdriver.Chrome(service=service)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 웹사이트 접속</span></div>
+                                <div class="code-line">url = <span class="string">"https://example.com/login"</span>  <span class="comment"># 로그인 페이지 URL</span></div>
+                                <div class="code-line">driver.get(url)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="highlight">try</span>:</div>
+                                <div class="code-line indent"><span class="comment"># 로그인 (예시)</span></div>
+                                <div class="code-line indent">username = WebDriverWait(driver, 10).until(</div>
+                                <div class="code-line indent indent">EC.presence_of_element_located((By.ID, <span class="string">"username"</span>))</div>
+                                <div class="code-line indent">)</div>
+                                <div class="code-line indent">password = driver.find_element(By.ID, <span class="string">"password"</span>)</div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent">username.send_keys(<span class="string">"your_username"</span>)</div>
+                                <div class="code-line indent">password.send_keys(<span class="string">"your_password"</span>)</div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent">login_button = driver.find_element(By.XPATH, <span class="string">"//button[contains(text(), '로그인')]"</span>)</div>
+                                <div class="code-line indent">login_button.click()</div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent"><span class="comment"># 로그인 후 대시보드 페이지로 이동 대기</span></div>
+                                <div class="code-line indent">WebDriverWait(driver, 10).until(</div>
+                                <div class="code-line indent indent">EC.presence_of_element_located((By.CLASS_NAME, <span class="string">"dashboard"</span>))</div>
+                                <div class="code-line indent">)</div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent"><span class="comment"># 데이터가 있는 페이지로 이동</span></div>
+                                <div class="code-line indent">driver.get(<span class="string">"https://example.com/reports"</span>)</div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent"><span class="comment"># 테이블 데이터 수집</span></div>
+                                <div class="code-line indent">table_rows = WebDriverWait(driver, 10).until(</div>
+                                <div class="code-line indent indent">EC.presence_of_all_elements_located((By.XPATH, <span class="string">"//table/tbody/tr"</span>))</div>
+                                <div class="code-line indent">)</div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent">data = []</div>
+                                <div class="code-line indent"><span class="highlight">for</span> row <span class="highlight">in</span> table_rows:</div>
+                                <div class="code-line indent indent">cols = row.find_elements(By.TAG_NAME, <span class="string">"td"</span>)</div>
+                                <div class="code-line indent indent">row_data = [col.text <span class="highlight">for</span> col <span class="highlight">in</span> cols]</div>
+                                <div class="code-line indent indent">data.append(row_data)</div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent"><span class="comment"># 데이터프레임으로 변환</span></div>
+                                <div class="code-line indent">columns = [<span class="string">'항목1'</span>, <span class="string">'항목2'</span>, <span class="string">'항목3'</span>, <span class="string">'항목4'</span>]  <span class="comment"># 실제 컬럼명으로 수정</span></div>
+                                <div class="code-line indent">df = pd.DataFrame(data, columns=columns)</div>
+                                <div class="code-line indent">df.to_excel(<span class="string">"웹자동화_수집데이터.xlsx"</span>, index=False)</div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent">print(f<span class="string">"총 {len(data)}개 행의 데이터를 수집했습니다."</span>)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="highlight">finally</span>:</div>
+                                <div class="code-line indent">driver.quit()  <span class="comment"># 브라우저 종료</span></div>
+                            </div>
+                            
+                            <div class="note">
+                                <div class="note-title">웹 자동화 활용 사례</div>
+                                <p>웹 자동화 기술은 다음과 같은 업무에 활용될 수 있습니다:</p>
+                                <ul class="list-disc pl-5 mt-2">
+                                    <li>정기적인 보고서 데이터 자동 수집</li>
+                                    <li>온라인 양식 자동 제출 및 처리</li>
+                                    <li>경쟁사 가격/제품 정보 모니터링</li>
+                                    <li>소셜 미디어 데이터 분석</li>
+                                    <li>웹사이트 테스트 자동화</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                "웹 자동화는 인터넷의 방대한 데이터를 비즈니스 인사이트로 변환하는 강력한 도구입니다"
+            </div>
+        </div>
+    </div>
+</body>
+    

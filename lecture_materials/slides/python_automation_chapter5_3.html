@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 자동화 교육 교안 - 챕터 5: 물리자동화의 이해</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .function-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .function-card {
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .function-card:hover {
+            transform: translateY(-5px);
+            background-color: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+        .function-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #FFD43B;
+            display: flex;
+            align-items: center;
+        }
+        .function-title i {
+            margin-right: 10px;
+            font-size: 22px;
+        }
+        .function-desc {
+            color: #e2e8f0;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+        .code-block {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            margin: 10px 0;
+            color: #e2e8f0;
+            overflow-x: auto;
+            border-left: 4px solid #4B8BBE;
+        }
+        .code-block pre {
+            margin: 0;
+            white-space: pre-wrap;
+        }
+        .prompt-box {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 15px;
+            border-left: 3px solid #4B8BBE;
+        }
+        .prompt-label {
+            font-size: 14px;
+            font-weight: bold;
+            color: #FFD43B;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+        .prompt-label i {
+            margin-right: 6px;
+        }
+        .prompt-text {
+            font-style: italic;
+            color: #cbd5e0;
+        }
+        .keyboard-keys {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+            justify-content: center;
+        }
+        .key {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            padding: 8px 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            font-family: monospace;
+            font-size: 14px;
+            display: inline-block;
+            color: #e2e8f0;
+        }
+        .note-section {
+            margin-top: 30px;
+            background-color: rgba(255, 212, 59, 0.1);
+            border-radius: 12px;
+            padding: 15px 20px;
+            border: 1px solid rgba(255, 212, 59, 0.3);
+        }
+        .note-title {
+            display: flex;
+            align-items: center;
+            color: #FFD43B;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .note-title i {
+            margin-right: 8px;
+        }
+        .note-content {
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+        .intro-text {
+            color: #e2e8f0;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            max-width: 90%;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">4</div>
+                <div class="title">키보드 자동화</div>
+            </div>
+            
+            <p class="intro-text">
+                PyAutoGUI를 사용하면 키보드 입력을 자동화하여 텍스트 입력, 특수 키 조작, 단축키(핫키) 실행 등을 
+                프로그래밍 방식으로 제어할 수 있습니다. 키보드 관련 함수들은 현재 키보드 커서가 있는 위치에 적용됩니다.
+            </p>
+            
+            <div class="function-grid">
+                <div class="function-card">
+                    <h3 class="function-title"><i class="fas fa-keyboard"></i>텍스트 입력</h3>
+                    <p class="function-desc">텍스트를 자동으로 타이핑하는 함수입니다. 글자와 글자 사이에 지연 시간을 설정할 수 있습니다.</p>
+                    <div class="code-block">
+<pre>import pyautogui
+
+# 텍스트 입력 (즉시 입력)
+pyautogui.write('Hello World!')
+
+# 글자 간 0.25초 간격으로 천천히 타이핑
+pyautogui.write('Hello World!', interval=0.25)
+
+# 엔터키 입력 추가
+pyautogui.write('Hello World!\n')</pre>
+                    </div>
+                    <div class="prompt-box">
+                        <div class="prompt-label"><i class="fas fa-comment-alt"></i>ChatGPT 프롬프트</div>
+                        <p class="prompt-text">"PyAutoGUI로 0.5초 간격으로 이메일 주소를 입력하는 코드를 작성해줘"</p>
+                    </div>
+                </div>
+                
+                <div class="function-card">
+                    <h3 class="function-title"><i class="fas fa-play"></i>특수 키 입력</h3>
+                    <p class="function-desc">Enter, Esc, 화살표 키 등 특수 키를 입력하는 함수입니다. 키 목록은 KEYBOARD_KEYS 상수에 정의되어 있습니다.</p>
+                    <div class="code-block">
+<pre># 특수 키 입력 (Enter 키)
+pyautogui.press('enter')
+
+# 화살표 키 입력
+pyautogui.press('left')  # 왼쪽 화살표
+pyautogui.press('right')  # 오른쪽 화살표
+pyautogui.press('up')  # 위쪽 화살표
+pyautogui.press('down')  # 아래쪽 화살표
+
+# 여러 키 순차적으로 입력
+pyautogui.press(['left', 'left', 'left'])
+
+# 동일한 키 여러 번 입력
+pyautogui.press('left', presses=3, interval=0.2)</pre>
+                    </div>
+                    <div class="keyboard-keys">
+                        <span class="key">enter</span>
+                        <span class="key">esc</span>
+                        <span class="key">tab</span>
+                        <span class="key">space</span>
+                        <span class="key">backspace</span>
+                        <span class="key">f1</span>
+                        <span class="key">home</span>
+                        <span class="key">end</span>
+                    </div>
+                </div>
+                
+                <div class="function-card">
+                    <h3 class="function-title"><i class="fas fa-bolt"></i>키보드 단축키 (핫키)</h3>
+                    <p class="function-desc">Ctrl+C, Alt+Tab과 같은 키보드 단축키를 실행할 수 있는 함수입니다.</p>
+                    <div class="code-block">
+<pre># Ctrl+C (복사)
+pyautogui.hotkey('ctrl', 'c')
+
+# Ctrl+V (붙여넣기)
+pyautogui.hotkey('ctrl', 'v')
+
+# Alt+Tab (창 전환)
+pyautogui.hotkey('alt', 'tab')
+
+# Ctrl+Alt+Delete
+pyautogui.hotkey('ctrl', 'alt', 'delete')
+
+# Ctrl+Shift+Esc (작업 관리자)
+pyautogui.hotkey('ctrl', 'shift', 'esc')</pre>
+                    </div>
+                    <div class="prompt-box">
+                        <div class="prompt-label"><i class="fas fa-comment-alt"></i>ChatGPT 프롬프트</div>
+                        <p class="prompt-text">"PyAutoGUI로 파일을 저장하는 Ctrl+S 단축키를 실행하는 코드를 작성해줘"</p>
+                    </div>
+                </div>
+                
+                <div class="function-card">
+                    <h3 class="function-title"><i class="fas fa-compress-arrows-alt"></i>키 개별 제어</h3>
+                    <p class="function-desc">키를 누르고 떼는 동작을 개별적으로 제어할 수 있는 함수입니다. 특정 키를 오래 누르거나 hold 컨텍스트 매니저를 사용할 수 있습니다.</p>
+                    <div class="code-block">
+<pre># 키 누르기
+pyautogui.keyDown('shift')
+
+# 다른 키 입력
+pyautogui.press('left')  # Shift+왼쪽 화살표 효과
+
+# 키 떼기
+pyautogui.keyUp('shift')
+
+# hold() 컨텍스트 매니저 사용 (Python 3.6+)
+with pyautogui.hold('shift'):
+    pyautogui.press(['left', 'left', 'left'])
+    # 이 블록이 끝나면 자동으로 shift 키가 떼짐</pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="note-section">
+                <div class="note-title"><i class="fas fa-lightbulb"></i> 유용한 팁</div>
+                <p class="note-content">문자열 내에서 특수 키를 사용하려면 write() 대신 press()나 pyautogui.typewrite()를 사용하세요. 예를 들어, 텍스트를 입력한 후 Tab 키를 누르고 다른 텍스트를 입력하려면: <code>pyautogui.write('사용자명')</code> 후 <code>pyautogui.press('tab')</code> 그리고 <code>pyautogui.write('비밀번호')</code>와 같이 조합해서 사용할 수 있습니다.</p>
+            </div>
+        </div>
+    </div>
+</body>
+    

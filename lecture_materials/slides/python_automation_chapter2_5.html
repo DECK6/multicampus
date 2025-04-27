@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 2</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 44px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .intro {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: #e2e8f0;
+        }
+        .operators-table {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .operator-card {
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .operator-card:hover {
+            transform: translateY(-5px);
+            background-color: rgba(75, 139, 190, 0.2);
+        }
+        .operator-symbol {
+            font-size: 32px;
+            font-weight: bold;
+            color: #FFD43B;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .operator-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .operator-desc {
+            font-size: 14px;
+            text-align: center;
+            color: #cbd5e0;
+            margin-bottom: 15px;
+        }
+        .operator-example {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 6px;
+            padding: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: #f8f8f2;
+        }
+        .code-section {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 30px;
+            border-left: 4px solid #4B8BBE;
+            position: relative;
+        }
+        .code-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .code-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-left: 10px;
+        }
+        .code-content {
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            line-height: 1.5;
+            color: #f8f8f2;
+            white-space: pre;
+            overflow-x: auto;
+        }
+        .prompt-badge {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background-color: #10a37f;
+            color: white;
+            font-size: 14px;
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .prompt-badge i {
+            margin-right: 8px;
+        }
+        .keyword {
+            color: #ff79c6;
+        }
+        .number {
+            color: #bd93f9;
+        }
+        .string {
+            color: #f1fa8c;
+        }
+        .comment {
+            color: #6272a4;
+        }
+        .output {
+            color: #50fa7b;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">6</div>
+                <div class="title">파이썬 기본연산 - 산술연산자</div>
+            </div>
+            
+            <div class="intro">
+                파이썬에서 산술연산자는 수학적 계산을 수행하는 기호들입니다. 이 연산자들을 사용해 덧셈, 뺄셈, 곱셈, 나눗셈 등의 기본 연산을 수행할 수 있습니다. 파이썬의 산술연산자들은 직관적이고 사용하기 쉽게 설계되어 있습니다.
+            </div>
+            
+            <div class="operators-table">
+                <div class="operator-card">
+                    <div class="operator-symbol">+</div>
+                    <div class="operator-name">덧셈 (Addition)</div>
+                    <div class="operator-desc">두 숫자의 합을 계산합니다</div>
+                    <div class="operator-example">a = 5 + 3  <span class="comment"># 결과: 8</span></div>
+                </div>
+                
+                <div class="operator-card">
+                    <div class="operator-symbol">-</div>
+                    <div class="operator-name">뺄셈 (Subtraction)</div>
+                    <div class="operator-desc">두 숫자의 차를 계산합니다</div>
+                    <div class="operator-example">a = 5 - 3  <span class="comment"># 결과: 2</span></div>
+                </div>
+                
+                <div class="operator-card">
+                    <div class="operator-symbol">*</div>
+                    <div class="operator-name">곱셈 (Multiplication)</div>
+                    <div class="operator-desc">두 숫자의 곱을 계산합니다</div>
+                    <div class="operator-example">a = 5 * 3  <span class="comment"># 결과: 15</span></div>
+                </div>
+                
+                <div class="operator-card">
+                    <div class="operator-symbol">/</div>
+                    <div class="operator-name">나눗셈 (Division)</div>
+                    <div class="operator-desc">나눗셈의 결과를 실수로 반환합니다</div>
+                    <div class="operator-example">a = 5 / 2  <span class="comment"># 결과: 2.5</span></div>
+                </div>
+                
+                <div class="operator-card">
+                    <div class="operator-symbol">//</div>
+                    <div class="operator-name">정수 나눗셈 (Floor Division)</div>
+                    <div class="operator-desc">나눗셈의 몫을 정수로 반환합니다</div>
+                    <div class="operator-example">a = 5 // 2  <span class="comment"># 결과: 2</span></div>
+                </div>
+                
+                <div class="operator-card">
+                    <div class="operator-symbol">%</div>
+                    <div class="operator-name">나머지 (Modulo)</div>
+                    <div class="operator-desc">나눗셈의 나머지를 반환합니다</div>
+                    <div class="operator-example">a = 5 % 2  <span class="comment"># 결과: 1</span></div>
+                </div>
+                
+                <div class="operator-card">
+                    <div class="operator-symbol">**</div>
+                    <div class="operator-name">거듭제곱 (Exponentiation)</div>
+                    <div class="operator-desc">왼쪽 숫자를 오른쪽 숫자만큼 제곱합니다</div>
+                    <div class="operator-example">a = 2 ** 3  <span class="comment"># 결과: 8</span></div>
+                </div>
+            </div>
+            
+            <div class="code-section">
+                <div class="prompt-badge">
+                    <i class="fas fa-robot"></i>
+                    ChatGPT 프롬프트: 파이썬의 모든 산술 연산자를 사용하는 예제 코드를 작성해줘
+                </div>
+                
+                <div class="code-header">
+                    <i class="fas fa-code" style="color: #FFD43B;"></i>
+                    <div class="code-title">산술 연산자 활용 예제</div>
+                </div>
+                
+                <div class="code-content"><span class="comment"># 파이썬 산술 연산자 예제</span>
+
+<span class="comment"># 변수 초기화</span>
+a = <span class="number">10</span>
+b = <span class="number">3</span>
+
+<span class="comment"># 모든 산술 연산자 사용</span>
+덧셈 = a + b
+뺄셈 = a - b
+곱셈 = a * b
+나눗셈 = a / b
+정수나눗셈 = a // b
+나머지 = a % b
+거듭제곱 = a ** b
+
+<span class="comment"># 결과 출력</span>
+print(<span class="string">f"덧셈 (a + b): {덧셈}"</span>)       <span class="output"># 출력: 13</span>
+print(<span class="string">f"뺄셈 (a - b): {뺄셈}"</span>)       <span class="output"># 출력: 7</span>
+print(<span class="string">f"곱셈 (a * b): {곱셈}"</span>)       <span class="output"># 출력: 30</span>
+print(<span class="string">f"나눗셈 (a / b): {나눗셈}"</span>)     <span class="output"># 출력: 3.3333333333333335</span>
+print(<span class="string">f"정수나눗셈 (a // b): {정수나눗셈}"</span>) <span class="output"># 출력: 3</span>
+print(<span class="string">f"나머지 (a % b): {나머지}"</span>)     <span class="output"># 출력: 1</span>
+print(<span class="string">f"거듭제곱 (a ** b): {거듭제곱}"</span>)   <span class="output"># 출력: 1000</span>
+
+<span class="comment"># 복합 연산 예제</span>
+complex_calc = (a + b) * (a - b) / (a % b)
+print(<span class="string">f"복합 연산 결과: {complex_calc}"</span>) <span class="output"># 출력: 130.0</span></div>
+            </div>
+        </div>
+    </div>
+</body>
+    

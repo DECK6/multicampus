@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MS Office 자동화 교육 - 챕터 13</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.3;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 40px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .code-example {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .prompt {
+            color: #A0AEC0;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+        .code {
+            color: #E2E8F0;
+            font-family: 'Consolas', monospace;
+            white-space: pre;
+            overflow-x: auto;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .feature-box {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">6</div>
+                <div class="section-title">PowerPoint 자동화 기초</div>
+            </div>
+
+            <div class="code-example">
+                <div class="prompt"># ChatGPT Prompt: "Show basic PowerPoint automation with python-pptx"</div>
+                <div class="code">from pptx import Presentation
+from pptx.util import Inches, Pt
+from pptx.dml.color import RGBColor
+
+# 새 프레젠테이션 생성
+prs = Presentation()
+
+# 제목 슬라이드 추가
+title_slide = prs.slides.add_slide(prs.slide_layouts[0])
+title = title_slide.shapes.title
+subtitle = title_slide.placeholders[1]
+
+title.text = "파이썬 자동화 보고서"
+subtitle.text = "작성자: 홍길동\n작성일: 2024-01-15"
+
+# 내용 슬라이드 추가
+bullet_slide = prs.slides.add_slide(prs.slide_layouts[1])
+shapes = bullet_slide.shapes
+
+title_shape = shapes.title
+body_shape = shapes.placeholders[1]
+
+title_shape.text = "주요 성과"
+tf = body_shape.text_frame
+
+# 글머리 기호 추가
+tf.text = "2023년 4분기 실적"
+p = tf.add_paragraph()
+p.text = "매출 20% 증가"
+p.level = 1</div>
+            </div>
+
+            <div class="grid-container">
+                <div class="feature-box">
+                    <h3 class="text-xl font-bold text-yellow-400 mb-4">
+                        <i class="fas fa-list-ul mr-2"></i>
+                        기본 기능
+                    </h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li>• 새로운 프레젠테이션 생성</li>
+                        <li>• 슬라이드 레이아웃 선택 및 추가</li>
+                        <li>• 텍스트 삽입 및 서식 지정</li>
+                        <li>• 글머리 기호 목록 생성</li>
+                        <li>• 도형 및 텍스트 상자 추가</li>
+                    </ul>
+                </div>
+
+                <div class="feature-box">
+                    <h3 class="text-xl font-bold text-yellow-400 mb-4">
+                        <i class="fas fa-brush mr-2"></i>
+                        스타일링 옵션
+                    </h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li>• 폰트 크기 및 색상 변경</li>
+                        <li>• 텍스트 정렬 및 간격 설정</li>
+                        <li>• 도형 색상 및 테두리 설정</li>
+                        <li>• 배경 스타일 적용</li>
+                        <li>• 슬라이드 마스터 활용</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="feature-box mt-4">
+                <h3 class="text-xl font-bold text-yellow-400 mb-4">
+                    <i class="fas fa-lightbulb mr-2"></i>
+                    실무 활용 팁
+                </h3>
+                <ul class="grid grid-cols-2 gap-4 text-gray-300">
+                    <li>• 템플릿 활용으로 일관된 디자인 유지</li>
+                    <li>• 데이터 시각화를 위한 차트 삽입</li>
+                    <li>• 엑셀 데이터 연동 자동화</li>
+                    <li>• 이미지 및 로고 자동 삽입</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+    

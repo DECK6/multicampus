@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 2</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 44px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .introduction {
+            margin-bottom: 30px;
+        }
+        .introduction p {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #e2e8f0;
+            margin-bottom: 15px;
+        }
+        .code-example-container {
+            display: flex;
+            gap: 40px;
+            margin-top: 30px;
+        }
+        .prompt-section {
+            flex: 1;
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 25px;
+            border-left: 4px solid #10a37f;
+        }
+        .code-section {
+            flex: 1.5;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 25px;
+            border-left: 4px solid #4B8BBE;
+            position: relative;
+        }
+        .section-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section-title i {
+            margin-right: 10px;
+            color: #FFD43B;
+        }
+        .prompt-content {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #e2e8f0;
+            padding: 12px;
+            background-color: rgba(16, 163, 127, 0.1);
+            border-radius: 6px;
+            border: 1px dashed rgba(16, 163, 127, 0.4);
+        }
+        .code-content {
+            font-family: 'Courier New', monospace;
+            font-size: 15px;
+            line-height: 1.5;
+            color: #f8f8f2;
+            overflow-x: auto;
+            white-space: pre;
+        }
+        .comment {
+            color: #6272a4;
+        }
+        .keyword {
+            color: #ff79c6;
+        }
+        .string {
+            color: #f1fa8c;
+        }
+        .function {
+            color: #50fa7b;
+        }
+        .copy-button {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: rgba(75, 139, 190, 0.3);
+            color: #e2e8f0;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: all 0.2s ease;
+        }
+        .copy-button i {
+            margin-right: 5px;
+        }
+        .copy-button:hover {
+            background-color: rgba(75, 139, 190, 0.5);
+        }
+        .best-practices {
+            margin-top: 30px;
+            background-color: rgba(255, 212, 59, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            border-left: 4px solid #FFD43B;
+        }
+        .practices-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #FFD43B;
+            display: flex;
+            align-items: center;
+        }
+        .practices-title i {
+            margin-right: 10px;
+        }
+        .practices-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        .practice-item {
+            display: flex;
+            align-items: center;
+        }
+        .practice-item i {
+            color: #FFD43B;
+            margin-right: 10px;
+            font-size: 14px;
+        }
+        .practice-item span {
+            font-size: 15px;
+            line-height: 1.5;
+            color: #e2e8f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">4</div>
+                <div class="title">ChatGPT를 활용한 코드 생성 방법과 예시</div>
+            </div>
+            
+            <div class="introduction">
+                <p>ChatGPT를 활용하여 파이썬 코드를 생성하는 방법은 매우 간단합니다. 원하는 기능을 자연어로 설명하면 ChatGPT가 관련 코드를 생성해 줍니다. 효과적인 프롬프트(질문)를 작성하는 방법을 알아보겠습니다.</p>
+            </div>
+            
+            <div class="code-example-container">
+                <div class="prompt-section">
+                    <div class="section-title">
+                        <i class="fas fa-comment-dots"></i>
+                        ChatGPT 프롬프트 예시
+                    </div>
+                    <div class="prompt-content">
+                        파이썬으로 숫자를 입력받아 1부터 해당 숫자까지의 합을 계산하는 함수를 만들어줘.
+                    </div>
+                    <div class="mt-4"></div>
+                    <div class="prompt-content">
+                        위 코드를 더 효율적으로 개선할 수 있을까?
+                    </div>
+                    <div class="mt-4"></div>
+                    <div class="prompt-content">
+                        이 함수에 입력값 검증 기능을 추가해줘. 음수나 실수는 처리하지 않도록.
+                    </div>
+                </div>
+                
+                <div class="code-section">
+                    <div class="section-title">
+                        <i class="fas fa-code"></i>
+                        생성된 파이썬 코드
+                    </div>
+                    <div class="code-content">
+<span class="comment"># ChatGPT 프롬프트: 파이썬으로 숫자를 입력받아 1부터 해당 숫자까지의 합을 계산하는 함수를 만들어줘.</span>
+
+<span class="keyword">def</span> <span class="function">calculate_sum</span>(n):
+    <span class="comment"># 1부터 n까지의 합을 계산하는 함수</span>
+    total = 0
+    <span class="keyword">for</span> i <span class="keyword">in</span> range(1, n + 1):
+        total += i
+    <span class="keyword">return</span> total
+
+<span class="comment"># 사용자로부터 입력 받기</span>
+number = <span class="function">int</span>(<span class="function">input</span>(<span class="string">"숫자를 입력하세요: "</span>))
+result = <span class="function">calculate_sum</span>(number)
+<span class="function">print</span>(<span class="string">f"1부터 {number}까지의 합: {result}"</span>)
+
+<span class="comment"># 개선된 버전 - 수학 공식 사용</span>
+<span class="keyword">def</span> <span class="function">calculate_sum_improved</span>(n):
+    <span class="comment"># 가우스 공식 사용: sum = n(n+1)/2</span>
+    <span class="keyword">return</span> n * (n + 1) // 2
+
+<span class="comment"># 입력 검증 추가</span>
+<span class="keyword">def</span> <span class="function">calculate_sum_with_validation</span>(n):
+    <span class="comment"># 입력값 검증</span>
+    <span class="keyword">if</span> <span class="keyword">not</span> <span class="function">isinstance</span>(n, <span class="function">int</span>):
+        <span class="keyword">raise</span> <span class="function">TypeError</span>(<span class="string">"정수만 입력 가능합니다."</span>)
+    <span class="keyword">if</span> n < 0:
+        <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">"음수는 처리할 수 없습니다."</span>)
+    
+    <span class="keyword">return</span> n * (n + 1) // 2</div>
+                    <button class="copy-button">
+                        <i class="far fa-copy"></i> 복사
+                    </button>
+                </div>
+            </div>
+            
+            <div class="best-practices">
+                <div class="practices-title">
+                    <i class="fas fa-lightbulb"></i>
+                    효과적인 ChatGPT 코드 생성 프롬프트 작성 팁
+                </div>
+                <div class="practices-list">
+                    <div class="practice-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>기능을 명확하고 구체적으로 설명하세요.</span>
+                    </div>
+                    <div class="practice-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>원하는 입출력 예시를 함께 제공하면 더 정확합니다.</span>
+                    </div>
+                    <div class="practice-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>코드 스타일이나 특정 라이브러리 사용 여부를 명시하세요.</span>
+                    </div>
+                    <div class="practice-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>생성된 코드에 대한 설명을 추가로 요청할 수 있습니다.</span>
+                    </div>
+                    <div class="practice-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>단계적으로 코드를 개선하거나 수정을 요청하세요.</span>
+                    </div>
+                    <div class="practice-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>에러가 발생하면 에러 메시지를 그대로 복사해서 물어보세요.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+    

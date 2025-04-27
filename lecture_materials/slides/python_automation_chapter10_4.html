@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>시계열 데이터 분석 기법</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .code-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+        }
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section-title i {
+            margin-right: 10px;
+        }
+        .code-block {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Consolas', monospace;
+            font-size: 14px;
+            color: #e2e8f0;
+            line-height: 1.6;
+            white-space: pre;
+            margin: 10px 0;
+        }
+        .output {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 15px;
+            color: #a0aec0;
+            font-family: 'Consolas', monospace;
+            margin-top: 10px;
+        }
+        .description {
+            color: #cbd5e0;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .tip {
+            background: rgba(75, 139, 190, 0.2);
+            border-left: 4px solid #4B8BBE;
+            padding: 15px;
+            margin-top: 20px;
+            color: #e2e8f0;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">5</div>
+                <div class="title">시계열 데이터 분석 기법</div>
+            </div>
+
+            <div class="grid-container">
+                <div class="code-section">
+                    <div class="section-title">
+                        <i class="fas fa-calendar-alt"></i>
+                        날짜/시간 데이터 처리
+                    </div>
+                    <div class="description">
+                        datetime 타입으로 변환하고 인덱스 설정하기
+                    </div>
+                    <div class="code-block">
+# 문자열을 datetime으로 변환
+df['date'] = pd.to_datetime(df['date'])
+
+# 날짜 컬럼을 인덱스로 설정
+df.set_index('date', inplace=True)
+
+# 날짜 범위 생성
+date_range = pd.date_range(
+    start='2023-01-01',
+    end='2023-12-31',
+    freq='D'
+)</div>
+                </div>
+
+                <div class="code-section">
+                    <div class="section-title">
+                        <i class="fas fa-chart-line"></i>
+                        리샘플링과 롤링 통계
+                    </div>
+                    <div class="description">
+                        데이터를 다양한 시간 단위로 집계하기
+                    </div>
+                    <div class="code-block">
+# 월별 데이터로 리샘플링
+monthly = df.resample('M').mean()
+
+# 7일 이동평균 계산
+rolling_mean = df.rolling(
+    window=7,
+    min_periods=1
+).mean()</div>
+                </div>
+
+                <div class="code-section">
+                    <div class="section-title">
+                        <i class="fas fa-clock"></i>
+                        시간 기반 특성 추출
+                    </div>
+                    <div class="description">
+                        날짜/시간에서 유용한 특성 추출하기
+                    </div>
+                    <div class="code-block">
+# 다양한 시간 특성 추출
+df['year'] = df.index.year
+df['month'] = df.index.month
+df['weekday'] = df.index.weekday
+df['quarter'] = df.index.quarter
+
+# 휴일 여부 확인
+from pandas.tseries.holiday import USFederalHolidayCalendar
+cal = USFederalHolidayCalendar()
+holidays = cal.holidays()</div>
+                </div>
+
+                <div class="code-section">
+                    <div class="section-title">
+                        <i class="fas fa-sort-amount-down"></i>
+                        시계열 분해
+                    </div>
+                    <div class="description">
+                        트렌드, 계절성, 잔차 분석
+                    </div>
+                    <div class="code-block">
+from statsmodels.tsa.seasonal import seasonal_decompose
+
+# 시계열 분해 수행
+decomposition = seasonal_decompose(
+    df['value'],
+    period=12  # 월별 데이터의 경우
+)
+
+trend = decomposition.trend
+seasonal = decomposition.seasonal
+residual = decomposition.resid</div>
+                </div>
+            </div>
+
+            <div class="tip">
+                <i class="fas fa-lightbulb"></i>
+                <strong>실무 팁:</strong> 시계열 데이터 분석 시에는 결측치 처리와 이상치 탐지가 매우 중요합니다. 
+                또한 시간대(timezone) 설정에 주의를 기울여야 하며, 데이터의 주기성을 파악하는 것이 효과적인 분석의 핵심입니다.
+            </div>
+        </div>
+    </div>
+</body>
+    

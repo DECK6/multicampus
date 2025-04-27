@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 6</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 44px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .subtitle {
+            font-size: 24px;
+            font-weight: 500;
+            color: #e2e8f0;
+            margin-bottom: 25px;
+        }
+        .setup-container {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .setup-section {
+            flex: 1;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+        }
+        .setup-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .setup-title i {
+            margin-right: 10px;
+        }
+        .setup-steps {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .setup-step {
+            display: flex;
+            margin-bottom: 12px;
+            align-items: flex-start;
+        }
+        .step-number {
+            background: #4B8BBE;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+        .step-text {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #cbd5e0;
+        }
+        .code-container {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 16px;
+            color: #e2e8f0;
+            position: relative;
+        }
+        .language-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 4px 8px;
+            background-color: #4B8BBE;
+            color: white;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .prompt {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-left: 3px solid #4B8BBE;
+            padding: 10px 15px;
+            margin-bottom: 15px;
+            font-style: italic;
+            color: #cbd5e0;
+        }
+        .keyword {
+            color: #FF79C6;
+        }
+        .string {
+            color: #F1FA8C;
+        }
+        .comment {
+            color: #6272A4;
+        }
+        .function {
+            color: #50FA7B;
+        }
+        .command-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            overflow: visible;
+            margin-top: 20px;
+        }
+        .command-table th {
+            background-color: rgba(75, 139, 190, 0.3);
+            color: #FFD43B;
+            text-align: left;
+            padding: 12px 15px;
+            font-weight: 600;
+        }
+        .command-table td {
+            padding: 10px 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #e2e8f0;
+        }
+        .command-table tr:hover td {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .footer {
+            margin-top: 30px;
+            font-size: 18px;
+            color: #a0aec0;
+            text-align: center;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">6</div>
+                <div class="title">Selenium 설치 및 브라우저 제어</div>
+            </div>
+            
+            <div class="subtitle">Selenium을 활용한 웹 브라우저 자동화의 첫 단계</div>
+            
+            <div class="setup-container">
+                <div class="setup-section">
+                    <h3 class="setup-title"><i class="fas fa-download"></i>Selenium 설치 및 설정</h3>
+                    <ul class="setup-steps">
+                        <li class="setup-step">
+                            <div class="step-number">1</div>
+                            <div class="step-text">파이썬 패키지 설치:<br><code>pip install selenium</code></div>
+                        </li>
+                        <li class="setup-step">
+                            <div class="step-number">2</div>
+                            <div class="step-text">웹 드라이버 다운로드: 브라우저와 버전에 맞는 WebDriver 설치</div>
+                        </li>
+                        <li class="setup-step">
+                            <div class="step-number">3</div>
+                            <div class="step-text">자동 WebDriver 관리 패키지 설치: <code>pip install webdriver-manager</code></div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="setup-section">
+                    <h3 class="setup-title"><i class="fas fa-check-circle"></i>브라우저 드라이버 설정</h3>
+                    <div class="code-container">
+                        <span class="language-badge">Python</span>
+                        <span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver<br>
+                        <span class="keyword">from</span> webdriver_manager.chrome <span class="keyword">import</span> ChromeDriverManager<br>
+                        <span class="keyword">from</span> selenium.webdriver.chrome.service <span class="keyword">import</span> Service<br>
+                        <br>
+                        <span class="comment"># Chrome 드라이버 자동 설정</span><br>
+                        service = Service(ChromeDriverManager().<span class="function">install</span>())<br>
+                        driver = webdriver.Chrome(service=service)<br>
+                        <br>
+                        <span class="comment"># 페이지 로드</span><br>
+                        driver.<span class="function">get</span>(<span class="string">"https://www.example.com"</span>)
+                    </div>
+                </div>
+            </div>
+            
+            <div class="prompt">
+                Selenium으로 웹 브라우저를 제어하는 기본 명령어들을 알려줘
+            </div>
+            
+            <table class="command-table">
+                <tr>
+                    <th>명령어</th>
+                    <th>설명</th>
+                    <th>예시</th>
+                </tr>
+                <tr>
+                    <td>driver.get(url)</td>
+                    <td>지정된 URL로 이동합니다</td>
+                    <td>driver.get("https://www.naver.com")</td>
+                </tr>
+                <tr>
+                    <td>driver.title</td>
+                    <td>현재 페이지의 제목을 반환합니다</td>
+                    <td>title = driver.title</td>
+                </tr>
+                <tr>
+                    <td>driver.current_url</td>
+                    <td>현재 페이지의 URL을 반환합니다</td>
+                    <td>current_url = driver.current_url</td>
+                </tr>
+                <tr>
+                    <td>driver.back()</td>
+                    <td>브라우저 뒤로 가기 기능을 실행합니다</td>
+                    <td>driver.back()</td>
+                </tr>
+                <tr>
+                    <td>driver.forward()</td>
+                    <td>브라우저 앞으로 가기 기능을 실행합니다</td>
+                    <td>driver.forward()</td>
+                </tr>
+                <tr>
+                    <td>driver.refresh()</td>
+                    <td>현재 페이지를 새로고침합니다</td>
+                    <td>driver.refresh()</td>
+                </tr>
+                <tr>
+                    <td>driver.close()</td>
+                    <td>현재 탭만 닫습니다</td>
+                    <td>driver.close()</td>
+                </tr>
+                <tr>
+                    <td>driver.quit()</td>
+                    <td>브라우저 창 전체를 종료합니다</td>
+                    <td>driver.quit()</td>
+                </tr>
+            </table>
+            
+            <div class="footer">
+                "Selenium을 통한 웹 브라우저 제어는 웹 데이터 수집과 자동화의 첫 단계입니다."
+            </div>
+        </div>
+    </div>
+</body>
+    

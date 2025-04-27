@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 1</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 40px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 42px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .reasons-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        .reason-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: flex-start;
+            transition: all 0.3s ease;
+        }
+        .reason-card:hover {
+            transform: translateY(-5px);
+            background-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+        }
+        .reason-icon {
+            background: linear-gradient(45deg, #4B8BBE, #306998);
+            min-width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+        .reason-icon i {
+            font-size: 20px;
+            color: #FFD43B;
+        }
+        .reason-content h3 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #e2e8f0;
+        }
+        .reason-content p {
+            font-size: 15px;
+            line-height: 1.5;
+            color: #cbd5e0;
+        }
+        .comparison-section {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 20px;
+        }
+        .comparison-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .language-comparison {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+        }
+        .language-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 15px;
+            flex: 1;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .language-card.python {
+            background-color: rgba(75, 139, 190, 0.4);
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .language-icon {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        .python-icon { color: #FFD43B; }
+        .java-icon { color: #f89820; }
+        .js-icon { color: #f7df1e; }
+        .csharp-icon { color: #68217a; }
+        .language-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .language-rating {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            justify-content: center;
+        }
+        .rating-label {
+            font-size: 14px;
+            margin-right: 10px;
+            min-width: 100px;
+            text-align: right;
+        }
+        .rating-bar {
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: visible;
+            flex-grow: 1;
+            max-width: 100px;
+        }
+        .rating-fill {
+            height: 100%;
+            border-radius: 4px;
+        }
+        .python-ease { width: 95%; background-color: #FFD43B; }
+        .java-ease { width: 60%; background-color: #f89820; }
+        .js-ease { width: 75%; background-color: #f7df1e; }
+        .csharp-ease { width: 65%; background-color: #68217a; }
+        
+        .python-libs { width: 98%; background-color: #FFD43B; }
+        .java-libs { width: 80%; background-color: #f89820; }
+        .js-libs { width: 85%; background-color: #f7df1e; }
+        .csharp-libs { width: 70%; background-color: #68217a; }
+        
+        .footer-quote {
+            margin-top: 20px;
+            text-align: center;
+            font-style: italic;
+            color: #a0aec0;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">3</div>
+                <div class="title">파이썬을 활용해야 하는 이유</div>
+            </div>
+            
+            <div class="reasons-grid">
+                <div class="reason-card">
+                    <div class="reason-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="reason-content">
+                        <h3>쉽고 직관적인 문법</h3>
+                        <p>파이썬은 영어 문장과 비슷한 구조로, 코드를 읽기 쉽고 작성하기도 간단합니다. 프로그래밍 경험이 없는 초보자도 빠르게 습득할 수 있습니다.</p>
+                    </div>
+                </div>
+                
+                <div class="reason-card">
+                    <div class="reason-icon">
+                        <i class="fas fa-puzzle-piece"></i>
+                    </div>
+                    <div class="reason-content">
+                        <h3>방대한 라이브러리 생태계</h3>
+                        <p>웹 스크래핑(BeautifulSoup), 데이터 분석(Pandas), 자동화(PyAutoGUI) 등 업무에 필요한 대부분의 기능이 이미 라이브러리로 구현되어 있습니다.</p>
+                    </div>
+                </div>
+                
+                <div class="reason-card">
+                    <div class="reason-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <div class="reason-content">
+                        <h3>높은 생산성과 빠른 개발 속도</h3>
+                        <p>적은 코드로 많은 기능을 구현할 수 있어 개발 시간이 짧습니다. 복잡한 설정이나 컴파일 과정 없이 바로 실행할 수 있습니다.</p>
+                    </div>
+                </div>
+                
+                <div class="reason-card">
+                    <div class="reason-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <div class="reason-content">
+                        <h3>다양한 분야에서의 활용</h3>
+                        <p>데이터 분석, 웹 개발, 인공지능, 업무 자동화 등 거의 모든 IT 분야에서 활용됩니다. 한 번 배우면 다양한 업무에 적용할 수 있습니다.</p>
+                    </div>
+                </div>
+                
+                <div class="reason-card">
+                    <div class="reason-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <div class="reason-content">
+                        <h3>강력한 커뮤니티 지원</h3>
+                        <p>전 세계적으로 수백만 명의 개발자가 파이썬을 사용하며, 문제 해결을 위한 풍부한 자료와 커뮤니티 지원이 있습니다.</p>
+                    </div>
+                </div>
+                
+                <div class="reason-card">
+                    <div class="reason-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <div class="reason-content">
+                        <h3>높은 인기와 기업 활용 사례</h3>
+                        <p>Google, Netflix, Dropbox 등 많은 글로벌 기업들이 업무 자동화와 서비스 개발에 파이썬을 적극 활용하고 있습니다.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="comparison-section">
+                <h3 class="comparison-title">주요 프로그래밍 언어 비교</h3>
+                <div class="language-comparison">
+                    <div class="language-card python">
+                        <div class="language-icon python-icon"><i class="fab fa-python"></i></div>
+                        <div class="language-name">Python</div>
+                        <div class="language-rating">
+                            <div class="rating-label">학습 용이성</div>
+                            <div class="rating-bar"><div class="rating-fill python-ease"></div></div>
+                        </div>
+                        <div class="language-rating">
+                            <div class="rating-label">라이브러리 생태계</div>
+                            <div class="rating-bar"><div class="rating-fill python-libs"></div></div>
+                        </div>
+                    </div>
+                    
+                    <div class="language-card">
+                        <div class="language-icon java-icon"><i class="fab fa-java"></i></div>
+                        <div class="language-name">Java</div>
+                        <div class="language-rating">
+                            <div class="rating-label">학습 용이성</div>
+                            <div class="rating-bar"><div class="rating-fill java-ease"></div></div>
+                        </div>
+                        <div class="language-rating">
+                            <div class="rating-label">라이브러리 생태계</div>
+                            <div class="rating-bar"><div class="rating-fill java-libs"></div></div>
+                        </div>
+                    </div>
+                    
+                    <div class="language-card">
+                        <div class="language-icon js-icon"><i class="fab fa-js"></i></div>
+                        <div class="language-name">JavaScript</div>
+                        <div class="language-rating">
+                            <div class="rating-label">학습 용이성</div>
+                            <div class="rating-bar"><div class="rating-fill js-ease"></div></div>
+                        </div>
+                        <div class="language-rating">
+                            <div class="rating-label">라이브러리 생태계</div>
+                            <div class="rating-bar"><div class="rating-fill js-libs"></div></div>
+                        </div>
+                    </div>
+                    
+                    <div class="language-card">
+                        <div class="language-icon csharp-icon"><i class="fab fa-microsoft"></i></div>
+                        <div class="language-name">C#</div>
+                        <div class="language-rating">
+                            <div class="rating-label">학습 용이성</div>
+                            <div class="rating-bar"><div class="rating-fill csharp-ease"></div></div>
+                        </div>
+                        <div class="language-rating">
+                            <div class="rating-label">라이브러리 생태계</div>
+                            <div class="rating-bar"><div class="rating-fill csharp-libs"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-quote">
+                "Life is short, you need Python" - Bruce Eckel
+            </div>
+        </div>
+    </div>
+</body>
+    

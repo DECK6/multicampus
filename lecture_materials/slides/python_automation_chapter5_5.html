@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 자동화 교육 교안 - 챕터 5: 물리자동화의 이해</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .intro-text {
+            color: #e2e8f0;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            max-width: 90%;
+        }
+        .function-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .function-card {
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .function-card:hover {
+            transform: translateY(-5px);
+            background-color: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+        .function-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #FFD43B;
+            display: flex;
+            align-items: center;
+        }
+        .function-title i {
+            margin-right: 10px;
+            font-size: 22px;
+        }
+        .function-desc {
+            color: #e2e8f0;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+        .code-block {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            margin: 10px 0;
+            color: #e2e8f0;
+            overflow-x: auto;
+            border-left: 4px solid #4B8BBE;
+        }
+        .code-block pre {
+            margin: 0;
+            white-space: pre-wrap;
+        }
+        .prompt-box {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 15px;
+            border-left: 3px solid #4B8BBE;
+        }
+        .prompt-label {
+            font-size: 14px;
+            font-weight: bold;
+            color: #FFD43B;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+        .prompt-label i {
+            margin-right: 6px;
+        }
+        .prompt-text {
+            font-style: italic;
+            color: #cbd5e0;
+        }
+        .note-section {
+            margin-top: 30px;
+            background-color: rgba(255, 212, 59, 0.1);
+            border-radius: 12px;
+            padding: 15px 20px;
+            border: 1px solid rgba(255, 212, 59, 0.3);
+        }
+        .note-title {
+            display: flex;
+            align-items: center;
+            color: #FFD43B;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .note-title i {
+            margin-right: 8px;
+        }
+        .note-content {
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+        .window-visualizer {
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.2);
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .window-box {
+            width: 200px;
+            height: 150px;
+            background: linear-gradient(45deg, #4B8BBE, #306998);
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            margin: 0 15px;
+            display: flex;
+            flex-direction: column;
+        }
+        .window-title {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 6px 10px;
+            font-size: 12px;
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .window-controls {
+            display: flex;
+        }
+        .window-control {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-left: 5px;
+        }
+        .window-close {
+            background-color: #ff5f56;
+        }
+        .window-minimize {
+            background-color: #ffbd2e;
+        }
+        .window-maximize {
+            background-color: #27c93f;
+        }
+        .window-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            padding: 10px;
+        }
+        .window-arrow {
+            font-size: 24px;
+            color: #FFD43B;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">6</div>
+                <div class="title">윈도우 프로그램 제어</div>
+            </div>
+            
+            <p class="intro-text">
+                PyAutoGUI는 윈도우 프로그램의 창을 찾고, 활성화하고, 크기를 조절하는 등의 기능을 제공합니다.
+                이를 통해 자동화 스크립트가 필요한 창을 자동으로 조작할 수 있어 더욱 복잡한 자동화가 가능해집니다.
+            </p>
+            
+            <div class="window-visualizer">
+                <div class="window-box">
+                    <div class="window-title">
+                        <span>최소화 창</span>
+                        <div class="window-controls">
+                            <div class="window-control window-minimize"></div>
+                            <div class="window-control window-maximize"></div>
+                            <div class="window-control window-close"></div>
+                        </div>
+                    </div>
+                    <div class="window-content">win.minimize()</div>
+                </div>
+                <div class="window-arrow">→</div>
+                <div class="window-box">
+                    <div class="window-title">
+                        <span>활성화 창</span>
+                        <div class="window-controls">
+                            <div class="window-control window-minimize"></div>
+                            <div class="window-control window-maximize"></div>
+                            <div class="window-control window-close"></div>
+                        </div>
+                    </div>
+                    <div class="window-content">win.activate()</div>
+                </div>
+                <div class="window-arrow">→</div>
+                <div class="window-box">
+                    <div class="window-title">
+                        <span>최대화 창</span>
+                        <div class="window-controls">
+                            <div class="window-control window-minimize"></div>
+                            <div class="window-control window-maximize"></div>
+                            <div class="window-control window-close"></div>
+                        </div>
+                    </div>
+                    <div class="window-content">win.maximize()</div>
+                </div>
+            </div>
+            
+            <div class="function-grid">
+                <div class="function-card">
+                    <h3 class="function-title"><i class="fas fa-window-restore"></i>윈도우 정보 얻기</h3>
+                    <p class="function-desc">현재 활성화된 창 또는 모든 열려있는 창들의 정보를 가져옵니다.</p>
+                    <div class="code-block">
+<pre>import pyautogui
+
+# 현재 활성화된 창 정보
+active_window = pyautogui.getActiveWindow()
+print(active_window.title)   # 창 제목
+print(active_window.size)    # 창 크기 (너비, 높이)
+print(active_window.left, active_window.top) # 창 위치
+
+# 모든 열려있는 창 가져오기
+all_windows = pyautogui.getAllWindows()
+for window in all_windows:
+    print(window.title)
+
+# 특정 제목을 포함한 창 찾기
+notepad_windows = pyautogui.getWindowsWithTitle('메모장')
+if notepad_windows:
+    notepad = notepad_windows[0]  # 첫번째 일치하는 창</pre>
+                    </div>
+                    <div class="prompt-box">
+                        <div class="prompt-label"><i class="fas fa-comment-alt"></i>ChatGPT 프롬프트</div>
+                        <p class="prompt-text">"PyAutoGUI로 현재 실행 중인 모든 창의 제목을 가져오는 코드를 작성해줘"</p>
+                    </div>
+                </div>
+                
+                <div class="function-card">
+                    <h3 class="function-title"><i class="fas fa-window-maximize"></i>윈도우 제어</h3>
+                    <p class="function-desc">찾은 창을 활성화하고, 최대화, 최소화, 복원, 닫기 등의 작업을 수행합니다.</p>
+                    <div class="code-block">
+<pre># 메모장 창 찾기
+notepad = pyautogui.getWindowsWithTitle('메모장')[0]
+
+# 창이 활성화되어 있지 않다면 활성화
+if not notepad.isActive:
+    notepad.activate()
+
+# 창 최대화
+if not notepad.isMaximized:
+    notepad.maximize()
+
+# 창 최소화
+notepad.minimize()
+
+# 창 원래 크기로 복원
+notepad.restore()
+
+# 창 닫기 (저장 여부를 물어볼 수 있음)
+notepad.close()</pre>
+                    </div>
+                    <div class="prompt-box">
+                        <div class="prompt-label"><i class="fas fa-comment-alt"></i>ChatGPT 프롬프트</div>
+                        <p class="prompt-text">"PyAutoGUI로 특정 프로그램 창을 찾아서 활성화하고 최대화하는 코드를 작성해줘"</p>
+                    </div>
+                </div>
+                
+                <div class="function-card">
+                    <h3 class="function-title"><i class="fas fa-ruler"></i>윈도우 크기 및 위치 조정</h3>
+                    <p class="function-desc">창의 크기를 변경하거나 화면상의 위치를 이동시킵니다.</p>
+                    <div class="code-block">
+<pre># 창 크기 변경 (너비, 높이)
+notepad.resizeTo(800, 600)
+
+# 창 위치 변경 (x, y)
+notepad.moveTo(100, 100)
+
+# 창 위치와 크기 한 번에 설정
+notepad.left, notepad.top = 100, 100
+notepad.width, notepad.height = 800, 600
+
+# 창이 화면 중앙에 오도록 위치 설정
+screen_width, screen_height = pyautogui.size()
+window_width, window_height = notepad.size
+x = (screen_width - window_width) // 2
+y = (screen_height - window_height) // 2
+notepad.moveTo(x, y)</pre>
+                    </div>
+                </div>
+                
+                <div class="function-card">
+                    <h3 class="function-title"><i class="fas fa-terminal"></i>응용 프로그램 실행</h3>
+                    <p class="function-desc">os 모듈이나 subprocess 모듈을 함께 사용하여 프로그램을 실행한 후 자동화할 수 있습니다.</p>
+                    <div class="code-block">
+<pre>import os
+import subprocess
+import time
+import pyautogui
+
+# 메모장 실행 (Windows)
+os.system('notepad')
+
+# 또는 subprocess 사용 (더 많은 제어 가능)
+subprocess.Popen('notepad')
+
+# 프로그램이 열릴 때까지 잠시 대기
+time.sleep(1)
+
+# 메모장 창 찾기
+notepad = pyautogui.getWindowsWithTitle('메모장')[0]
+notepad.activate()
+
+# 이제 키보드 입력으로 텍스트 입력
+pyautogui.write('안녕하세요! PyAutoGUI로 작성된 텍스트입니다.')</pre>
+                    </div>
+                    <div class="prompt-box">
+                        <div class="prompt-label"><i class="fas fa-comment-alt"></i>ChatGPT 프롬프트</div>
+                        <p class="prompt-text">"PyAutoGUI로 메모장을 실행하고 자동으로 텍스트를 입력하는 코드를 작성해줘"</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="note-section">
+                <div class="note-title"><i class="fas fa-exclamation-circle"></i> 주의사항</div>
+                <p class="note-content">윈도우 제어 기능은 운영체제에 따라 다르게 동작할 수 있습니다. Windows에서는 pygetwindow 모듈을 사용하며, macOS에서는 PyAutoGUI의 윈도우 제어 기능이 제한적일 수 있습니다. 더 복잡한 윈도우 자동화가 필요하면 Windows에서는 pywinauto, macOS에서는 pyautogui와 함께 Quartz를 사용하는 것이 좋습니다.</p>
+            </div>
+        </div>
+    </div>
+</body>
+    

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 - 챕터 8: 웹에서 데이터 가져오기</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 44px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .explanation {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-left: 5px solid #4B8BBE;
+        }
+        .explanation p {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #e2e8f0;
+            margin-bottom: 15px;
+        }
+        .explanation p:last-child {
+            margin-bottom: 0;
+        }
+        .code-section {
+            display: flex;
+            margin-bottom: 30px;
+            gap: 20px;
+        }
+        .code-container {
+            flex: 1;
+            background-color: #1a202c;
+            border-radius: 12px;
+            padding: 20px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 16px;
+            line-height: 1.6;
+            overflow: auto;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .prompt {
+            color: #A9A9A9;
+            user-select: none;
+        }
+        .code-comment {
+            color: #6A9955;
+        }
+        .method-table {
+            flex: 1;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+        }
+        .method-row {
+            display: flex;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .method-row:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        .method-name {
+            flex: 0 0 160px;
+            font-weight: bold;
+            color: #FFD43B;
+            font-family: 'Consolas', 'Monaco', monospace;
+        }
+        .method-desc {
+            flex: 1;
+            color: #e2e8f0;
+        }
+        .chat-gpt-prompt {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin-bottom: 25px;
+            border-left: 5px solid #FFD43B;
+        }
+        .chat-gpt-prompt-label {
+            font-size: 16px;
+            font-weight: bold;
+            color: #FFD43B;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .chat-gpt-prompt-label i {
+            margin-right: 8px;
+        }
+        .chat-gpt-prompt-content {
+            font-size: 18px;
+            color: #e2e8f0;
+            font-style: italic;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #a0aec0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">4</div>
+                <div class="title">BeautifulSoup 기초</div>
+            </div>
+            
+            <div class="chat-gpt-prompt">
+                <div class="chat-gpt-prompt-label">
+                    <i class="fas fa-robot"></i>ChatGPT 프롬프트
+                </div>
+                <div class="chat-gpt-prompt-content">
+                    "Python BeautifulSoup 기본 사용법과 HTML 파싱 예제 코드를 알려줘"
+                </div>
+            </div>
+            
+            <div class="explanation">
+                <p><strong>BeautifulSoup</strong>은 HTML과 XML 파일에서 데이터를 추출하는 파이썬 라이브러리입니다. 웹 페이지의 복잡한 HTML 구조에서 원하는 정보를 쉽게 찾을 수 있게 해주는 <strong>파서(parser)</strong> 역할을 합니다.</p>
+                <p>HTML 문서를 파이썬에서 다룰 수 있는 객체 구조로 변환하여 태그, 속성, 텍스트 등을 쉽게 탐색하고 추출할 수 있게 해줍니다.</p>
+            </div>
+            
+            <div class="code-section">
+                <div class="code-container">
+                    <span class="prompt"># BeautifulSoup 기본 사용법</span><br>
+                    <span class="code-comment"># 라이브러리 임포트</span><br>
+                    from bs4 import BeautifulSoup<br>
+                    import requests<br><br>
+                    
+                    <span class="code-comment"># 웹 페이지 가져오기</span><br>
+                    url = "https://example.com"<br>
+                    response = requests.get(url)<br>
+                    html_content = response.text<br><br>
+                    
+                    <span class="code-comment"># BeautifulSoup 객체 생성</span><br>
+                    soup = BeautifulSoup(html_content, "html.parser")<br><br>
+                    
+                    <span class="code-comment"># 태그 찾기 - 첫 번째 h1 태그 찾기</span><br>
+                    first_heading = soup.find('h1')<br>
+                    print(first_heading.text)<br><br>
+                    
+                    <span class="code-comment"># 여러 태그 찾기 - 모든 p 태그 찾기</span><br>
+                    all_paragraphs = soup.find_all('p')<br>
+                    for paragraph in all_paragraphs:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;print(paragraph.text)<br>
+                </div>
+                
+                <div class="method-table">
+                    <h3 style="font-size: 20px; color: #FFD43B; margin-bottom: 15px;">주요 메서드</h3>
+                    
+                    <div class="method-row">
+                        <div class="method-name">find()</div>
+                        <div class="method-desc">조건에 맞는 첫 번째 태그를 찾습니다. 태그 이름, id, class 등으로 검색 가능</div>
+                    </div>
+                    
+                    <div class="method-row">
+                        <div class="method-name">find_all()</div>
+                        <div class="method-desc">조건에 맞는 모든 태그를 리스트로 반환합니다.</div>
+                    </div>
+                    
+                    <div class="method-row">
+                        <div class="method-name">select()</div>
+                        <div class="method-desc">CSS 선택자를 사용하여 태그를 찾습니다. (예: soup.select('div.headline'))</div>
+                    </div>
+                    
+                    <div class="method-row">
+                        <div class="method-name">get_text()</div>
+                        <div class="method-desc">태그 내의 모든 텍스트 내용을 추출합니다.</div>
+                    </div>
+                    
+                    <div class="method-row">
+                        <div class="method-name">.attrs</div>
+                        <div class="method-desc">태그의 모든 속성을 딕셔너리 형태로 반환합니다.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="explanation">
+                <p>실제 크롤링에서는 원하는 정보가 어떤 태그와 속성에 있는지 파악하는 것이 중요합니다. 웹 브라우저의 개발자 도구(F12)를 사용하여 HTML 구조를 분석한 후 적절한 메서드로 데이터를 추출합니다.</p>
+            </div>
+            
+            <div class="footer">
+                파이썬 BeautifulSoup은 웹 크롤링의 가장 기본적이고 필수적인 도구입니다
+            </div>
+        </div>
+    </div>
+</body>
+    

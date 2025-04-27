@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 3</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 42px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .subtitle {
+            font-size: 20px;
+            font-weight: 400;
+            color: #e2e8f0;
+            margin-bottom: 30px;
+        }
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        .left-column {
+            padding-right: 15px;
+        }
+        .right-column {
+            padding-left: 15px;
+        }
+        .section {
+            margin-bottom: 25px;
+            background: rgba(75, 139, 190, 0.15);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        .section:hover {
+            background: rgba(75, 139, 190, 0.25);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .section-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #FFD43B;
+            display: flex;
+            align-items: center;
+        }
+        .section-icon {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+        .section-content {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #e2e8f0;
+        }
+        .code-block {
+            margin-top: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 14px;
+            color: #e2e8f0;
+            position: relative;
+        }
+        .code-prompt {
+            background: #4B8BBE;
+            border-radius: 4px;
+            padding: 8px 12px;
+            margin-bottom: 10px;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 13px;
+            color: white;
+        }
+        .code-prompt i {
+            margin-right: 8px;
+            color: #FFD43B;
+        }
+        .code-line {
+            margin-bottom: 5px;
+        }
+        .highlight {
+            color: #FFD43B;
+        }
+        .comment {
+            color: #a0aec0;
+            font-style: italic;
+        }
+        .table-preview {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 14px;
+        }
+        .table-row {
+            display: flex;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 8px 0;
+        }
+        .table-row:last-child {
+            border-bottom: none;
+        }
+        .table-header {
+            font-weight: 600;
+            color: #FFD43B;
+        }
+        .table-cell {
+            flex: 1;
+            padding: 0 10px;
+        }
+        .footer {
+            margin-top: 30px;
+            font-size: 18px;
+            color: #a0aec0;
+            text-align: center;
+            font-style: italic;
+        }
+        .badge {
+            background: #FFD43B;
+            color: #1a365d;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">3</div>
+                <div class="title">판다스 데이터프레임 기초</div>
+            </div>
+            
+            <p class="subtitle">업무 자동화의 핵심 도구인 판다스(Pandas) 데이터프레임의 기본 사용법을 알아봅니다.</p>
+            
+            <div class="main-content">
+                <div class="left-column">
+                    <div class="section">
+                        <div class="section-title">
+                            <i class="fas fa-table section-icon"></i>
+                            데이터프레임이란?
+                            <span class="badge">핵심 도구</span>
+                        </div>
+                        <div class="section-content">
+                            <p>데이터프레임(DataFrame)은 판다스 라이브러리의 2차원 테이블 구조로, 행과 열로 구성되어 있습니다. 엑셀 시트와 유사하지만 더 강력한 데이터 조작 기능을 제공합니다.</p>
+                            <ul class="mt-3 list-disc pl-5">
+                                <li>각 열은 서로 다른 데이터 타입을 가질 수 있습니다 (숫자, 문자열, 날짜 등)</li>
+                                <li>행과 열에 이름(라벨)을 지정할 수 있습니다</li>
+                                <li>SQL, 엑셀과 같은 작업을 코드로 수행할 수 있습니다</li>
+                                <li>대용량 데이터 처리에 최적화되어 있습니다</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">
+                            <i class="fas fa-plus-circle section-icon"></i>
+                            데이터프레임 생성하기
+                        </div>
+                        <div class="section-content">
+                            <div class="code-block">
+                                <div class="code-prompt">
+                                    <i class="fas fa-robot"></i>직원 정보를 담은 간단한 판다스 데이터프레임 생성 코드를 작성해줘
+                                </div>
+                                <div class="code-line"><span class="highlight">import</span> pandas <span class="highlight">as</span> pd</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 딕셔너리로부터 데이터프레임 생성</span></div>
+                                <div class="code-line">employee_data = {</div>
+                                <div class="code-line">    <span class="highlight">"이름"</span>: [<span class="highlight">"홍길동"</span>, <span class="highlight">"김철수"</span>, <span class="highlight">"이영희"</span>, <span class="highlight">"박지민"</span>],</div>
+                                <div class="code-line">    <span class="highlight">"부서"</span>: [<span class="highlight">"개발"</span>, <span class="highlight">"마케팅"</span>, <span class="highlight">"인사"</span>, <span class="highlight">"개발"</span>],</div>
+                                <div class="code-line">    <span class="highlight">"연봉"</span>: [5000, 4800, 5200, 5500],</div>
+                                <div class="code-line">    <span class="highlight">"입사일"</span>: [<span class="highlight">"2020-01-15"</span>, <span class="highlight">"2019-05-20"</span>, <span class="highlight">"2021-03-10"</span>, <span class="highlight">"2018-12-05"</span>]</div>
+                                <div class="code-line">}</div>
+                                <div class="code-line"></div>
+                                <div class="code-line">df = pd.DataFrame(employee_data)</div>
+                                <div class="code-line"><span class="highlight">print</span>(df)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="right-column">
+                    <div class="section">
+                        <div class="section-title">
+                            <i class="fas fa-file-import section-icon"></i>
+                            외부 데이터 불러오기
+                        </div>
+                        <div class="section-content">
+                            <p>실무에서는 주로 외부 파일에서 데이터를 불러와 데이터프레임을 생성합니다.</p>
+                            
+                            <div class="code-block">
+                                <div class="code-prompt">
+                                    <i class="fas fa-robot"></i>CSV, Excel, SQL 데이터를 판다스로 불러오는 코드 예제를 보여줘
+                                </div>
+                                <div class="code-line"><span class="comment"># CSV 파일 불러오기</span></div>
+                                <div class="code-line">df_csv = pd.read_csv(<span class="highlight">'데이터.csv'</span>, encoding=<span class="highlight">'utf-8'</span>)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># Excel 파일 불러오기</span></div>
+                                <div class="code-line">df_excel = pd.read_excel(<span class="highlight">'보고서.xlsx'</span>, sheet_name=<span class="highlight">'Sheet1'</span>)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># SQL 데이터베이스에서 불러오기</span></div>
+                                <div class="code-line"><span class="highlight">import</span> sqlite3</div>
+                                <div class="code-line">conn = sqlite3.connect(<span class="highlight">'데이터베이스.db'</span>)</div>
+                                <div class="code-line">df_sql = pd.read_sql(<span class="highlight">'SELECT * FROM 직원'</span>, conn)</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">
+                            <i class="fas fa-eye section-icon"></i>
+                            데이터프레임 기본 정보 확인
+                        </div>
+                        <div class="section-content">
+                            <div class="code-block">
+                                <div class="code-prompt">
+                                    <i class="fas fa-robot"></i>데이터프레임의 기본 정보를 확인하는 방법을 알려줘
+                                </div>
+                                <div class="code-line"><span class="comment"># 상위 5개 행 확인</span></div>
+                                <div class="code-line">df.head()</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 데이터프레임 크기(행, 열) 확인</span></div>
+                                <div class="code-line">df.shape  <span class="comment"># (행 수, 열 수) 반환</span></div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 데이터 요약 정보 확인</span></div>
+                                <div class="code-line">df.info()</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 수치 데이터 통계 정보</span></div>
+                                <div class="code-line">df.describe()</div>
+                            </div>
+                            
+                            <div class="table-preview">
+                                <div class="table-row table-header">
+                                    <div class="table-cell">이름</div>
+                                    <div class="table-cell">부서</div>
+                                    <div class="table-cell">연봉</div>
+                                    <div class="table-cell">입사일</div>
+                                </div>
+                                <div class="table-row">
+                                    <div class="table-cell">홍길동</div>
+                                    <div class="table-cell">개발</div>
+                                    <div class="table-cell">5000</div>
+                                    <div class="table-cell">2020-01-15</div>
+                                </div>
+                                <div class="table-row">
+                                    <div class="table-cell">김철수</div>
+                                    <div class="table-cell">마케팅</div>
+                                    <div class="table-cell">4800</div>
+                                    <div class="table-cell">2019-05-20</div>
+                                </div>
+                                <div class="table-row">
+                                    <div class="table-cell">이영희</div>
+                                    <div class="table-cell">인사</div>
+                                    <div class="table-cell">5200</div>
+                                    <div class="table-cell">2021-03-10</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                "판다스 데이터프레임은 엑셀 작업을 자동화하는 가장 강력한 도구입니다"
+            </div>
+        </div>
+    </div>
+</body>
+    

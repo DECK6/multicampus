@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 14 & 15</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 40px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .code-block {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Consolas', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">7</div>
+                <h2 class="text-2xl font-bold text-yellow-400">Outlook을 활용한 이메일 자동화</h2>
+            </div>
+
+            <div class="code-block">
+                <div class="text-yellow-400 text-lg mb-4">
+                    <i class="fas fa-code mr-2"></i>ChatGPT Prompt: "Create Python script for Outlook email automation"
+                </div>
+                <pre class="text-gray-300 text-sm">
+import win32com.client
+import os
+
+def send_outlook_email(to_email, subject, body, attachments=None):
+    try:
+        # Outlook 애플리케이션 객체 생성
+        outlook = win32com.client.Dispatch('Outlook.Application')
+        mail = outlook.CreateItem(0)  # 0 = Email item
+
+        # 기본 정보 설정
+        mail.To = to_email
+        mail.Subject = subject
+        mail.HTMLBody = body
+
+        # 첨부파일 추가
+        if attachments:
+            for file in attachments:
+                if os.path.exists(file):
+                    mail.Attachments.Add(file)
+
+        # 이메일 전송
+        mail.Send()
+        return True, "이메일이 성공적으로 전송되었습니다."
+
+    except Exception as e:
+        return False, f"이메일 전송 실패: {str(e)}"</pre>
+            </div>
+
+            <div class="grid grid-cols-2 gap-6 mt-6">
+                <div class="bg-blue-900 bg-opacity-20 p-4 rounded-lg">
+                    <h3 class="text-yellow-400 text-lg font-semibold mb-3">
+                        <i class="fas fa-cog mr-2"></i>사전 요구사항
+                    </h3>
+                    <ul class="space-y-2 text-sm">
+                        <li>Windows 운영체제</li>
+                        <li>Outlook 클라이언트 설치</li>
+                        <li>pywin32 라이브러리 설치</li>
+                        <li>Outlook 계정 로그인 상태</li>
+                    </ul>
+                </div>
+
+                <div class="bg-blue-900 bg-opacity-20 p-4 rounded-lg">
+                    <h3 class="text-yellow-400 text-lg font-semibold mb-3">
+                        <i class="fas fa-check-circle mr-2"></i>장점
+                    </h3>
+                    <ul class="space-y-2 text-sm">
+                        <li>SMTP 설정 불필요</li>
+                        <li>기업 Exchange 서버 사용 가능</li>
+                        <li>Outlook 기능 완벽 호환</li>
+                        <li>보안 정책 준수 용이</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-6">
+                <div class="bg-yellow-900 bg-opacity-20 p-4 rounded-lg">
+                    <h3 class="text-yellow-400 font-semibold mb-2">
+                        <i class="fas fa-lightbulb mr-2"></i>활용 시나리오
+                    </h3>
+                    <div class="grid grid-cols-3 gap-4 text-sm">
+                        <div class="p-3 bg-blue-900 bg-opacity-20 rounded">
+                            <i class="fas fa-calendar-check mb-2"></i>
+                            <h4 class="font-semibold mb-1">일정 알림</h4>
+                            <p>회의 일정 자동 알림 및 초대장 발송</p>
+                        </div>
+                        <div class="p-3 bg-blue-900 bg-opacity-20 rounded">
+                            <i class="fas fa-chart-line mb-2"></i>
+                            <h4 class="font-semibold mb-1">보고서 발송</h4>
+                            <p>주간/월간 보고서 자동 생성 및 배포</p>
+                        </div>
+                        <div class="p-3 bg-blue-900 bg-opacity-20 rounded">
+                            <i class="fas fa-users mb-2"></i>
+                            <h4 class="font-semibold mb-1">고객 관리</h4>
+                            <p>고객별 맞춤 뉴스레터 자동 발송</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+    

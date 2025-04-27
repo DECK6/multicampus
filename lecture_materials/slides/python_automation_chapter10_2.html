@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pandas의 고급 기능과 실전 데이터 분석 기법</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .code-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .section-title i {
+            margin-right: 10px;
+        }
+        .code-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+        .code-example {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .code-title {
+            color: #4B8BBE;
+            font-size: 18px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .code-block {
+            font-family: 'Consolas', monospace;
+            font-size: 14px;
+            color: #e2e8f0;
+            line-height: 1.6;
+            white-space: pre;
+        }
+        .output {
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            color: #a0aec0;
+            font-family: 'Consolas', monospace;
+        }
+        .note {
+            background: rgba(75, 139, 190, 0.2);
+            border-left: 4px solid #4B8BBE;
+            padding: 15px;
+            margin-top: 20px;
+            color: #e2e8f0;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">3</div>
+                <div class="title">데이터프레임 병합 테크닉</div>
+            </div>
+
+            <div class="code-section">
+                <div class="section-title">
+                    <i class="fas fa-object-group"></i>
+                    데이터프레임 병합 방법
+                </div>
+                <div class="code-grid">
+                    <div class="code-example">
+                        <div class="code-title">1. merge() - SQL 스타일 조인</div>
+                        <div class="code-block">
+# 기본 병합
+df1.merge(df2, on='key_column')
+
+# 다중 키 병합
+df1.merge(df2, 
+    on=['key1', 'key2'],
+    how='inner')</div>
+                        <div class="output">
+>>> 조인 타입: inner, left, right, outer</div>
+                    </div>
+
+                    <div class="code-example">
+                        <div class="code-title">2. join() - 인덱스 기반 병합</div>
+                        <div class="code-block">
+# 인덱스 기준 병합
+df1.join(df2)
+
+# 특정 열을 키로 설정하여 병합
+df1.join(df2.set_index('key'))</div>
+                    </div>
+
+                    <div class="code-example">
+                        <div class="code-title">3. concat() - 데이터 연결</div>
+                        <div class="code-block">
+# 수직 방향 연결
+pd.concat([df1, df2])
+
+# 수평 방향 연결
+pd.concat([df1, df2], axis=1)</div>
+                    </div>
+
+                    <div class="code-example">
+                        <div class="code-title">4. append() - 행 추가</div>
+                        <div class="code-block">
+# 단일 행 추가
+df1.append(new_row)
+
+# 다른 데이터프레임 추가
+df1.append(df2, 
+    ignore_index=True)</div>
+                    </div>
+                </div>
+
+                <div class="note">
+                    <i class="fas fa-lightbulb"></i>
+                    실무 팁: merge()는 데이터 관계를 기반으로 할 때, concat()은 단순 데이터 결합 시 사용하면 효과적입니다.
+                    대용량 데이터 병합 시에는 메모리 사용량을 고려하여 chunk 단위로 처리하는 것이 좋습니다.
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+    

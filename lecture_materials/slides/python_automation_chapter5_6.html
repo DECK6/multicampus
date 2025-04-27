@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 자동화 교육 교안 - 챕터 5: 물리자동화의 이해</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .intro-text {
+            color: #e2e8f0;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            max-width: 90%;
+        }
+        .code-block {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            margin: 10px 0;
+            color: #e2e8f0;
+            overflow-x: auto;
+            border-left: 4px solid #4B8BBE;
+        }
+        .code-block pre {
+            margin: 0;
+            white-space: pre-wrap;
+        }
+        .prompt-box {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 15px;
+            border-left: 3px solid #4B8BBE;
+        }
+        .prompt-label {
+            font-size: 14px;
+            font-weight: bold;
+            color: #FFD43B;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+        .prompt-label i {
+            margin-right: 6px;
+        }
+        .prompt-text {
+            font-style: italic;
+            color: #cbd5e0;
+        }
+        .example-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .example-title i {
+            margin-right: 12px;
+            font-size: 24px;
+        }
+        .example-desc {
+            color: #e2e8f0;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .step-box {
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .step-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+        .step-title .step-number {
+            background: #4B8BBE;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 16px;
+            margin-right: 12px;
+        }
+        .step-content {
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+        .two-column {
+            display: flex;
+            gap: 30px;
+        }
+        .column {
+            flex: 1;
+        }
+        .tip-box {
+            background-color: rgba(255, 212, 59, 0.1);
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin-top: 25px;
+            border: 1px solid rgba(255, 212, 59, 0.3);
+        }
+        .tip-title {
+            display: flex;
+            align-items: center;
+            color: #FFD43B;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .tip-title i {
+            margin-right: 8px;
+        }
+        .tip-content {
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">7</div>
+                <div class="title">자동화 예제: 실용적인 워크플로우</div>
+            </div>
+            
+            <p class="intro-text">
+                이번 페이지에서는 지금까지 배운 PyAutoGUI 기능들을 조합하여 실제 작업을 자동화하는 
+                예제를 살펴보겠습니다. 마우스, 키보드, 스크린샷, 윈도우 제어 기능을 함께 사용하여 
+                완전한 자동화 워크플로우를 구현하는 방법을 알아봅니다.
+            </p>
+            
+            <div class="example-title">
+                <i class="fas fa-file-alt"></i>예제: 주기적인 데이터 업데이트 자동화
+            </div>
+            <p class="example-desc">
+                매일 특정 시간에 엑셀 파일을 열고, 데이터를 새로 고침한 후, 결과를 저장하고 닫는 작업을 자동화하는 스크립트입니다.
+            </p>
+            
+            <div class="two-column">
+                <div class="column">
+                    <div class="step-box">
+                        <div class="step-title">
+                            <div class="step-number">1</div>
+                            프로그램 실행 및 창 제어
+                        </div>
+                        <div class="step-content">
+                            <p>Excel 프로그램을 시작하고 창을 제어합니다.</p>
+                            <div class="code-block">
+<pre>import pyautogui
+import subprocess
+import time
+
+# Excel 실행
+subprocess.Popen('excel "report.xlsx"')
+
+# 프로그램이 로드될 때까지 대기
+time.sleep(3)
+
+# Excel 창 찾기
+excel_window = pyautogui.getWindowsWithTitle('report.xlsx')[0]
+excel_window.activate()
+excel_window.maximize()</pre>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step-box">
+                        <div class="step-title">
+                            <div class="step-number">2</div>
+                            데이터 새로고침
+                        </div>
+                        <div class="step-content">
+                            <p>단축키를 사용하여 데이터를 새로고침합니다.</p>
+                            <div class="code-block">
+<pre># 데이터 탭으로 이동 (Alt+A)
+pyautogui.hotkey('alt', 'a')
+time.sleep(0.5)
+
+# 새로고침 옵션 선택 (키보드 방향키와 Enter 사용)
+# 메뉴 구조에 따라 달라질 수 있음
+pyautogui.press('r')
+pyautogui.press('a')  # 모두 새로고침 선택
+time.sleep(2)  # 새로고침 완료 대기</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="column">
+                    <div class="step-box">
+                        <div class="step-title">
+                            <div class="step-number">3</div>
+                            저장 및 종료
+                        </div>
+                        <div class="step-content">
+                            <p>파일을 저장하고 프로그램을 종료합니다.</p>
+                            <div class="code-block">
+<pre># 저장 (Ctrl+S)
+pyautogui.hotkey('ctrl', 's')
+time.sleep(1)
+
+# 엑셀 종료
+pyautogui.hotkey('alt', 'f4')
+
+# 변경사항 저장 확인 다이얼로그가 나타날 경우
+# 저장(S) 버튼 클릭 또는 Enter 키 사용
+save_btn = pyautogui.locateOnScreen('save_button.png')
+if save_btn:
+    pyautogui.click(save_btn)
+else:
+    pyautogui.press('enter')
+
+print("데이터 업데이트 완료!")</pre>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step-box">
+                        <div class="step-title">
+                            <div class="step-number">4</div>
+                            예외 처리 및 안전장치
+                        </div>
+                        <div class="step-content">
+                            <p>자동화 스크립트의 안정성을 높이는 예외 처리를 추가합니다.</p>
+                            <div class="code-block">
+<pre>try:
+    # 앞서 작성한 자동화 코드
+    # ...
+except Exception as e:
+    print(f"오류 발생: {e}")
+    # 스크린샷 찍어 오류 상태 저장
+    pyautogui.screenshot('error_state.png')
+finally:
+    # 실행 중인 Excel이 남아있는지 확인하고 종료
+    excel_windows = pyautogui.getWindowsWithTitle('Excel')
+    for window in excel_windows:
+        window.close()</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <div class="tip-title"><i class="fas fa-lightbulb"></i> 자동화 스크립트 작성 팁</div>
+                <div class="tip-content">
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li><strong>충분한 대기 시간:</strong> 프로그램 로딩, 화면 전환, 다이얼로그 표시 등에 시간 지연을 추가하세요.</li>
+                        <li><strong>이미지 인식 대안:</strong> 이미지 인식이 실패할 경우를 대비해 키보드 단축키나 좌표 기반 클릭 등의 대안을 준비하세요.</li>
+                        <li><strong>스크립트 테스트:</strong> 자동화 스크립트를 여러 번 테스트하여 다양한 상황에서도 안정적으로 작동하는지 확인하세요.</li>
+                        <li><strong>주기적 실행:</strong> Windows의 작업 스케줄러나 cron과 같은 도구를 사용하여 스크립트를 정기적으로 실행할 수 있습니다.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="prompt-box mt-6">
+                <div class="prompt-label"><i class="fas fa-comment-alt"></i>ChatGPT 프롬프트</div>
+                <p class="prompt-text">"PyAutoGUI를 사용하여 매일 웹사이트에서 데이터를 자동으로 다운로드하고 저장하는 스크립트를 작성해줘"</p>
+            </div>
+        </div>
+    </div>
+</body>
+    

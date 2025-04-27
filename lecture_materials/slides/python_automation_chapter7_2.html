@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 7</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 44px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .intro {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: #e2e8f0;
+            max-width: 90%;
+        }
+        .libraries-comparison {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .library-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        .library-card:hover {
+            transform: translateY(-5px);
+            background-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+        }
+        .library-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .library-icon {
+            background: linear-gradient(45deg, #4B8BBE, #306998);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+        .library-icon i {
+            font-size: 24px;
+            color: #FFD43B;
+        }
+        .library-name {
+            font-size: 22px;
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+        .library-desc {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #cbd5e0;
+            margin-bottom: 15px;
+        }
+        .feature-list {
+            margin-top: 15px;
+        }
+        .feature-item {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 10px;
+        }
+        .feature-icon {
+            color: #FFD43B;
+            margin-right: 8px;
+            font-size: 14px;
+        }
+        .feature-text {
+            font-size: 14px;
+            color: #e2e8f0;
+        }
+        .code-snippet {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: #a0aec0;
+            overflow: auto;
+        }
+        .highlight {
+            color: #FFD43B;
+        }
+        .comment {
+            color: #718096;
+            font-style: italic;
+        }
+        .footer {
+            margin-top: 30px;
+            font-size: 16px;
+            color: #a0aec0;
+            text-align: center;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">3</div>
+                <div class="title">웹 자동화를 위한 파이썬 라이브러리</div>
+            </div>
+            
+            <p class="intro">
+                파이썬에서 웹 자동화를 구현할 때 사용할 수 있는 다양한 라이브러리들이 있습니다. 각 라이브러리는 특징과 장단점이 있어 자동화 목적에 맞게 선택해야 합니다.
+            </p>
+            
+            <div class="libraries-comparison">
+                <div class="library-card">
+                    <div class="library-header">
+                        <div class="library-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h3 class="library-name">Selenium</h3>
+                    </div>
+                    <p class="library-desc">
+                        실제 브라우저를 제어하여 사용자 행동을 시뮬레이션하는 강력한 웹 자동화 도구입니다.
+                    </p>
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <span class="feature-icon"><i class="fas fa-check"></i></span>
+                            <span class="feature-text">자바스크립트가 동적으로 생성하는 콘텐츠 처리 가능</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon"><i class="fas fa-check"></i></span>
+                            <span class="feature-text">실제 사용자처럼 클릭, 입력 등의 상호작용 가능</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon"><i class="fas fa-check"></i></span>
+                            <span class="feature-text">여러 브라우저(Chrome, Firefox, Edge 등) 지원</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon"><i class="fas fa-check"></i></span>
+                            <span class="feature-text">로그인, 파일 업로드 등 복잡한 웹 작업 가능</span>
+                        </div>
+                    </div>
+                    <div class="code-snippet">
+                        <span class="comment"># ChatGPT: "간단한 셀레니움 브라우저 열기 코드"</span><br>
+                        <span class="highlight">from</span> selenium <span class="highlight">import</span> webdriver<br>
+                        <br>
+                        driver = webdriver.Chrome()<br>
+                        driver.get(<span class="highlight">"https://www.example.com"</span>)<br>
+                        <span class="comment"># 브라우저가 열리고 웹사이트에 접속됨</span>
+                    </div>
+                </div>
+                
+                <div class="library-card">
+                    <div class="library-header">
+                        <div class="library-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h3 class="library-name">BeautifulSoup</h3>
+                    </div>
+                    <p class="library-desc">
+                        HTML 및 XML 파싱 라이브러리로, 웹페이지의 정보를 추출하는 데 특화되어 있습니다.
+                    </p>
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <span class="feature-icon"><i class="fas fa-check"></i></span>
+                            <span class="feature-text">간단한 HTML 파싱 및 데이터 추출</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon"><i class="fas fa-check"></i></span>
+                            <span class="feature-text">빠른 처리 속도와 적은 리소스 사용</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon"><i class="fas fa-times"></i></span>
+                            <span class="feature-text">자바스크립트로 생성된 콘텐츠 처리 불가</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon"><i class="fas fa-times"></i></span>
+                            <span class="feature-text">클릭, 입력 등의 상호작용 불가</span>
+                        </div>
+                    </div>
+                    <div class="code-snippet">
+                        <span class="comment"># ChatGPT: "BeautifulSoup 기본 사용 예시"</span><br>
+                        <span class="highlight">import</span> requests<br>
+                        <span class="highlight">from</span> bs4 <span class="highlight">import</span> BeautifulSoup<br>
+                        <br>
+                        response = requests.get(<span class="highlight">"https://example.com"</span>)<br>
+                        soup = BeautifulSoup(response.text, <span class="highlight">'html.parser'</span>)
+                    </div>
+                </div>
+                
+                <div class="library-card">
+                    <div class="library-header">
+                        <div class="library-icon">
+                            <i class="fas fa-theater-masks"></i>
+                        </div>
+                        <h3 class="library-name">Playwright</h3>
+                    </div>
+                    <p class="library-desc">
+                        Microsoft에서 개발한 최신 웹 자동화 라이브러리로, Selenium보다 더 빠르고 안정적입니다.
+                    </p>
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <span class="feature-icon"><i class="fas fa-check"></i></span>
+                            <span class="feature-text">모든 주요 브라우저에서 자동화 지원</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon"><i class="fas fa-check"></i></span>
+                            <span class="feature-text">Selenium보다 더 빠른 실행 속도 (평균 1.5-2배)</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon"><i class="fas fa-check"></i></span>
+                            <span class="feature-text">자동 대기 기능으로 안정적인 동작</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon"><i class="fas fa-check"></i></span>
+                            <span class="feature-text">모바일 에뮬레이션 및 네트워크 제어 기능</span>
+                        </div>
+                    </div>
+                    <div class="code-snippet">
+                        <span class="comment"># ChatGPT: "Playwright 기본 사용 예시"</span><br>
+                        <span class="highlight">from</span> playwright.sync_api <span class="highlight">import</span> sync_playwright<br>
+                        <br>
+                        <span class="highlight">with</span> sync_playwright() <span class="highlight">as</span> p:<br>
+                        &nbsp;&nbsp;browser = p.chromium.launch()<br>
+                        &nbsp;&nbsp;page = browser.new_page()<br>
+                        &nbsp;&nbsp;page.goto(<span class="highlight">"https://example.com"</span>)
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                "이 챕터에서는 Selenium을 중심으로 7가지 웹 제어 행동을 자동화하는 방법을 알아봅니다"
+            </div>
+        </div>
+    </div>
+</body>
+    

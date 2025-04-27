@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 16</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: calc(100vh - 80px);
+            max-height: 720px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 24px;
+            margin: 0 auto 30px;
+        }
+        .title {
+            font-size: 48px;
+            font-weight: 700;
+            color: #FFD43B;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .message {
+            font-size: 24px;
+            color: #e2e8f0;
+            line-height: 1.8;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .highlight {
+            color: #FFD43B;
+            font-weight: 600;
+        }
+        .footer {
+            position: absolute;
+            bottom: 40px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 18px;
+            color: #a0aec0;
+            font-style: italic;
+        }
+        .icon-grid {
+            display: flex;
+            gap: 40px;
+            margin: 50px 0;
+        }
+        .icon-item {
+            text-align: center;
+        }
+        .icon-circle {
+            width: 80px;
+            height: 80px;
+            background: rgba(75, 139, 190, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            transition: all 0.3s ease;
+        }
+        .icon-circle:hover {
+            transform: scale(1.1);
+            background: rgba(75, 139, 190, 0.3);
+        }
+        .icon-circle i {
+            font-size: 36px;
+            color: #FFD43B;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">14</div>
+                <h1 class="title">수고하셨습니다!</h1>
+            </div>
+            
+            <p class="message">
+                이틀간의 파이썬 자동화 교육을 모두 마치셨습니다.<br>
+                <span class="highlight">크롤링부터 데이터 처리, 문서 작성, 이메일 전송까지</span><br>
+                업무 자동화의 기초를 모두 배우셨습니다.
+            </p>
+
+            <div class="icon-grid">
+                <div class="icon-item">
+                    <div class="icon-circle">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <p>자동화</p>
+                </div>
+                <div class="icon-item">
+                    <div class="icon-circle">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <p>시간 절약</p>
+                </div>
+                <div class="icon-item">
+                    <div class="icon-circle">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <p>생산성</p>
+                </div>
+                <div class="icon-item">
+                    <div class="icon-circle">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <p>혁신</p>
+                </div>
+            </div>
+
+            <p class="message">
+                이제 여러분은 <span class="highlight">파이썬 자동화의 고수</span>입니다.<br>
+                배운 내용을 활용하여 더 효율적인 업무 환경을 만들어보세요!
+            </p>
+
+            <div class="footer">
+                "자동화의 시작, 이제 당신의 차례입니다"
+            </div>
+        </div>
+    </div>
+</body>
+    

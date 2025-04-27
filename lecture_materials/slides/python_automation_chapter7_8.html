@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 7</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 44px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .intro {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: #e2e8f0;
+            max-width: 90%;
+        }
+        .two-column {
+            display: flex;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .column {
+            flex: 1;
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            background-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+        }
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .card-title i {
+            margin-right: 10px;
+        }
+        .card-content {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #e2e8f0;
+        }
+        .code-block {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: #e2e8f0;
+            overflow: auto;
+        }
+        .highlight {
+            color: #FFD43B;
+        }
+        .comment {
+            color: #718096;
+            font-style: italic;
+        }
+        .scrolling-methods {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .method-box {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+        .method-name {
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 8px;
+            font-family: 'Courier New', monospace;
+        }
+        .method-desc {
+            font-size: 14px;
+            color: #e2e8f0;
+            line-height: 1.5;
+        }
+        .scroll-diagram {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 20px 0;
+        }
+        .scroll-direction {
+            text-align: center;
+            padding: 10px;
+            width: 130px;
+        }
+        .scroll-icon {
+            background: linear-gradient(45deg, #4B8BBE, #306998);
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+        }
+        .scroll-icon i {
+            font-size: 30px;
+            color: #FFD43B;
+        }
+        .scroll-label {
+            font-size: 16px;
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+        .tip-box {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-left: 4px solid #FFD43B;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .tip-title {
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+        .tip-title i {
+            margin-right: 8px;
+        }
+        .tip-content {
+            font-size: 15px;
+            color: #e2e8f0;
+        }
+        .page-visual {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            height: 200px;
+            position: relative;
+            overflow: visible;
+            margin-top: 20px;
+        }
+        .page-content {
+            width: 100%;
+            height: 400px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+            border-radius: 12px;
+        }
+        .viewport {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            border: 2px dashed #FFD43B;
+            box-sizing: border-box;
+            border-radius: 12px;
+        }
+        .scroll-indicator {
+            position: absolute;
+            right: 10px;
+            top: 20px;
+            bottom: 20px;
+            width: 8px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+        .scroll-thumb {
+            position: absolute;
+            top: 0;
+            width: 8px;
+            height: 30px;
+            background-color: #FFD43B;
+            border-radius: 4px;
+            animation: scrolling 3s infinite alternate;
+        }
+        @keyframes scrolling {
+            0% { top: 0; }
+            100% { top: calc(100% - 30px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">9</div>
+                <div class="title">행동 6: 페이지 스크롤</div>
+            </div>
+            
+            <p class="intro">
+                웹페이지는 종종 화면보다 길어 스크롤이 필요합니다. Selenium을 사용하면 자바스크립트를 통해 페이지를 다양한 방식으로 스크롤할 수 있으며, 이는 화면 밖 콘텐츠에 접근하거나 무한 스크롤 페이지를 자동화하는 데 필수적입니다.
+            </p>
+            
+            <div class="two-column">
+                <div class="column">
+                    <div class="card">
+                        <h3 class="card-title"><i class="fas fa-arrows-alt-v"></i>기본 스크롤 방법</h3>
+                        <div class="card-content">
+                            <p>자바스크립트를 통해 페이지의 다양한 위치로 스크롤할 수 있습니다.</p>
+                            
+                            <div class="code-block">
+                                <span class="comment"># ChatGPT: "셀레니움으로 페이지 스크롤하기"</span><br>
+                                <span class="comment"># 페이지 맨 아래로 스크롤</span><br>
+                                driver.execute_script(<span class="highlight">"window.scrollTo(0, document.body.scrollHeight);"</span>)<br>
+                                <br>
+                                <span class="comment"># 페이지 맨 위로 스크롤</span><br>
+                                driver.execute_script(<span class="highlight">"window.scrollTo(0, 0);"</span>)<br>
+                                <br>
+                                <span class="comment"># 특정 픽셀만큼 아래로 스크롤</span><br>
+                                driver.execute_script(<span class="highlight">"window.scrollBy(0, 500);"</span>)<br>
+                                <br>
+                                <span class="comment"># 특정 픽셀만큼 위로 스크롤</span><br>
+                                driver.execute_script(<span class="highlight">"window.scrollBy(0, -300);"</span>)
+                            </div>
+                            
+                            <div class="scroll-diagram">
+                                <div class="scroll-direction">
+                                    <div class="scroll-icon">
+                                        <i class="fas fa-arrow-up"></i>
+                                    </div>
+                                    <div class="scroll-label">위로 스크롤</div>
+                                </div>
+                                <div class="scroll-direction">
+                                    <div class="scroll-icon">
+                                        <i class="fas fa-arrow-down"></i>
+                                    </div>
+                                    <div class="scroll-label">아래로 스크롤</div>
+                                </div>
+                                <div class="scroll-direction">
+                                    <div class="scroll-icon">
+                                        <i class="fas fa-arrows-alt-v"></i>
+                                    </div>
+                                    <div class="scroll-label">전체 페이지</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <h3 class="card-title"><i class="fas fa-object-ungroup"></i>특정 요소로 스크롤</h3>
+                        <div class="card-content">
+                            <p>페이지 내의 특정 요소가 보이도록 스크롤하는 방법입니다.</p>
+                            
+                            <div class="code-block">
+                                <span class="comment"># ChatGPT: "셀레니움으로 특정 요소가 보이도록 스크롤하기"</span><br>
+                                <span class="highlight">from</span> selenium <span class="highlight">import</span> webdriver<br>
+                                <span class="highlight">from</span> selenium.webdriver.common.by <span class="highlight">import</span> By<br>
+                                <br>
+                                <span class="comment"># 스크롤할 요소 찾기</span><br>
+                                element = driver.find_element(By.ID, <span class="highlight">"footer"</span>)<br>
+                                <br>
+                                <span class="comment"># 요소가 화면에 보이도록 스크롤</span><br>
+                                driver.execute_script(<span class="highlight">"arguments[0].scrollIntoView();"</span>, element)<br>
+                                <br>
+                                <span class="comment"># 요소가 화면 상단에 위치하도록 스크롤</span><br>
+                                driver.execute_script(<span class="highlight">"arguments[0].scrollIntoView(true);"</span>, element)<br>
+                                <br>
+                                <span class="comment"># 요소가 화면 하단에 위치하도록 스크롤</span><br>
+                                driver.execute_script(<span class="highlight">"arguments[0].scrollIntoView(false);"</span>, element)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="column">
+                    <div class="card">
+                        <h3 class="card-title"><i class="fas fa-infinity"></i>무한 스크롤 페이지 처리</h3>
+                        <div class="card-content">
+                            <p>소셜 미디어, 검색 결과 등 많은 웹사이트에서 무한 스크롤을 사용합니다. 이를 자동화하는 방법입니다.</p>
+                            
+                            <div class="code-block">
+                                <span class="comment"># ChatGPT: "셀레니움으로 무한 스크롤 페이지 자동화하기"</span><br>
+                                <span class="highlight">import</span> time<br>
+                                <br>
+                                <span class="highlight">def</span> <span class="highlight">scroll_to_bottom</span>(driver, scroll_pause_time=1.0):<br>
+                                &nbsp;&nbsp;<span class="comment"># 현재 스크롤 위치 가져오기</span><br>
+                                &nbsp;&nbsp;last_height = driver.execute_script(<span class="highlight">"return document.body.scrollHeight"</span>)<br>
+                                &nbsp;&nbsp;<br>
+                                &nbsp;&nbsp;<span class="highlight">while</span> True:<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># 페이지 맨 아래로 스크롤</span><br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;driver.execute_script(<span class="highlight">"window.scrollTo(0, document.body.scrollHeight);"</span>)<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># 페이지 로딩 대기</span><br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;time.sleep(scroll_pause_time)<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># 새 스크롤 높이 계산</span><br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;new_height = driver.execute_script(<span class="highlight">"return document.body.scrollHeight"</span>)<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># 스크롤이 더 이상 내려가지 않으면 종료</span><br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="highlight">if</span> new_height == last_height:<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;last_height = new_height
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <h3 class="card-title"><i class="fas fa-th-list"></i>특정 데이터 수집을 위한 스크롤</h3>
+                        <div class="card-content">
+                            <div class="code-block">
+                                <span class="comment"># ChatGPT: "셀레니움으로 스크롤하며 데이터 수집하기"</span><br>
+                                <span class="highlight">def</span> <span class="highlight">scroll_and_collect_data</span>(driver, target_count=50):<br>
+                                &nbsp;&nbsp;all_items = []<br>
+                                &nbsp;&nbsp;<br>
+                                &nbsp;&nbsp;<span class="highlight">while</span> len(all_items) < target_count:<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># 현재 표시된 아이템 수집</span><br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;items = driver.find_elements(By.CSS_SELECTOR, <span class="highlight">".product-item"</span>)<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># 새 아이템만 목록에 추가</span><br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="highlight">for</span> item <span class="highlight">in</span> items:<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;item_id = item.get_attribute(<span class="highlight">"data-id"</span>)<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="highlight">if</span> item_id <span class="highlight">not in</span> [i[<span class="highlight">"id"</span>] <span class="highlight">for</span> i <span class="highlight">in</span> all_items]:<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;item_data = {<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="highlight">"id"</span>: item_id,<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="highlight">"name"</span>: item.find_element(By.CSS_SELECTOR, <span class="highlight">".item-name"</span>).text,<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="highlight">"price"</span>: item.find_element(By.CSS_SELECTOR, <span class="highlight">".item-price"</span>).text<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;all_items.append(item_data)<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;print(<span class="highlight">f"현재 {len(all_items)}개 아이템 수집됨"</span>)<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># 더 많은 아이템이 필요하면 스크롤</span><br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="highlight">if</span> len(all_items) < target_count:<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;driver.execute_script(<span class="highlight">"window.scrollBy(0, 800);"</span>)<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;time.sleep(1)  <span class="comment"># 새 콘텐츠 로딩 대기</span><br>
+                                &nbsp;&nbsp;<br>
+                                &nbsp;&nbsp;<span class="highlight">return</span> all_items
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tip-box">
+                        <div class="tip-title"><i class="fas fa-lightbulb"></i>스크롤 팁</div>
+                        <div class="tip-content">
+                            <p>1. 너무 빠른 스크롤은 콘텐츠가 제대로 로드되지 않을 수 있으니 적절한 대기 시간을 설정하세요.</p>
+                            <p>2. 스크롤 전후로 페이지 높이를 비교하면 새 콘텐츠가 로드되었는지 확인할 수 있습니다.</p>
+                            <p>3. 특정 요소가 보이도록 스크롤한 후 클릭이나 데이터 추출 작업을 수행하세요.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+    

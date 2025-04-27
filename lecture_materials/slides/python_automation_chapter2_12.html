@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 2</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 44px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .intro {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #e2e8f0;
+            margin-bottom: 20px;
+        }
+        .highlight {
+            color: #FFD43B;
+            font-weight: 600;
+        }
+        .use-cases-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        .use-case-card {
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .use-case-card:hover {
+            transform: translateY(-5px);
+            background-color: rgba(75, 139, 190, 0.2);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+        .use-case-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+        }
+        .use-case-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            background: linear-gradient(45deg, #4B8BBE, #306998);
+            flex-shrink: 0;
+        }
+        .use-case-icon i {
+            font-size: 18px;
+            color: #FFD43B;
+        }
+        .use-case-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+        .use-case-desc {
+            font-size: 15px;
+            color: #cbd5e0;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        .code-example {
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            padding: 12px;
+            border-radius: 8px;
+            background-color: rgba(0, 0, 0, 0.3);
+            color: #f8f8f2;
+            white-space: pre;
+            overflow-x: auto;
+            margin-bottom: 10px;
+        }
+        .result {
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            background-color: rgba(255, 212, 59, 0.1);
+            color: #e2e8f0;
+            border-left: 3px solid #FFD43B;
+        }
+        .code-section {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 20px;
+            border-left: 4px solid #4B8BBE;
+            position: relative;
+        }
+        .code-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .code-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-left: 10px;
+        }
+        .code-content {
+            font-family: 'Courier New', monospace;
+            font-size: 15px;
+            line-height: 1.5;
+            color: #f8f8f2;
+            white-space: pre;
+            overflow-x: auto;
+        }
+        .prompt-badge {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background-color: #10a37f;
+            color: white;
+            font-size: 14px;
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .prompt-badge i {
+            margin-right: 8px;
+        }
+        .keyword {
+            color: #ff79c6;
+        }
+        .number {
+            color: #bd93f9;
+        }
+        .string {
+            color: #f1fa8c;
+        }
+        .comment {
+            color: #6272a4;
+        }
+        .function {
+            color: #50fa7b;
+        }
+        .operator {
+            color: #FFD43B;
+        }
+        .tips {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+            border-left: 4px solid #4B8BBE;
+        }
+        .tips-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .tips-title i {
+            margin-right: 8px;
+        }
+        .tips-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .tips-item {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-size: 14px;
+            color: #e2e8f0;
+            display: flex;
+            align-items: center;
+        }
+        .tips-item i {
+            color: #FFD43B;
+            margin-right: 8px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">13</div>
+                <div class="title">인덱싱과 슬라이싱 실제 활용 예제</div>
+            </div>
+            
+            <div class="intro">
+                인덱싱과 슬라이싱은 파이썬에서 데이터를 효율적으로 처리하는 데 매우 유용합니다. 실제 업무에서 활용할 수 있는 다양한 예제를 통해 어떻게 활용되는지 알아보겠습니다.
+            </div>
+            
+            <div class="use-cases-grid">
+                <div class="use-case-card">
+                    <div class="use-case-header">
+                        <div class="use-case-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div class="use-case-title">데이터 추출 및 필터링</div>
+                    </div>
+                    <div class="use-case-desc">
+                        대용량 데이터에서 특정 부분만 추출하거나 필터링할 때 슬라이싱을 활용할 수 있습니다.
+                    </div>
+                    <div class="code-example"><span class="comment"># 대용량 로그 데이터에서 최근 5개 항목만 추출</span>
+logs = ["로그1", "로그2", "로그3", ... "로그100"]
+recent_logs = logs[-5:]  <span class="comment"># 마지막 5개 항목</span>
+
+<span class="comment"># 홀수 인덱스 항목만 추출 (짝수 위치 요소)</span>
+odd_positions = logs[1::2]</div>
+                    <div class="result">결과: 대용량 데이터에서 필요한 부분만 빠르게 추출</div>
+                </div>
+                
+                <div class="use-case-card">
+                    <div class="use-case-header">
+                        <div class="use-case-icon">
+                            <i class="fas fa-text-width"></i>
+                        </div>
+                        <div class="use-case-title">문자열 처리</div>
+                    </div>
+                    <div class="use-case-desc">
+                        문자열 데이터를 정리하고 필요한, 텍스트 부분만 추출하거나 변환하는 작업이 가능합니다.
+                    </div>
+                    <div class="code-example"><span class="comment"># 이메일 주소에서 도메인 추출</span>
+email = "<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d7a2a4b2a597b2afb6baa7bbb2f9b4b8ba">[email&#160;protected]</a>"
+domain = email[email.index('@')+1:]  <span class="comment"># example.com</span>
+
+<span class="comment"># 파일 경로에서 파일명만 추출</span>
+path = "/home/user/documents/report.pdf"
+filename = path.split('/')[-1]  <span class="comment"># report.pdf</span></div>
+                    <div class="result">결과: 복잡한 문자열에서 필요한 정보만 정확히 추출</div>
+                </div>
+                
+                <div class="use-case-card">
+                    <div class="use-case-header">
+                        <div class="use-case-icon">
+                            <i class="fas fa-table"></i>
+                        </div>
+                        <div class="use-case-title">데이터 분할 및 처리</div>
+                    </div>
+                    <div class="use-case-desc">
+                        대규모 데이터셋을 작은 청크(chunk)로 나누어 처리하거나 특정 패턴의 데이터만 선택적으로 처리할 수 있습니다.
+                    </div>
+                    <div class="code-example"><span class="comment"># 리스트를 여러 부분으로 분할하여 처리</span>
+data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+chunk_size = 3
+
+<span class="comment"># 리스트를 3개씩 분할하여 처리</span>
+for i in range(0, len(data), chunk_size):
+    chunk = data[i:i+chunk_size]
+    print(f"Processing chunk: {chunk}")</div>
+                    <div class="result">결과: 대용량 데이터를 효율적으로 분할 처리</div>
+                </div>
+                
+                <div class="use-case-card">
+                    <div class="use-case-header">
+                        <div class="use-case-icon">
+                            <i class="fas fa-random"></i>
+                        </div>
+                        <div class="use-case-title">데이터 변환 및 조작</div>
+                    </div>
+                    <div class="use-case-desc">
+                        리스트나 문자열 데이터를 변환하거나 특정 형태로 조작할 때 슬라이싱을 활용할 수 있습니다.
+                    </div>
+                    <div class="code-example"><span class="comment"># 문자열 뒤집기</span>
+text = "Python Programming"
+reversed_text = text[::-1]  <span class="comment"># "gnimmargorP nohtyP"</span>
+
+<span class="comment"># 리스트의 일부분 교체하기</span>
+numbers = [1, 2, 3, 4, 5]
+numbers[1:4] = [20, 30, 40]  <span class="comment"># [1, 20, 30, 40, 5]</span></div>
+                    <div class="result">결과: 데이터 구조의 특정 부분을 쉽게 변환 및 조작</div>
+                </div>
+            </div>
+            
+            <div class="tips">
+                <div class="tips-title">
+                    <i class="fas fa-lightbulb"></i>
+                    인덱싱과 슬라이싱 활용 팁
+                </div>
+                <div class="tips-list">
+                    <div class="tips-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>슬라이싱은 범위를 벗어나도 오류가 발생하지 않음 (유연한 사용 가능)</span>
+                    </div>
+                    <div class="tips-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>음수 스텝을 사용하면 역순으로 요소 추출 가능</span>
+                    </div>
+                    <div class="tips-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>슬라이싱으로 얕은 복사본 생성: new_list = original_list[:]</span>
+                    </div>
+                    <div class="tips-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>다차원 리스트는 여러 인덱스를 사용: matrix[1][2]</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="code-section">
+                <div class="prompt-badge">
+                    <i class="fas fa-robot"></i>
+                    ChatGPT 프롬프트: 파이썬 인덱싱과 슬라이싱을 실제 업무에서 활용할 수 있는 실용적인 예제 코드를 작성해줘
+                </div>
+                
+                <div class="code-header">
+                    <i class="fas fa-code" style="color: #FFD43B;"></i>
+                    <div class="code-title">인덱싱과 슬라이싱 실무 활용 예제</div>
+                </div>
+                
+                <div class="code-content"><span class="comment"># 실무에서 활용할 수 있는 인덱싱과 슬라이싱 예제</span>
+
+<span class="comment"># 1. CSV 데이터에서 특정 열 추출하기</span>
+csv_data = [
+    ['이름', '부서', '직급', '연봉'],
+    ['김철수', '개발팀', '대리', 45000000],
+    ['이영희', '마케팅', '과장', 52000000],
+    ['박지민', '영업팀', '사원', 38000000],
+    ['최현우', '개발팀', '과장', 55000000]
+]
+
+<span class="comment"># 헤더를 제외한 직원 데이터만 추출</span>
+employees = csv_data[<span class="number">1</span>:]
+
+<span class="comment"># 개발팀 직원만 필터링 (부서 인덱스 = 1)</span>
+dev_team = [emp <span class="keyword">for</span> emp <span class="keyword">in</span> employees <span class="keyword">if</span> emp[<span class="number">1</span>] == <span class="string">'개발팀'</span>]
+print(<span class="string">f"개발팀 직원: {dev_team}"</span>)
+
+<span class="comment"># 모든 직원의 연봉 리스트 추출 (연봉 인덱스 = 3)</span>
+salaries = [emp[<span class="number">3</span>] <span class="keyword">for</span> emp <span class="keyword">in</span> employees]
+print(<span class="string">f"전체 연봉 목록: {salaries}"</span>)
+print(<span class="string">f"평균 연봉: {sum(salaries) / len(salaries):.0f}원"</span>)
+
+<span class="comment"># 2. 로그 파일 데이터 처리하기</span>
+log_entries = [
+    <span class="string">"2023-12-01 08:30:45 INFO: 시스템 시작"</span>,
+    <span class="string">"2023-12-01 08:32:12 WARNING: 디스크 공간 부족"</span>,
+    <span class="string">"2023-12-01 08:35:30 ERROR: 데이터베이스 연결 실패"</span>,
+    <span class="string">"2023-12-01 08:40:15 INFO: 백업 시작"</span>,
+    <span class="string">"2023-12-01 08:45:22 INFO: 백업 완료"</span>
+]
+
+<span class="comment"># 시간 정보만 추출 (처음부터 공백까지)</span>
+timestamps = [log[:log.<span class="function">index</span>(<span class="string">' INFO'</span>) <span class="keyword">if</span> <span class="string">' INFO'</span> <span class="keyword">in</span> log 
+              <span class="keyword">else</span> log.<span class="function">index</span>(<span class="string">' WARNING'</span>) <span class="keyword">if</span> <span class="string">' WARNING'</span> <span class="keyword">in</span> log 
+              <span class="keyword">else</span> log.<span class="function">index</span>(<span class="string">' ERROR'</span>)] <span class="keyword">for</span> log <span class="keyword">in</span> log_entries]
+print(<span class="string">f"타임스탬프: {timestamps}"</span>)
+
+<span class="comment"># 로그 레벨 카운팅</span>
+info_count = <span class="function">sum</span>(<span class="number">1</span> <span class="keyword">for</span> log <span class="keyword">in</span> log_entries <span class="keyword">if</span> <span class="string">'INFO'</span> <span class="keyword">in</span> log)
+error_count = <span class="function">sum</span>(<span class="number">1</span> <span class="keyword">for</span> log <span class="keyword">in</span> log_entries <span class="keyword">if</span> <span class="string">'ERROR'</span> <span class="keyword">in</span> log)
+print(<span class="string">f"INFO 로그 수: {info_count}, ERROR 로그 수: {error_count}"</span>)
+
+<span class="comment"># 3. 이메일 목록에서 도메인별 사용자 분류</span>
+emails = [<span class="string">"<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5b2e283e296a1b3c363a323775383436">[email&#160;protected]</a>"</span>, <span class="string">"<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1a6f697f68285a637b72757534797577">[email&#160;protected]</a>"</span>, <span class="string">"<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4b3e382e39780b2c262a222765282426">[email&#160;protected]</a>"</span>, 
+         <span class="string">"<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b9cccadccb8df9d7d8cfdccb97dad6d4">[email&#160;protected]</a>"</span>, <span class="string">"<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0c797f697e394c6b616d6560226f6361">[email&#160;protected]</a>"</span>]
+
+<span class="comment"># 도메인별 사용자 수 계산</span>
+domains = [email[email.<span class="function">index</span>(<span class="string">'@'</span>)+<span class="number">1</span>:] <span class="keyword">for</span> email <span class="keyword">in</span> emails]
+domain_counts = {}
+<span class="keyword">for</span> domain <span class="keyword">in</span> domains:
+    domain_counts[domain] = domain_counts.<span class="function">get</span>(domain, <span class="number">0</span>) + <span class="number">1</span>
+
+print(<span class="string">f"도메인별 사용자 수: {domain_counts}"</span>)</div>
+            </div>
+        </div>
+    </div>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body>
+    

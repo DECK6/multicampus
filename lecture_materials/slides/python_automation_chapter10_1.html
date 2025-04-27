@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pandas의 고급 기능과 실전 데이터 분석 기법</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .method-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+        .method-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        .method-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .method-title i {
+            margin-right: 10px;
+        }
+        .code-block {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Consolas', monospace;
+            font-size: 14px;
+            color: #e2e8f0;
+            margin: 10px 0;
+            white-space: pre;
+        }
+        .description {
+            color: #cbd5e0;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .note {
+            background: rgba(75, 139, 190, 0.2);
+            border-left: 4px solid #4B8BBE;
+            padding: 15px;
+            margin: 15px 0;
+            color: #e2e8f0;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">2</div>
+                <div class="title">데이터 그룹화와 집계 기법</div>
+            </div>
+
+            <div class="grid-container">
+                <div class="method-card">
+                    <div class="method-title">
+                        <i class="fas fa-layer-group"></i>
+                        기본 그룹화
+                    </div>
+                    <div class="description">
+                        groupby() 함수를 사용하여 데이터를 특정 열을 기준으로 그룹화합니다.
+                    </div>
+                    <div class="code-block">
+# 단일 열 기준 그룹화
+df.groupby('부서')['급여'].mean()
+
+# 다중 열 기준 그룹화
+df.groupby(['부서', '직급'])['급여'].sum()</div>
+                    <div class="note">
+                        💡 agg() 함수를 사용하면 여러 집계 함수를 동시에 적용할 수 있습니다.
+                    </div>
+                </div>
+
+                <div class="method-card">
+                    <div class="method-title">
+                        <i class="fas fa-calculator"></i>
+                        고급 집계 기법
+                    </div>
+                    <div class="description">
+                        다양한 집계 함수를 조합하여 복잡한 분석을 수행합니다.
+                    </div>
+                    <div class="code-block">
+# 여러 집계 함수 동시 적용
+df.groupby('부서').agg({
+    '급여': ['mean', 'sum', 'count'],
+    '나이': ['min', 'max']
+})</div>
+                </div>
+
+                <div class="method-card">
+                    <div class="method-title">
+                        <i class="fas fa-filter"></i>
+                        그룹 필터링
+                    </div>
+                    <div class="description">
+                        filter() 함수를 사용하여 조건에 맞는 그룹만 선택합니다.
+                    </div>
+                    <div class="code-block">
+# 평균 급여가 5000 이상인 부서만 선택
+df.groupby('부서').filter(
+    lambda x: x['급여'].mean() >= 5000
+)</div>
+                </div>
+
+                <div class="method-card">
+                    <div class="method-title">
+                        <i class="fas fa-random"></i>
+                        그룹 변환
+                    </div>
+                    <div class="description">
+                        transform() 함수로 그룹별 계산 결과를 원본 데이터에 적용합니다.
+                    </div>
+                    <div class="code-block">
+# 부서별 평균 급여 대비 개인 급여 비율 계산
+df['급여_비율'] = df['급여'] / df.groupby('부서')['급여'].transform('mean')</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+    

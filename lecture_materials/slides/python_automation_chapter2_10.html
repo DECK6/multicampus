@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 2</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 44px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .main-content {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .content-col {
+            flex: 1;
+        }
+        .section-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section-title i {
+            margin-right: 10px;
+        }
+        .content-box {
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .list-creation-methods {
+            margin-bottom: 20px;
+        }
+        .method-card {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-left: 3px solid #4B8BBE;
+            transition: all 0.3s ease;
+        }
+        .method-card:hover {
+            background-color: rgba(75, 139, 190, 0.2);
+            transform: translateX(5px);
+        }
+        .method-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 5px;
+        }
+        .method-code {
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            padding: 8px;
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, 0.3);
+            color: #f8f8f2;
+            margin-top: 8px;
+            white-space: pre;
+            overflow-x: auto;
+        }
+        .access-visual {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+        }
+        .list-boxes {
+            display: flex;
+            position: relative;
+            margin-bottom: 25px;
+        }
+        .index-markers {
+            display: flex;
+            position: absolute;
+            top: -25px;
+            left: 0;
+            width: 100%;
+        }
+        .index-marker {
+            width: 60px;
+            text-align: center;
+            font-size: 14px;
+            color: #FFD43B;
+        }
+        .negative-index {
+            position: absolute;
+            bottom: -25px;
+            left: 0;
+            width: 100%;
+            display: flex;
+        }
+        .list-box {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 5px;
+            background: linear-gradient(45deg, #4B8BBE, #306998);
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            position: relative;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .feature-item {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 12px;
+            display: flex;
+            align-items: flex-start;
+        }
+        .feature-icon {
+            width: 28px;
+            height: 28px;
+            background-color: rgba(75, 139, 190, 0.3);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+        .feature-icon i {
+            font-size: 14px;
+            color: #FFD43B;
+        }
+        .feature-text {
+            font-size: 14px;
+            color: #e2e8f0;
+            line-height: 1.4;
+        }
+        .code-section {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 20px;
+            border-left: 4px solid #4B8BBE;
+            position: relative;
+        }
+        .code-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .code-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-left: 10px;
+        }
+        .code-content {
+            font-family: 'Courier New', monospace;
+            font-size: 15px;
+            line-height: 1.5;
+            color: #f8f8f2;
+            white-space: pre;
+            overflow-x: auto;
+        }
+        .prompt-badge {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background-color: #10a37f;
+            color: white;
+            font-size: 14px;
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .prompt-badge i {
+            margin-right: 8px;
+        }
+        .keyword {
+            color: #ff79c6;
+        }
+        .number {
+            color: #bd93f9;
+        }
+        .string {
+            color: #f1fa8c;
+        }
+        .comment {
+            color: #6272a4;
+        }
+        .function {
+            color: #50fa7b;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">11</div>
+                <div class="title">리스트 생성과 요소 접근 방법</div>
+            </div>
+            
+            <div class="main-content">
+                <div class="content-col">
+                    <div class="section-title">
+                        <i class="fas fa-plus-circle"></i>
+                        리스트 생성 방법
+                    </div>
+                    
+                    <div class="content-box">
+                        <div class="list-creation-methods">
+                            <div class="method-card">
+                                <div class="method-title">1. 리터럴 표기법 (대괄호 사용)</div>
+                                <p class="text-sm text-gray-300">가장 일반적인 방법으로, 대괄호 [ ] 안에 요소를 쉼표로 구분하여 작성합니다.</p>
+                                <div class="method-code">
+<pre><code>fruits = ["사과", "바나나", "오렌지"]<br>empty_list = []</code></pre>
+                                </div>
+                            </div>
+                            
+                            <div class="method-card">
+                                <div class="method-title">2. list() 생성자 사용</div>
+                                <p class="text-sm text-gray-300">다른 이터러블(iterable) 객체로부터 리스트를 생성할 때 유용합니다.</p>
+                                <div class="method-code">
+<pre><code>numbers = list(range(1, 6))  # [1, 2, 3, 4, 5]<br>chars = list("Python")     # ['P', 'y', 't', 'h', 'o', 'n']<br>empty = list()            # []</code></pre>
+                                </div>
+                            </div>
+                            
+                            <div class="method-card">
+                                <div class="method-title">3. 리스트 컴프리헨션(List Comprehension)</div>
+                                <p class="text-sm text-gray-300">간결하고 효율적인 방법으로 기존 리스트를 기반으로 새 리스트를 생성합니다.</p>
+                                <div class="method-code">
+<pre><code>squares = [x**2 for x in range(1, 6)]  # [1, 4, 9, 16, 25]<br>evens = [x for x in range(10) if x % 2 == 0]  # [0, 2, 4, 6, 8]</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="section-title">
+                        <i class="fas fa-layer-group"></i>
+                        중첩 리스트 (Nested Lists)
+                    </div>
+                    
+                    <div class="content-box">
+                        <p class="text-gray-300 mb-3">리스트는 다른 리스트를 요소로 포함할 수 있으며, 이를 중첩 리스트 또는 다차원 리스트라고 합니다.</p>
+                        
+                        <div class="method-code mb-4">
+<pre><code>matrix = [<br>    [1, 2, 3],  # 첫 번째 행<br>    [4, 5, 6],  # 두 번째 행<br>    [7, 8, 9]   # 세 번째 행<br>]</code></pre>
+                        </div>
+                        
+                        <p class="text-gray-300 mb-2">중첩 리스트 요소 접근:</p>
+                        <div class="method-code">
+<pre><code>first_row = matrix[0]       # [1, 2, 3]<br>element = matrix[1][2]    # 두 번째 행, 세 번째 열: 6</code></pre>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-col">
+                    <div class="section-title">
+                        <i class="fas fa-hand-pointer"></i>
+                        리스트 요소 접근하기
+                    </div>
+                    
+                    <div class="content-box">
+                        <p class="text-gray-300 mb-3">파이썬에서는 인덱스를 사용하여 리스트의 개별 요소에 접근할 수 있습니다. 인덱스는 0부터 시작하며, 음수 인덱스를 사용하면 뒤에서부터 접근할 수 있습니다.</p>
+                        
+                        <div class="access-visual">
+                            <div class="list-boxes">
+                                <div class="index-markers">
+                                    <div class="index-marker">0</div>
+                                    <div class="index-marker">1</div>
+                                    <div class="index-marker">2</div>
+                                    <div class="index-marker">3</div>
+                                    <div class="index-marker">4</div>
+                                </div>
+                                <div class="list-box">A</div>
+                                <div class="list-box">B</div>
+                                <div class="list-box">C</div>
+                                <div class="list-box">D</div>
+                                <div class="list-box">E</div>
+                                <div class="negative-index">
+                                    <div class="index-marker">-5</div>
+                                    <div class="index-marker">-4</div>
+                                    <div class="index-marker">-3</div>
+                                    <div class="index-marker">-2</div>
+                                    <div class="index-marker">-1</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="method-code">
+<pre><code>letters = ['A', 'B', 'C', 'D', 'E']<br><br># 양수 인덱스 접근<br>first = letters[0]    # 'A'<br>third = letters[2]    # 'C'<br><br># 음수 인덱스 접근<br>last = letters[-1]    # 'E'<br>second_last = letters[-2]  # 'D'</code></pre>
+                        </div>
+                        
+                        <div class="feature-grid mt-4">
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-edit"></i>
+                                </div>
+                                <div class="feature-text">
+                                    <strong>요소 수정</strong>: 인덱스를 사용하여 특정 위치의 요소 값을 변경할 수 있습니다.
+                                    <div class="text-xs text-gray-400 mt-1"><pre><code>letters[1] = 'X'  # ['A', 'X', 'C', 'D', 'E']<br></code></pre></div>
+                                </div>
+                            </div>
+                            
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </div>
+                                <div class="feature-text">
+                                    <strong>인덱스 오류</strong>: 존재하지 않는 인덱스에 접근하면 IndexError가 발생합니다.
+                                    <div class="text-xs text-gray-400 mt-1"><pre><code>letters[10]  # IndexError: list index out of range<br></code></pre></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="code-section">
+                <div class="prompt-badge">
+                    <i class="fas fa-robot"></i>
+                    ChatGPT 프롬프트: 파이썬에서 다양한 방법으로 리스트를 생성하고 요소에 접근하는 코드 예제를 작성해줘
+                </div>
+                
+                <div class="code-header">
+                    <i class="fas fa-code" style="color: #FFD43B;"></i>
+                    <div class="code-title">리스트 생성과 요소 접근 예제</div>
+                </div>
+                
+                <div class="code-content"><span class="comment"># 다양한 방법으로 리스트 생성하기</span><br><br><span class="comment"># 1. 리터럴 표기법으로 생성</span><br>colors = [<span class="string">"빨강"</span>, <span class="string">"파랑"</span>, <span class="string">"초록"</span>, <span class="string">"노랑"</span>]<br>print(<span class="string">f"색상 리스트: {colors}"</span>)  <span class="comment"># 출력: 색상 리스트: ['빨강', '파랑', '초록', '노랑']</span><br><br><span class="comment"># 2. list() 생성자로 생성</span><br>numbers = <span class="function">list</span>(<span class="function">range</span>(<span class="number">1</span>, <span class="number">6</span>))<br>print(<span class="string">f"숫자 리스트: {numbers}"</span>)  <span class="comment"># 출력: 숫자 리스트: [1, 2, 3, 4, 5]</span><br><br>characters = <span class="function">list</span>(<span class="string">"Python"</span>)<br>print(<span class="string">f"문자 리스트: {characters}"</span>)  <span class="comment"># 출력: 문자 리스트: ['P', 'y', 't', 'h', 'o', 'n']</span><br><br><span class="comment"># 3. 리스트 컴프리헨션으로 생성</span><br>squares = [x**<span class="number">2</span> <span class="keyword">for</span> x <span class="keyword">in</span> <span class="function">range</span>(<span class="number">1</span>, <span class="number">6</span>)]<br>print(<span class="string">f"제곱 리스트: {squares}"</span>)  <span class="comment"># 출력: 제곱 리스트: [1, 4, 9, 16, 25]</span><br><br>even_numbers = [x <span class="keyword">for</span> x <span class="keyword">in</span> <span class="function">range</span>(<span class="number">10</span>) <span class="keyword">if</span> x % <span class="number">2</span> == <span class="number">0</span>]<br>print(<span class="string">f"짝수 리스트: {even_numbers}"</span>)  <span class="comment"># 출력: 짝수 리스트: [0, 2, 4, 6, 8]</span><br><br><span class="comment"># 4. 중첩 리스트 생성</span><br>matrix = [<br>    [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>],<br>    [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>],<br>    [<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]<br>]<br>print(<span class="string">f"행렬: {matrix}"</span>)<br><br><span class="comment"># 인덱스로 요소 접근하기</span><br>first_color = colors[<span class="number">0</span>]<br>last_color = colors[-<span class="number">1</span>]<br>print(<span class="string">f"첫 번째 색: {first_color}, 마지막 색: {last_color}"</span>)<br><br><span class="comment"># 중첩 리스트 요소 접근</span><br>center_element = matrix[<span class="number">1</span>][<span class="number">1</span>]  <span class="comment"># 가운데 요소</span><br>print(<span class="string">f"행렬의 중앙 요소: {center_element}"</span>)  <span class="comment"># 출력: 행렬의 중앙 요소: 5</span><br><br><span class="comment"># 요소 수정하기</span><br>colors[<span class="number">2</span>] = <span class="string">"보라"</span>  <span class="comment"># '초록'을 '보라'로 변경</span><br>print(<span class="string">f"수정된 색상 리스트: {colors}"</span>)<br><br><span class="comment"># 다양한 자료형이 포함된 리스트</span><br>mixed = [<span class="number">1</span>, <span class="string">"안녕"</span>, <span class="number">3.14</span>, <span class="keyword">True</span>, [<span class="number">1</span>, <span class="number">2</span>]]<br>print(<span class="string">f"혼합 리스트: {mixed}"</span>)<br>print(<span class="string">f"혼합 리스트의 세 번째 요소: {mixed[2]}"</span>)  <span class="comment"># 출력: 혼합 리스트의 세 번째 요소: 3.14</span></div>
+            </div>
+        </div>
+    </div>
+</body>
+    

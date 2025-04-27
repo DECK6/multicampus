@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 1</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 40px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 42px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .intro-text {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #e2e8f0;
+            margin-bottom: 25px;
+        }
+        .two-column {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        .left-column {
+            flex: 1;
+        }
+        .right-column {
+            flex: 1;
+        }
+        .libraries-section {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section-title i {
+            color: #FFD43B;
+            margin-right: 10px;
+            font-size: 20px;
+        }
+        .library-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        .library-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            transition: all 0.3s ease;
+        }
+        .library-card:hover {
+            transform: translateY(-3px);
+            background-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+        .library-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #90caf9;
+            margin-bottom: 8px;
+        }
+        .library-description {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #cbd5e0;
+        }
+        .use-cases {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .use-case-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        .use-case-card {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            align-items: flex-start;
+            transition: all 0.3s ease;
+        }
+        .use-case-card:hover {
+            transform: translateY(-5px);
+            background-color: rgba(75, 139, 190, 0.3);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+        .use-case-icon {
+            background: linear-gradient(45deg, #4B8BBE, #306998);
+            min-width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+        .use-case-icon i {
+            font-size: 16px;
+            color: #FFD43B;
+        }
+        .use-case-content {
+            flex: 1;
+        }
+        .use-case-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 5px;
+        }
+        .use-case-description {
+            font-size: 14px;
+            line-height: 1.4;
+            color: #cbd5e0;
+        }
+        .workflow-section {
+            margin-bottom: 20px;
+        }
+        .workflow-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+        .workflow-step {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            width: 23%;
+            position: relative;
+            text-align: center;
+        }
+        .workflow-step:not(:last-child):after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: -30px;
+            width: 30px;
+            height: 2px;
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        .workflow-step-number {
+            background-color: #4B8BBE;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            margin: 0 auto 10px;
+        }
+        .workflow-step-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 5px;
+        }
+        .workflow-step-description {
+            font-size: 13px;
+            color: #cbd5e0;
+            line-height: 1.3;
+        }
+        .code-section {
+            background-color: rgba(40, 44, 52, 0.8);
+            border-radius: 12px;
+            padding: 20px;
+            font-family: 'Consolas', 'Monaco', monospace;
+        }
+        .prompt {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-radius: 8px;
+            padding: 10px 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #FFD43B;
+        }
+        .prompt-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 5px;
+        }
+        .prompt-text {
+            font-size: 14px;
+            color: #e2e8f0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .code-block {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #e2e8f0;
+            white-space: pre;
+            overflow-x: auto;
+        }
+        .keyword { color: #c678dd; }
+        .string { color: #98c379; }
+        .comment { color: #7f848e; font-style: italic; }
+        .function { color: #61afef; }
+        .variable { color: #e06c75; }
+        .library { color: #e5c07b; }
+        .certificate-example {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 2px dashed rgba(255, 212, 59, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #a0aec0;
+        }
+        .certificate-example p {
+            margin-bottom: 8px;
+        }
+        .tips {
+            font-size: 14px;
+            color: #a0aec0;
+            margin-top: 10px;
+            font-style: italic;
+            padding: 10px;
+            border-left: 3px solid #FFD43B;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 0 8px 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">7</div>
+                <div class="title">개인화 자료 생성</div>
+            </div>
+            
+            <div class="intro-text">
+                파이썬을 활용하면 수료증, 명함, 초대장 등 대량의 개인화된 문서를 자동으로 생성할 수 있습니다. 템플릿에 개인 정보를 자동으로 삽입하여 수백, 수천 개의 문서를 단 몇 분 만에 제작할 수 있어 시간을 크게 절약할 수 있습니다.
+            </div>
+            
+            <div class="two-column">
+                <div class="left-column">
+                    <div class="libraries-section">
+                        <h3 class="section-title">
+                            <i class="fas fa-puzzle-piece"></i>주요 라이브러리
+                        </h3>
+                        <div class="library-cards">
+                            <div class="library-card">
+                                <div class="library-name">Pillow (PIL)</div>
+                                <div class="library-description">이미지 처리 라이브러리로, 이미지 생성, 편집, 텍스트 삽입, 필터 적용 등 다양한 이미지 작업을 수행할 수 있습니다.</div>
+                            </div>
+                            
+                            <div class="library-card">
+                                <div class="library-name">ReportLab</div>
+                                <div class="library-description">PDF 생성 및 편집을 위한 라이브러리로, 전문적인 문서와 보고서를 프로그래밍 방식으로 생성할 수 있습니다.</div>
+                            </div>
+                            
+                            <div class="library-card">
+                                <div class="library-name">PyPDF2</div>
+                                <div class="library-description">PDF 파일을 조작하기 위한 라이브러리로, PDF 병합, 분할, 페이지 추출 등의 작업을 수행할 수 있습니다.</div>
+                            </div>
+                            
+                            <div class="library-card">
+                                <div class="library-name">FPDF</div>
+                                <div class="library-description">간단한 PDF 생성 라이브러리로, 텍스트, 이미지, 표 등을 포함한 PDF 문서를 쉽게 생성할 수 있습니다.</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="workflow-section">
+                        <h3 class="section-title">
+                            <i class="fas fa-project-diagram"></i>개인화 자료 생성 워크플로우
+                        </h3>
+                        <div class="workflow-steps">
+                            <div class="workflow-step">
+                                <div class="workflow-step-number">1</div>
+                                <div class="workflow-step-title">템플릿 준비</div>
+                                <div class="workflow-step-description">기본 디자인 템플릿 생성/준비</div>
+                            </div>
+                            <div class="workflow-step">
+                                <div class="workflow-step-number">2</div>
+                                <div class="workflow-step-title">데이터 준비</div>
+                                <div class="workflow-step-description">CSV/Excel 파일에 개인정보 정리</div>
+                            </div>
+                            <div class="workflow-step">
+                                <div class="workflow-step-number">3</div>
+                                <div class="workflow-step-title">개인화 작업</div>
+                                <div class="workflow-step-description">각 개인정보를 템플릿에 삽입</div>
+                            </div>
+                            <div class="workflow-step">
+                                <div class="workflow-step-number">4</div>
+                                <div class="workflow-step-title">저장 및 배포</div>
+                                <div class="workflow-step-description">개인화된 파일 저장 및 전송</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="use-cases">
+                        <h3 class="section-title">
+                            <i class="fas fa-lightbulb"></i>활용 사례
+                        </h3>
+                        <div class="use-case-grid">
+                            <div class="use-case-card">
+                                <div class="use-case-icon">
+                                    <i class="fas fa-certificate"></i>
+                                </div>
+                                <div class="use-case-content">
+                                    <div class="use-case-title">수료증 자동 생성</div>
+                                    <div class="use-case-description">교육 프로그램, 세미나, 컨퍼런스 등의 수료증을 참가자별로 자동 생성</div>
+                                </div>
+                            </div>
+                            
+                            <div class="use-case-card">
+                                <div class="use-case-icon">
+                                    <i class="fas fa-id-card"></i>
+                                </div>
+                                <div class="use-case-content">
+                                    <div class="use-case-title">명함 제작</div>
+                                    <div class="use-case-description">임직원 정보를 활용하여 대량의 명함 디자인 일괄 제작</div>
+                                </div>
+                            </div>
+                            
+                            <div class="use-case-card">
+                                <div class="use-case-icon">
+                                    <i class="fas fa-envelope-open-text"></i>
+                                </div>
+                                <div class="use-case-content">
+                                    <div class="use-case-title">초대장/티켓 생성</div>
+                                    <div class="use-case-description">이벤트, 회의, 컨퍼런스 등을 위한 개인화된 초대장 및 티켓 생성</div>
+                                </div>
+                            </div>
+                            
+                            <div class="use-case-card">
+                                <div class="use-case-icon">
+                                    <i class="fas fa-file-contract"></i>
+                                </div>
+                                <div class="use-case-content">
+                                    <div class="use-case-title">계약서/문서 자동화</div>
+                                    <div class="use-case-description">표준 계약서에 개인/회사 정보를 자동으로 삽입하여 계약서 생성</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="right-column">
+                    <div class="code-section">
+                        <div class="prompt">
+                            <div class="prompt-title">ChatGPT 프롬프트:</div>
+                            <div class="prompt-text">"파이썬으로 엑셀 데이터를 활용해 수료증을 자동으로 생성하는 코드를 작성해주세요. Pillow 라이브러리를 사용해서 학생 이름, 과정명, 날짜가 들어가게 해주세요."</div>
+                        </div>
+                        
+                        <div class="code-block"><span class="comment"># 수료증 자동 생성 예제</span>
+<span class="keyword">from</span> <span class="library">PIL</span> <span class="keyword">import</span> Image, ImageDraw, ImageFont
+<span class="keyword">import</span> <span class="library">pandas</span> <span class="keyword">as</span> <span class="library">pd</span>
+<span class="keyword">import</span> <span class="library">os</span>
+<span class="keyword">from</span> <span class="library">datetime</span> <span class="keyword">import</span> datetime
+
+<span class="comment"># 엑셀에서 수료자 데이터 읽기</span>
+<span class="variable">df</span> = <span class="library">pd</span>.<span class="function">read_excel</span>(<span class="string">'수료자_명단.xlsx'</span>)
+
+<span class="comment"># 수료증 템플릿 이미지 열기</span>
+<span class="variable">template</span> = Image.<span class="function">open</span>(<span class="string">'수료증_템플릿.png'</span>)
+<span class="variable">draw</span> = ImageDraw.<span class="function">Draw</span>(<span class="variable">template</span>)
+
+<span class="comment"># 폰트 설정</span>
+<span class="variable">name_font</span> = ImageFont.<span class="function">truetype</span>(<span class="string">'font/NanumGothic-Bold.ttf'</span>, 60)
+<span class="variable">content_font</span> = ImageFont.<span class="function">truetype</span>(<span class="string">'font/NanumGothic.ttf'</span>, 30)
+<span class="variable">date_font</span> = ImageFont.<span class="function">truetype</span>(<span class="string">'font/NanumGothic.ttf'</span>, 25)
+
+<span class="comment"># 현재 날짜</span>
+<span class="variable">today</span> = datetime.<span class="function">now</span>().strftime(<span class="string">"%Y년 %m월 %d일"</span>)
+
+<span class="comment"># 저장 폴더 생성</span>
+<span class="keyword">if not</span> <span class="library">os</span>.path.<span class="function">exists</span>(<span class="string">'생성된_수료증'</span>):
+    <span class="library">os</span>.<span class="function">makedirs</span>(<span class="string">'생성된_수료증'</span>)
+
+<span class="comment"># 각 수료자별로 수료증 생성</span>
+<span class="keyword">for</span> <span class="variable">index</span>, <span class="variable">row</span> <span class="keyword">in</span> <span class="variable">df</span>.iterrows():
+    <span class="comment"># 템플릿 복사본 생성</span>
+    <span class="variable">certificate</span> = <span class="variable">template</span>.<span class="function">copy</span>()
+    <span class="variable">draw</span> = ImageDraw.<span class="function">Draw</span>(<span class="variable">certificate</span>)
+    
+    <span class="comment"># 이름 삽입</span>
+    <span class="variable">name</span> = <span class="variable">row</span>[<span class="string">'이름'</span>]
+    <span class="variable">name_width</span> = <span class="variable">draw</span>.<span class="function">textlength</span>(<span class="variable">name</span>, <span class="variable">name_font</span>)
+    <span class="variable">draw</span>.<span class="function">text</span>(
+        ((certificate.width - <span class="variable">name_width</span>) / 2, 350),
+        <span class="variable">name</span>, 
+        fill=<span class="string">'black'</span>, 
+        font=<span class="variable">name_font</span>
+    )
+    
+    <span class="comment"># 과정명 삽입</span>
+    <span class="variable">course</span> = <span class="variable">row</span>[<span class="string">'과정명'</span>]
+    <span class="variable">course_width</span> = <span class="variable">draw</span>.<span class="function">textlength</span>(<span class="variable">course</span>, <span class="variable">content_font</span>)
+    <span class="variable">draw</span>.<span class="function">text</span>(
+        ((certificate.width - <span class="variable">course_width</span>) / 2, 450),
+        <span class="variable">course</span>, 
+        fill=<span class="string">'black'</span>, 
+        font=<span class="variable">content_font</span>
+    )
+    
+    <span class="comment"># 날짜 삽입</span>
+    <span class="variable">draw</span>.<span class="function">text</span>(
+        (500, 550),
+        <span class="variable">today</span>, 
+        fill=<span class="string">'black'</span>, 
+        font=<span class="variable">date_font</span>
+    )
+    
+    <span class="comment"># 파일 저장</span>
+    <span class="variable">file_name</span> = <span class="string">f'생성된_수료증/{</span><span class="variable">name</span><span class="string">}_수료증.png'</span>
+    <span class="variable">certificate</span>.<span class="function">save</span>(<span class="variable">file_name</span>)
+    <span class="keyword">print</span>(<span class="string">f"{</span><span class="variable">name</span><span class="string">}님의 수료증이 생성되었습니다."</span>)
+
+<span class="keyword">print</span>(<span class="string">"모든 수료증 생성이 완료되었습니다."</span>)</div>
+                    </div>
+                    
+                    <div class="certificate-example">
+                        <p><i class="fas fa-certificate fa-2x" style="color: #FFD43B;"></i></p>
+                        <p style="font-size: 16px; color: #e2e8f0; font-weight: bold;">수 료 증</p>
+                        <p style="color: #e2e8f0; margin-top: 15px;">이름: 홍길동</p>
+                        <p style="color: #e2e8f0;">과정명: 파이썬 업무 자동화 과정</p>
+                        <p style="color: #e2e8f0; margin-top: 15px;">위 사람은 본 교육과정을 성공적으로 이수하였음을 증명합니다.</p>
+                        <p style="color: #e2e8f0; text-align: right; margin-top: 15px;">2024년 6월 10일</p>
+                        <p style="color: #e2e8f0; text-align: right;">교육기관장</p>
+                    </div>
+                    
+                    <div class="tips">
+                        <strong>Tip:</strong> 수료증 템플릿은 PowerPoint나 디자인 도구로 먼저 생성한 후 PNG 또는 JPG로 저장하여 사용하면 더 전문적인 결과물을 얻을 수 있습니다. 고해상도 이미지(300 DPI 이상)로 저장하면 인쇄 품질이 좋아집니다.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+    

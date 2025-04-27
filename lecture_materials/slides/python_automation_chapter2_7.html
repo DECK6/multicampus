@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 2</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 44px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .variable-section {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        .left-column {
+            flex: 1;
+        }
+        .right-column {
+            flex: 1;
+        }
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section-title i {
+            margin-right: 10px;
+        }
+        .section-content {
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 20px;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #e2e8f0;
+            margin-bottom: 20px;
+        }
+        .highlight {
+            color: #FFD43B;
+            font-weight: 600;
+        }
+        .data-types-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .data-type-card {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            border-left: 3px solid #4B8BBE;
+            transition: all 0.3s ease;
+        }
+        .data-type-card:hover {
+            transform: translateY(-5px);
+            background-color: rgba(75, 139, 190, 0.2);
+        }
+        .data-type-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        .data-type-title i {
+            margin-right: 8px;
+            width: 20px;
+            text-align: center;
+        }
+        .data-type-desc {
+            font-size: 14px;
+            color: #cbd5e0;
+            line-height: 1.4;
+        }
+        .data-type-example {
+            font-family: 'Courier New', monospace;
+            margin-top: 8px;
+            font-size: 13px;
+            color: #a0aec0;
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 5px 8px;
+            border-radius: 4px;
+        }
+        .code-section {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 20px;
+            border-left: 4px solid #4B8BBE;
+            position: relative;
+        }
+        .code-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .code-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-left: 10px;
+        }
+        .code-content {
+            font-family: 'Courier New', monospace;
+            font-size: 15px;
+            line-height: 1.5;
+            color: #f8f8f2;
+            white-space: pre;
+            overflow-x: auto;
+        }
+        .prompt-badge {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background-color: #10a37f;
+            color: white;
+            font-size: 14px;
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .prompt-badge i {
+            margin-right: 8px;
+        }
+        .keyword {
+            color: #ff79c6;
+        }
+        .number {
+            color: #bd93f9;
+        }
+        .string {
+            color: #f1fa8c;
+        }
+        .comment {
+            color: #6272a4;
+        }
+        .boolean {
+            color: #8be9fd;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">8</div>
+                <div class="title">변수와 자료형 개요</div>
+            </div>
+            
+            <div class="variable-section">
+                <div class="left-column">
+                    <div class="section-title">
+                        <i class="fas fa-box-open"></i>
+                        변수란?
+                    </div>
+                    <div class="section-content">
+                        <p>변수는 데이터를 저장하는 <span class="highlight">메모리 공간</span>을 가리키는 이름입니다. 파이썬에서는 변수를 선언할 때 별도의 타입을 명시하지 않아도 됩니다.</p>
+                        <p class="mt-2">변수 선언 방법은 매우 간단합니다:</p>
+                        <code class="block bg-black bg-opacity-25 p-2 rounded mt-2 font-mono">변수명 = 값</code>
+                        <p class="mt-3">파이썬은 <span class="highlight">동적 타이핑(Dynamic Typing)</span> 언어로, 변수에 할당된 값에 따라 자료형이 자동으로 결정됩니다.</p>
+                    </div>
+                    
+                    <div class="section-title">
+                        <i class="fas fa-clipboard-list"></i>
+                        변수 이름 규칙
+                    </div>
+                    <div class="section-content">
+                        <ul class="list-disc pl-5 space-y-1">
+                            <li>문자, 숫자, 밑줄(_)을 사용할 수 있습니다.</li>
+                            <li>숫자로 시작할 수 없습니다.</li>
+                            <li>대소문자를 구분합니다 (age ≠ Age).</li>
+                            <li>예약어(if, for, while 등)는 사용할 수 없습니다.</li>
+                            <li>보통 <span class="highlight">스네이크 케이스(snake_case)</span>를 사용합니다.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="right-column">
+                    <div class="section-title">
+                        <i class="fas fa-database"></i>
+                        자료형이란?
+                    </div>
+                    <div class="section-content">
+                        <p>자료형(Data Type)은 데이터가 메모리에 저장되는 방식과 이 데이터로 수행할 수 있는 연산을 결정합니다.</p>
+                        <p class="mt-2">파이썬의 자료형은 크게 <span class="highlight">기본 자료형</span>과 <span class="highlight">컬렉션 자료형</span>으로 나눌 수 있습니다.</p>
+                        <p class="mt-2">특정 값의 자료형을 확인하려면 <code class="bg-black bg-opacity-30 px-2 py-1 rounded font-mono">type()</code> 함수를 사용할 수 있습니다.</p>
+                    </div>
+                    
+                    <div class="data-types-container">
+                        <div class="data-type-card">
+                            <div class="data-type-title">
+                                <i class="fas fa-hashtag"></i>
+                                int (정수)
+                            </div>
+                            <div class="data-type-desc">
+                                소수점이 없는 숫자입니다.
+                            </div>
+                            <div class="data-type-example">age = 25</div>
+                        </div>
+                        
+                        <div class="data-type-card">
+                            <div class="data-type-title">
+                                <i class="fas fa-calculator"></i>
+                                float (실수)
+                            </div>
+                            <div class="data-type-desc">
+                                소수점이 있는 숫자입니다.
+                            </div>
+                            <div class="data-type-example">pi = 3.14159</div>
+                        </div>
+                        
+                        <div class="data-type-card">
+                            <div class="data-type-title">
+                                <i class="fas fa-quote-right"></i>
+                                str (문자열)
+                            </div>
+                            <div class="data-type-desc">
+                                텍스트 데이터입니다.
+                            </div>
+                            <div class="data-type-example">name = "파이썬"</div>
+                        </div>
+                        
+                        <div class="data-type-card">
+                            <div class="data-type-title">
+                                <i class="fas fa-toggle-on"></i>
+                                bool (논리)
+                            </div>
+                            <div class="data-type-desc">
+                                True 또는 False 값입니다.
+                            </div>
+                            <div class="data-type-example">is_valid = True</div>
+                        </div>
+                        
+                        <div class="data-type-card">
+                            <div class="data-type-title">
+                                <i class="fas fa-list"></i>
+                                list (리스트)
+                            </div>
+                            <div class="data-type-desc">
+                                순서가 있는 컬렉션입니다.
+                            </div>
+                            <div class="data-type-example">numbers = [1, 2, 3]</div>
+                        </div>
+                        
+                        <div class="data-type-card">
+                            <div class="data-type-title">
+                                <i class="fas fa-key"></i>
+                                dict (딕셔너리)
+                            </div>
+                            <div class="data-type-desc">
+                                키-값 쌍의 컬렉션입니다.
+                            </div>
+                            <div class="data-type-example">user = {"name": "Kim"}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="code-section">
+                <div class="prompt-badge">
+                    <i class="fas fa-robot"></i>
+                    ChatGPT 프롬프트: 파이썬 변수와 다양한 자료형을 사용하는 코드 예제를 작성해줘
+                </div>
+                
+                <div class="code-header">
+                    <i class="fas fa-code" style="color: #FFD43B;"></i>
+                    <div class="code-title">변수와 자료형 활용 예제</div>
+                </div>
+                
+                <div class="code-content"><span class="comment"># 다양한 자료형의 변수 선언과 사용</span>
+
+<span class="comment"># 기본 자료형</span>
+name = <span class="string">"홍길동"</span>           <span class="comment"># 문자열(str) 타입</span>
+age = <span class="number">30</span>                <span class="comment"># 정수(int) 타입</span>
+height = <span class="number">175.5</span>           <span class="comment"># 실수(float) 타입</span>
+is_student = <span class="boolean">False</span>        <span class="comment"># 논리(bool) 타입</span>
+nothing = <span class="keyword">None</span>            <span class="comment"># None 타입</span>
+
+<span class="comment"># 자료형 확인하기</span>
+print(<span class="string">f"name의 자료형: {type(name)}"</span>)      <span class="comment"># 출력: name의 자료형: <class 'str'></span>
+print(<span class="string">f"age의 자료형: {type(age)}"</span>)        <span class="comment"># 출력: age의 자료형: <class 'int'></span>
+print(<span class="string">f"height의 자료형: {type(height)}"</span>)   <span class="comment"># 출력: height의 자료형: <class 'float'></span>
+
+<span class="comment"># 동적 타이핑 - 동일한 변수에 다른 타입 할당 가능</span>
+variable = <span class="number">10</span>            <span class="comment"># 정수 타입</span>
+print(<span class="string">f"variable: {variable}, 타입: {type(variable)}"</span>)
+
+variable = <span class="string">"파이썬"</span>        <span class="comment"># 문자열 타입으로 변경</span>
+print(<span class="string">f"variable: {variable}, 타입: {type(variable)}"</span>)
+
+<span class="comment"># 컬렉션 자료형</span>
+numbers = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]                      <span class="comment"># 리스트(list)</span>
+point = (<span class="number">10</span>, <span class="number">20</span>)                            <span class="comment"># 튜플(tuple)</span>
+user_info = {<span class="string">"name"</span>: <span class="string">"김철수"</span>, <span class="string">"age"</span>: <span class="number">25</span>}         <span class="comment"># 딕셔너리(dict)</span>
+unique_numbers = {<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">4</span>}              <span class="comment"># 집합(set) - 중복 제거됨</span>
+
+print(<span class="string">f"numbers: {numbers}, 타입: {type(numbers)}"</span>)
+print(<span class="string">f"unique_numbers: {unique_numbers}"</span>)  <span class="comment"># 출력: unique_numbers: {1, 2, 3, 4}</span></div>
+            </div>
+        </div>
+    </div>
+</body>
+    

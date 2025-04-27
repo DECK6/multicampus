@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 1</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 44px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .benefit-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            height: 100%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            background-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+        }
+        .card-icon {
+            background: linear-gradient(45deg, #4B8BBE, #306998);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .card-icon i {
+            font-size: 24px;
+            color: #FFD43B;
+        }
+        .card-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #e2e8f0;
+        }
+        .card-description {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #cbd5e0;
+        }
+        .stats-section {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            background-color: rgba(75, 139, 190, 0.2);
+            border-radius: 12px;
+            padding: 25px;
+        }
+        .stat-item {
+            text-align: center;
+            padding: 0 20px;
+        }
+        .stat-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: #FFD43B;
+            margin-bottom: 10px;
+        }
+        .stat-label {
+            font-size: 16px;
+            color: #e2e8f0;
+        }
+        .footer {
+            margin-top: 40px;
+            font-size: 18px;
+            color: #a0aec0;
+            text-align: center;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">2</div>
+                <div class="title">업무자동화의 필요성</div>
+            </div>
+            
+            <div class="benefit-cards">
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3 class="card-title">시간 절약</h3>
+                    <p class="card-description">반복적인 업무를 자동화함으로써 평균 60-80%의 시간을 절약할 수 있습니다. 이 시간은 더 가치 있는 업무에 투자할 수 있습니다.</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 class="card-title">인적 오류 감소</h3>
+                    <p class="card-description">자동화된 프로세스는 인적 오류 가능성을 크게 줄여 데이터 정확성과 일관성을 높입니다. 오류율을 최대 90%까지 줄일 수 있습니다.</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="card-title">생산성 향상</h3>
+                    <p class="card-description">자동화를 통해 직원들은 창의적이고 전략적인 업무에 집중할 수 있어 업무 만족도와 생산성이 향상됩니다.</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <h3 class="card-title">확장성</h3>
+                    <p class="card-description">한 번 구축된 자동화 시스템은 필요에 따라 쉽게 확장하여 더 많은 업무량을 처리할 수 있습니다.</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <h3 class="card-title">비용 절감</h3>
+                    <p class="card-description">반복적인 수작업을 자동화함으로써 장기적으로 인건비와 운영 비용을 절감할 수 있습니다.</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-clipboard-check"></i>
+                    </div>
+                    <h3 class="card-title">표준화</h3>
+                    <p class="card-description">업무 프로세스를 자동화하면 모든 작업이 동일한 방식으로 일관되게 처리됩니다.</p>
+                </div>
+            </div>
+            
+            <div class="stats-section">
+                <div class="stat-item">
+                    <div class="stat-value">40%</div>
+                    <div class="stat-label">업무 시간 절약</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">90%</div>
+                    <div class="stat-label">오류 감소율</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">25%</div>
+                    <div class="stat-label">운영 비용 절감</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">3.5x</div>
+                    <div class="stat-label">ROI 증가</div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                "자동화는 선택이 아닌 현대 업무 환경에서의 필수 요소입니다"
+            </div>
+        </div>
+    </div>
+</body>
+    

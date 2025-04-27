@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 3</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 40px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 40px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .subtitle {
+            font-size: 20px;
+            font-weight: 400;
+            color: #e2e8f0;
+            margin-bottom: 25px;
+        }
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        .section {
+            background: rgba(75, 139, 190, 0.15);
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        .section:hover {
+            background: rgba(75, 139, 190, 0.25);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #FFD43B;
+            display: flex;
+            align-items: center;
+        }
+        .section-icon {
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        .section-content {
+            font-size: 15px;
+            line-height: 1.5;
+            color: #e2e8f0;
+        }
+        .code-block {
+            margin-top: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 13px;
+            color: #e2e8f0;
+            position: relative;
+        }
+        .code-prompt {
+            background: #4B8BBE;
+            border-radius: 4px;
+            padding: 6px 10px;
+            margin-bottom: 8px;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 12px;
+            color: white;
+        }
+        .code-prompt i {
+            margin-right: 6px;
+            color: #FFD43B;
+        }
+        .code-line {
+            margin-bottom: 4px;
+        }
+        .highlight {
+            color: #FFD43B;
+        }
+        .string {
+            color: #9cdcfe;
+        }
+        .comment {
+            color: #a0aec0;
+            font-style: italic;
+        }
+        .indent {
+            margin-left: 20px;
+        }
+        .output-preview {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin-top: 8px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 12px;
+            color: #cbd5e0;
+        }
+        .output-title {
+            color: #a0aec0;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+        .footer {
+            margin-top: 25px;
+            font-size: 16px;
+            color: #a0aec0;
+            text-align: center;
+            font-style: italic;
+        }
+        .note {
+            background: rgba(255, 212, 59, 0.1);
+            border-left: 3px solid #FFD43B;
+            padding: 10px 15px;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #e2e8f0;
+        }
+        .note-title {
+            color: #FFD43B;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .loop-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 15px 0;
+        }
+        .diagram-box {
+            background: rgba(75, 139, 190, 0.3);
+            border-radius: 10px;
+            padding: 8px 15px;
+            margin: 5px 0;
+            min-width: 150px;
+            text-align: center;
+            position: relative;
+        }
+        .diagram-box.highlight {
+            background: rgba(255, 212, 59, 0.2);
+            border: 1px solid #FFD43B;
+            color: #FFD43B;
+        }
+        .arrow-down {
+            color: #4B8BBE;
+            font-size: 18px;
+            margin: 2px 0;
+        }
+        .tag {
+            display: inline-block;
+            background: rgba(75, 139, 190, 0.4);
+            border-radius: 12px;
+            padding: 3px 8px;
+            font-size: 12px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">7</div>
+                <div class="title">반복문 - for 루프</div>
+            </div>
+            
+            <p class="subtitle">반복문은 동일한 코드를 여러 번 실행하여 반복 작업을 자동화하는 핵심 구문입니다. for 루프는 가장 많이 사용되는 반복문입니다.</p>
+            
+            <div class="main-content">
+                <div class="left-column">
+                    <div class="section">
+                        <div class="section-title">
+                            <i class="fas fa-sync-alt section-icon"></i>
+                            기본 for 루프
+                        </div>
+                        <div class="section-content">
+                            <p>파이썬의 for 루프는 시퀀스(리스트, 튜플, 문자열 등)의 각 항목을 순회하면서 코드 블록을 실행합니다.</p>
+                            
+                            <div class="loop-diagram">
+                                <div class="diagram-box">시작</div>
+                                <div class="arrow-down"><i class="fas fa-arrow-down"></i></div>
+                                <div class="diagram-box highlight">시퀀스의 다음 항목</div>
+                                <div class="arrow-down"><i class="fas fa-arrow-down"></i></div>
+                                <div class="diagram-box">코드 블록 실행</div>
+                                <div class="arrow-down"><i class="fas fa-arrow-down"></i></div>
+                                <div class="diagram-box">모든 항목 순회 완료?</div>
+                                <div class="arrow-down"><i class="fas fa-arrow-down"></i></div>
+                                <div class="diagram-box">종료</div>
+                            </div>
+                            
+                            <div class="code-block">
+                                <div class="code-prompt">
+                                    <i class="fas fa-robot"></i>파이썬의 기본적인 for 루프 예제 코드를 보여줘
+                                </div>
+                                <div class="code-line"><span class="comment"># 리스트를 순회하는 기본 for 루프</span></div>
+                                <div class="code-line">과일_목록 = [<span class="string">'사과'</span>, <span class="string">'바나나'</span>, <span class="string">'체리'</span>, <span class="string">'딸기'</span>]</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="highlight">for</span> 과일 <span class="highlight">in</span> 과일_목록:</div>
+                                <div class="code-line indent">print(f<span class="string">"과일: {과일}"</span>)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># range()를 사용한 숫자 범위 순회</span></div>
+                                <div class="code-line"><span class="highlight">for</span> i <span class="highlight">in</span> range(5):  <span class="comment"># 0, 1, 2, 3, 4</span></div>
+                                <div class="code-line indent">print(f<span class="string">"숫자: {i}"</span>)</div>
+                            </div>
+                            
+                            <div class="output-preview">
+                                <div class="output-title">출력 결과:</div>
+                                과일: 사과<br>
+                                과일: 바나나<br>
+                                과일: 체리<br>
+                                과일: 딸기<br>
+                                숫자: 0<br>
+                                숫자: 1<br>
+                                ...(생략)
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">
+                            <i class="fas fa-list-ol section-icon"></i>
+                            인덱스와 값 함께 순회하기
+                        </div>
+                        <div class="section-content">
+                            <p><code class="highlight">enumerate()</code> 함수를 사용하면 시퀀스의 인덱스와 값을 동시에 순회할 수 있습니다.</p>
+                            
+                            <div class="code-block">
+                                <div class="code-prompt">
+                                    <i class="fas fa-robot"></i>enumerate를 사용해서 인덱스와 값을 함께 출력하는 예제를 보여줘
+                                </div>
+                                <div class="code-line">과일_목록 = [<span class="string">'사과'</span>, <span class="string">'바나나'</span>, <span class="string">'체리'</span>]</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># enumerate() 사용하기</span></div>
+                                <div class="code-line"><span class="highlight">for</span> 인덱스, 과일 <span class="highlight">in</span> enumerate(과일_목록):</div>
+                                <div class="code-line indent">print(f<span class="string">"{인덱스}번째: {과일}"</span>)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 시작 인덱스 변경</span></div>
+                                <div class="code-line"><span class="highlight">for</span> 인덱스, 과일 <span class="highlight">in</span> enumerate(과일_목록, start=1):</div>
+                                <div class="code-line indent">print(f<span class="string">"{인덱스}번째: {과일}"</span>)</div>
+                            </div>
+                            
+                            <div class="output-preview">
+                                <div class="output-title">출력 결과:</div>
+                                0번째: 사과<br>
+                                1번째: 바나나<br>
+                                2번째: 체리<br>
+                                1번째: 사과<br>
+                                2번째: 바나나<br>
+                                3번째: 체리
+                            </div>
+                            
+                            <div class="note">
+                                <div class="note-title">실무 활용 Tip</div>
+                                <p>엑셀 시트의 행 번호를 표시하거나, 데이터 처리 시 진행 상황을 표시할 때 <code>enumerate()</code>가 매우 유용합니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="right-column">
+                    <div class="section">
+                        <div class="section-title">
+                            <i class="fas fa-table section-icon"></i>
+                            딕셔너리 순회하기
+                        </div>
+                        <div class="section-content">
+                            <p>딕셔너리는 키, 값, 또는 키-값 쌍을 순회할 수 있습니다.</p>
+                            
+                            <div class="code-block">
+                                <div class="code-prompt">
+                                    <i class="fas fa-robot"></i>딕셔너리를 순회하는 다양한 방법을 보여주는 코드 예시
+                                </div>
+                                <div class="code-line">직원_정보 = {</div>
+                                <div class="code-line indent"><span class="string">'홍길동'</span>: <span class="string">'개발팀'</span>,</div>
+                                <div class="code-line indent"><span class="string">'김철수'</span>: <span class="string">'마케팅팀'</span>,</div>
+                                <div class="code-line indent"><span class="string">'이영희'</span>: <span class="string">'인사팀'</span></div>
+                                <div class="code-line">}</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 키만 순회</span></div>
+                                <div class="code-line"><span class="highlight">for</span> 이름 <span class="highlight">in</span> 직원_정보.keys():</div>
+                                <div class="code-line indent">print(f<span class="string">"직원 이름: {이름}"</span>)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 값만 순회</span></div>
+                                <div class="code-line"><span class="highlight">for</span> 부서 <span class="highlight">in</span> 직원_정보.values():</div>
+                                <div class="code-line indent">print(f<span class="string">"부서: {부서}"</span>)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 키-값 쌍 순회</span></div>
+                                <div class="code-line"><span class="highlight">for</span> 이름, 부서 <span class="highlight">in</span> 직원_정보.items():</div>
+                                <div class="code-line indent">print(f<span class="string">"{이름}은(는) {부서}에 소속되어 있습니다."</span>)</div>
+                            </div>
+                            
+                            <div class="output-preview">
+                                <div class="output-title">items() 메서드 출력 결과:</div>
+                                홍길동은(는) 개발팀에 소속되어 있습니다.<br>
+                                김철수은(는) 마케팅팀에 소속되어 있습니다.<br>
+                                이영희은(는) 인사팀에 소속되어 있습니다.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">
+                            <i class="fas fa-database section-icon"></i>
+                            데이터프레임 순회하기
+                        </div>
+                        <div class="section-content">
+                            <p>판다스 데이터프레임을 다양한 방식으로 순회하여 데이터를 처리할 수 있습니다.</p>
+                            
+                            <div class="code-block">
+                                <div class="code-prompt">
+                                    <i class="fas fa-robot"></i>판다스 데이터프레임을 순회하는 다양한 방법을 보여줘
+                                </div>
+                                <div class="code-line"><span class="highlight">import</span> pandas <span class="highlight">as</span> pd</div>
+                                <div class="code-line"></div>
+                                <div class="code-line">df = pd.DataFrame({</div>
+                                <div class="code-line indent"><span class="string">'이름'</span>: [<span class="string">'홍길동'</span>, <span class="string">'김철수'</span>, <span class="string">'이영희'</span>],</div>
+                                <div class="code-line indent"><span class="string">'나이'</span>: [25, 30, 28],</div>
+                                <div class="code-line indent"><span class="string">'급여'</span>: [3000, 3500, 3200]</div>
+                                <div class="code-line">})</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 행별 순회 (iterrows)</span></div>
+                                <div class="code-line"><span class="highlight">for</span> index, row <span class="highlight">in</span> df.iterrows():</div>
+                                <div class="code-line indent">print(f<span class="string">"행 {index}: {row['이름']}의 급여는 {row['급여']}입니다."</span>)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># apply 함수로 행 처리</span></div>
+                                <div class="code-line"><span class="highlight">def</span> 급여_인상(row):</div>
+                                <div class="code-line indent"><span class="highlight">return</span> row[<span class="string">'급여'</span>] * 1.1</div>
+                                <div class="code-line"></div>
+                                <div class="code-line">df[<span class="string">'인상된_급여'</span>] = df.apply(급여_인상, axis=1)</div>
+                            </div>
+                            
+                            <div class="note">
+                                <div class="note-title">효율적인 데이터프레임 처리</div>
+                                <p>데이터프레임을 순회할 때는 <code>iterrows()</code>보다 <code>apply()</code> 또는 벡터화 연산을 사용하는 것이 더 효율적입니다. 대량의 데이터를 처리할 때는 특히 성능 차이가 큽니다.</p>
+                                <div class="tag">iterrows()</div>
+                                <div class="tag">itertuples()</div>
+                                <div class="tag">apply()</div>
+                                <div class="tag">벡터화 연산</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                "반복문은 업무 자동화의 심장입니다. 반복 작업이 있는 곳에 for 루프가 있습니다."
+            </div>
+        </div>
+    </div>
+</body>
+    

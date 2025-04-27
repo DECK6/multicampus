@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MS Office 자동화 교육 - 챕터 13</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.3;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 40px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .code-example {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .prompt {
+            color: #A0AEC0;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+        .code {
+            color: #E2E8F0;
+            font-family: 'Consolas', monospace;
+            white-space: pre;
+            overflow-x: auto;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .feature-box {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">10</div>
+                <div class="section-title">이미지 처리 자동화 - Pillow 라이브러리</div>
+            </div>
+
+            <div class="code-example">
+                <div class="prompt"># ChatGPT Prompt: "Show how to create and edit images with Pillow for business cards"</div>
+                <div class="code">from PIL import Image, ImageDraw, ImageFont
+
+# 명함 이미지 생성
+def create_business_card(name, title, company, email, phone):
+    # 새 이미지 생성 (가로 900px, 세로 500px)
+    card = Image.new('RGB', (900, 500), color='white')
+    draw = ImageDraw.Draw(card)
+    
+    # 폰트 로드
+    name_font = ImageFont.truetype('arial.ttf', 60)
+    info_font = ImageFont.truetype('arial.ttf', 40)
+    
+    # 텍스트 추가
+    draw.text((50, 100), name, fill='black', font=name_font)
+    draw.text((50, 200), title, fill='gray', font=info_font)
+    draw.text((50, 280), company, fill='black', font=info_font)
+    draw.text((50, 340), email, fill='blue', font=info_font)
+    draw.text((50, 400), phone, fill='black', font=info_font)
+    
+    return card</div>
+            </div>
+
+            <div class="grid-container">
+                <div class="feature-box">
+                    <h3 class="text-xl font-bold text-yellow-400 mb-4">
+                        <i class="fas fa-image mr-2"></i>
+                        기본 이미지 처리
+                    </h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li>• 이미지 생성 및 열기</li>
+                        <li>• 크기 조정 및 회전</li>
+                        <li>• 자르기 및 필터 적용</li>
+                        <li>• 색상 조정 및 변환</li>
+                        <li>• 이미지 포맷 변경</li>
+                    </ul>
+                </div>
+
+                <div class="feature-box">
+                    <h3 class="text-xl font-bold text-yellow-400 mb-4">
+                        <i class="fas fa-paint-brush mr-2"></i>
+                        텍스트 및 그래픽
+                    </h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li>• 텍스트 추가 및 스타일링</li>
+                        <li>• 도형 그리기</li>
+                        <li>• 폰트 설정</li>
+                        <li>• 워터마크 추가</li>
+                        <li>• 이미지 합성</li>
+                    </ul>
+                </div>
+
+                <div class="feature-box">
+                    <h3 class="text-xl font-bold text-yellow-400 mb-4">
+                        <i class="fas fa-cogs mr-2"></i>
+                        고급 기능
+                    </h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li>• 이미지 필터 및 효과</li>
+                        <li>• 투명도 조정</li>
+                        <li>• 이미지 마스킹</li>
+                        <li>• 배치 처리</li>
+                        <li>• 메모리 최적화</li>
+                    </ul>
+                </div>
+
+                <div class="feature-box">
+                    <h3 class="text-xl font-bold text-yellow-400 mb-4">
+                        <i class="fas fa-lightbulb mr-2"></i>
+                        실무 활용 사례
+                    </h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li>• 명함 자동 생성</li>
+                        <li>• 수료증 제작</li>
+                        <li>• 배너 및 썸네일 생성</li>
+                        <li>• 이미지 일괄 처리</li>
+                        <li>• 문서 워터마킹</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+    

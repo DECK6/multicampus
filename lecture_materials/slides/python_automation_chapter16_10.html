@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 16</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 40px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .improvement-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .improvement-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        .improvement-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        .improvement-icon {
+            width: 50px;
+            height: 50px;
+            background: #4B8BBE;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .improvement-icon i {
+            font-size: 24px;
+            color: #FFD43B;
+        }
+        .improvement-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #4B8BBE;
+            margin-bottom: 15px;
+        }
+        .improvement-desc {
+            font-size: 15px;
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+        .code-snippet {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 15px;
+            font-family: 'Consolas', monospace;
+            font-size: 13px;
+            color: #a0aec0;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">11</div>
+                <div class="title">프로그램 성능 개선하기</div>
+            </div>
+
+            <div class="improvement-grid">
+                <div class="improvement-card">
+                    <div class="improvement-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="improvement-title">병렬 처리 구현</h3>
+                    <p class="improvement-desc">multiprocessing 라이브러리를 활용하여 크롤링 속도를 향상시킵니다.</p>
+                    <div class="code-snippet">
+                        with Pool(processes=4) as pool:<br>
+                        &nbsp;&nbsp;results = pool.map(crawl_news,<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;keyword_list)
+                    </div>
+                </div>
+
+                <div class="improvement-card">
+                    <div class="improvement-icon">
+                        <i class="fas fa-memory"></i>
+                    </div>
+                    <h3 class="improvement-title">메모리 최적화</h3>
+                    <p class="improvement-desc">제너레이터를 사용하여 대용량 데이터 처리 시 메모리 사용량을 줄입니다.</p>
+                    <div class="code-snippet">
+                        def data_generator():<br>
+                        &nbsp;&nbsp;for item in large_dataset:<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;yield process(item)
+                    </div>
+                </div>
+
+                <div class="improvement-card">
+                    <div class="improvement-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="improvement-title">예외 처리 강화</h3>
+                    <p class="improvement-desc">더 견고한 에러 핸들링으로 프로그램의 안정성을 높입니다.</p>
+                    <div class="code-snippet">
+                        try:<br>
+                        &nbsp;&nbsp;process_data()<br>
+                        except RequestError as e:<br>
+                        &nbsp;&nbsp;logger.error(f"Network error: {e}")
+                    </div>
+                </div>
+
+                <div class="improvement-card">
+                    <div class="improvement-icon">
+                        <i class="fas fa-compress-arrows-alt"></i>
+                    </div>
+                    <h3 class="improvement-title">코드 최적화</h3>
+                    <p class="improvement-desc">list comprehension과 제너레이터 표현식을 활용하여 코드를 더 효율적으로 만듭니다.</p>
+                    <div class="code-snippet">
+                        word_counts = {<br>
+                        &nbsp;&nbsp;word: text.count(word)<br>
+                        &nbsp;&nbsp;for word in set(text.split())<br>
+                        }
+                    </div>
+                </div>
+
+                <div class="improvement-card">
+                    <div class="improvement-icon">
+                        <i class="fas fa-save"></i>
+                    </div>
+                    <h3 class="improvement-title">캐싱 구현</h3>
+                    <p class="improvement-desc">자주 사용되는 데이터를 캐시하여 반복적인 연산을 줄입니다.</p>
+                    <div class="code-snippet">
+                        @lru_cache(maxsize=128)<br>
+                        def get_processed_data(key):<br>
+                        &nbsp;&nbsp;return process_heavy_data(key)
+                    </div>
+                </div>
+
+                <div class="improvement-card">
+                    <div class="improvement-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <h3 class="improvement-title">로깅 시스템</h3>
+                    <p class="improvement-desc">상세한 로깅으로 문제 발생 시 빠른 디버깅이 가능하도록 합니다.</p>
+                    <div class="code-snippet">
+                        logging.basicConfig(<br>
+                        &nbsp;&nbsp;level=logging.INFO,<br>
+                        &nbsp;&nbsp;format='%(asctime)s - %(message)s'<br>
+                        )
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+    

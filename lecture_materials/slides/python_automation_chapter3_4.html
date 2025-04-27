@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 3</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 40px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 40px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .subtitle {
+            font-size: 20px;
+            font-weight: 400;
+            color: #e2e8f0;
+            margin-bottom: 25px;
+        }
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        .section {
+            background: rgba(75, 139, 190, 0.15);
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        .section:hover {
+            background: rgba(75, 139, 190, 0.25);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #FFD43B;
+            display: flex;
+            align-items: center;
+        }
+        .section-icon {
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        .section-content {
+            font-size: 15px;
+            line-height: 1.5;
+            color: #e2e8f0;
+        }
+        .code-block {
+            margin-top: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 13px;
+            color: #e2e8f0;
+            position: relative;
+        }
+        .code-prompt {
+            background: #4B8BBE;
+            border-radius: 4px;
+            padding: 6px 10px;
+            margin-bottom: 8px;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 12px;
+            color: white;
+        }
+        .code-prompt i {
+            margin-right: 6px;
+            color: #FFD43B;
+        }
+        .code-line {
+            margin-bottom: 4px;
+        }
+        .highlight {
+            color: #FFD43B;
+        }
+        .string {
+            color: #9cdcfe;
+        }
+        .comment {
+            color: #a0aec0;
+            font-style: italic;
+        }
+        .output-preview {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin-top: 8px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 12px;
+            color: #cbd5e0;
+        }
+        .output-title {
+            color: #a0aec0;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+        .footer {
+            margin-top: 25px;
+            font-size: 16px;
+            color: #a0aec0;
+            text-align: center;
+            font-style: italic;
+        }
+        .note {
+            background: rgba(255, 212, 59, 0.1);
+            border-left: 3px solid #FFD43B;
+            padding: 10px 15px;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #e2e8f0;
+        }
+        .note-title {
+            color: #FFD43B;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .tag {
+            display: inline-block;
+            background: rgba(75, 139, 190, 0.3);
+            color: #e2e8f0;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            margin-right: 6px;
+            margin-bottom: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">5</div>
+                <div class="title">데이터프레임 변환 및 처리</div>
+            </div>
+            
+            <p class="subtitle">데이터프레임의 변환, 처리, 결합 작업을 통해 자동화 작업의 효율성을 높이는 방법을 알아봅니다.</p>
+            
+            <div class="main-content">
+                <div class="left-column">
+                    <div class="section">
+                        <div class="section-title">
+                            <i class="fas fa-magic section-icon"></i>
+                            데이터 변환 함수
+                        </div>
+                        <div class="section-content">
+                            <p>데이터프레임의 값을 변환하는 함수들을 사용하여 데이터 처리를 자동화할 수 있습니다.</p>
+                            
+                            <div class="code-block">
+                                <div class="code-prompt">
+                                    <i class="fas fa-robot"></i>판다스에서 apply, map, applymap 함수 사용 예시를 보여줘
+                                </div>
+                                <div class="code-line"><span class="highlight">import</span> pandas <span class="highlight">as</span> pd</div>
+                                <div class="code-line"></div>
+                                <div class="code-line">df = pd.DataFrame({</div>
+                                <div class="code-line">    <span class="string">'금액'</span>: [1000, 2000, 3000],</div>
+                                <div class="code-line">    <span class="string">'할인율'</span>: [0.1, 0.2, 0.3],</div>
+                                <div class="code-line">    <span class="string">'상품명'</span>: [<span class="string">'A상품'</span>, <span class="string">'B상품'</span>, <span class="string">'C상품'</span>]</div>
+                                <div class="code-line">})</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># apply() - 열 또는 행에 함수 적용</span></div>
+                                <div class="code-line">df[<span class="string">'할인금액'</span>] = df.apply(<span class="highlight">lambda</span> row: row[<span class="string">'금액'</span>] * row[<span class="string">'할인율'</span>], axis=1)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># map() - Series에 함수 적용</span></div>
+                                <div class="code-line">가격대 = {1000: <span class="string">'저가'</span>, 2000: <span class="string">'중가'</span>, 3000: <span class="string">'고가'</span>}</div>
+                                <div class="code-line">df[<span class="string">'가격대'</span>] = df[<span class="string">'금액'</span>].map(가격대)</div>
+                            </div>
+                            
+                            <div class="output-preview">
+                                <div class="output-title">변환 결과:</div>
+                                &nbsp; 금액 할인율 상품명 할인금액 가격대<br>
+                                0 1000 0.1 A상품 100.0 저가<br>
+                                1 2000 0.2 B상품 400.0 중가<br>
+                                2 3000 0.3 C상품 900.0 고가
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">
+                            <i class="fas fa-object-group section-icon"></i>
+                            그룹화와 집계
+                        </div>
+                        <div class="section-content">
+                            <p>데이터를 그룹화하고 집계하여 요약 정보를 도출하는 작업을 자동화할 수 있습니다.</p>
+                            
+                            <div class="code-block">
+                                <div class="code-prompt">
+                                    <i class="fas fa-robot"></i>판다스에서 groupby를 사용한 데이터 그룹화 예시 코드
+                                </div>
+                                <div class="code-line">판매_데이터 = pd.DataFrame({</div>
+                                <div class="code-line">    <span class="string">'부서'</span>: [<span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'A'</span>, <span class="string">'A'</span>, <span class="string">'B'</span>],</div>
+                                <div class="code-line">    <span class="string">'판매액'</span>: [1000, 1500, 2000, 1200, 2500]</div>
+                                <div class="code-line">})</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 부서별 판매액 합계</span></div>
+                                <div class="code-line">부서별_합계 = 판매_데이터.groupby(<span class="string">'부서'</span>)[<span class="string">'판매액'</span>].sum()</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 여러 집계 함수 동시 적용</span></div>
+                                <div class="code-line">부서별_통계 = 판매_데이터.groupby(<span class="string">'부서'</span>)[<span class="string">'판매액'</span>].agg([</div>
+                                <div class="code-line">    <span class="string">'sum'</span>, <span class="string">'mean'</span>, <span class="string">'count'</span>, <span class="string">'max'</span>, <span class="string">'min'</span></div>
+                                <div class="code-line">])</div>
+                            </div>
+                            
+                            <div class="output-preview">
+                                <div class="output-title">부서별 통계 결과:</div>
+                                &nbsp;&nbsp;&nbsp; sum&nbsp;&nbsp; mean count max min<br>
+                                부서<br>
+                                A&nbsp;&nbsp; 4200 1400.0&nbsp;&nbsp; 3 2000 1000<br>
+                                B&nbsp;&nbsp; 4000 2000.0&nbsp;&nbsp; 2 2500 1500
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="right-column">
+                    <div class="section">
+                        <div class="section-title">
+                            <i class="fas fa-link section-icon"></i>
+                            데이터프레임 병합 및 결합
+                        </div>
+                        <div class="section-content">
+                            <p>여러 데이터 소스에서 얻은 데이터프레임을 병합하여 통합된 데이터셋을 생성할 수 있습니다.</p>
+                            
+                            <div class="code-block">
+                                <div class="code-prompt">
+                                    <i class="fas fa-robot"></i>판다스에서 merge, join, concat 함수를 사용한 데이터 결합 예시
+                                </div>
+                                <div class="code-line"><span class="comment"># 고객 데이터</span></div>
+                                <div class="code-line">고객_df = pd.DataFrame({</div>
+                                <div class="code-line">    <span class="string">'고객ID'</span>: [1, 2, 3],</div>
+                                <div class="code-line">    <span class="string">'이름'</span>: [<span class="string">'홍길동'</span>, <span class="string">'김철수'</span>, <span class="string">'이영희'</span>]</div>
+                                <div class="code-line">})</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 주문 데이터</span></div>
+                                <div class="code-line">주문_df = pd.DataFrame({</div>
+                                <div class="code-line">    <span class="string">'주문ID'</span>: [101, 102, 103],</div>
+                                <div class="code-line">    <span class="string">'고객ID'</span>: [1, 3, 1],</div>
+                                <div class="code-line">    <span class="string">'금액'</span>: [1000, 2000, 1500]</div>
+                                <div class="code-line">})</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># merge로 두 데이터프레임 결합 (SQL JOIN과 유사)</span></div>
+                                <div class="code-line">고객주문 = pd.merge(</div>
+                                <div class="code-line">    고객_df, 주문_df, on=<span class="string">'고객ID'</span>, how=<span class="string">'left'</span></div>
+                                <div class="code-line">)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># concat으로 데이터프레임 연결</span></div>
+                                <div class="code-line">df1 = pd.DataFrame({<span class="string">'A'</span>: [1, 2], <span class="string">'B'</span>: [3, 4]})</div>
+                                <div class="code-line">df2 = pd.DataFrame({<span class="string">'A'</span>: [5, 6], <span class="string">'B'</span>: [7, 8]})</div>
+                                <div class="code-line">수직결합 = pd.concat([df1, df2])  <span class="comment"># 행 방향 결합</span></div>
+                            </div>
+                            
+                            <div class="note">
+                                <div class="note-title">병합 유형</div>
+                                <div class="tag">left join</div>
+                                <div class="tag">right join</div>
+                                <div class="tag">inner join</div>
+                                <div class="tag">outer join</div>
+                                <p>SQL 조인과 유사한 개념으로, 두 데이터셋을 연결하는 방식을 지정합니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">
+                            <i class="fas fa-broom section-icon"></i>
+                            데이터 정제 및 결측치 처리
+                        </div>
+                        <div class="section-content">
+                            <p>실무 데이터는 결측치(NaN)나 중복 등 다양한 문제가 있으며 이를 자동으로 처리할 수 있습니다.</p>
+                            
+                            <div class="code-block">
+                                <div class="code-prompt">
+                                    <i class="fas fa-robot"></i>판다스에서 결측치와 중복 처리하는 코드 예시
+                                </div>
+                                <div class="code-line">데이터 = pd.DataFrame({</div>
+                                <div class="code-line">    <span class="string">'A'</span>: [1, 2, None, 4],</div>
+                                <div class="code-line">    <span class="string">'B'</span>: [5, None, None, 8],</div>
+                                <div class="code-line">    <span class="string">'C'</span>: [<span class="string">'x'</span>, <span class="string">'y'</span>, <span class="string">'z'</span>, <span class="string">'x'</span>]</div>
+                                <div class="code-line">})</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 결측치 확인</span></div>
+                                <div class="code-line">결측치_확인 = 데이터.isna().sum()</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 결측치 채우기</span></div>
+                                <div class="code-line">채운_데이터 = 데이터.fillna({<span class="string">'A'</span>: 0, <span class="string">'B'</span>: 데이터[<span class="string">'B'</span>].mean()})</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 결측치가 있는 행 제거</span></div>
+                                <div class="code-line">완전한_데이터 = 데이터.dropna()</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 중복 행 제거</span></div>
+                                <div class="code-line">중복제거 = 데이터.drop_duplicates(subset=[<span class="string">'C'</span>])</div>
+                            </div>
+                            
+                            <div class="note">
+                                <div class="note-title">업무 자동화 응용</div>
+                                <p>이러한 데이터 처리 기술은 매일 반복되는 보고서 작성, 데이터 정제, 여러 파일 통합 등의 업무를 자동화하는 데 필수적입니다. 엑셀로 수작업 처리하던 작업을 몇 줄의 코드로 처리할 수 있습니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                "판다스의 강력한 변환 기능은 복잡한 데이터 처리 작업도 몇 줄의 코드로 자동화할 수 있게 해줍니다"
+            </div>
+        </div>
+    </div>
+</body>
+    

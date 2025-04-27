@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>금융데이터 분석 유형별 ChatGPT 프롬프트</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 40px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .prompt-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .prompt-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            backdrop-filter: blur(5px);
+        }
+        .prompt-card h3 {
+            color: #FFD43B;
+            font-size: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .prompt-card i {
+            margin-right: 10px;
+        }
+        .prompt-example {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Consolas', monospace;
+            color: #e2e8f0;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .prompt-tip {
+            color: #a0aec0;
+            font-size: 14px;
+            font-style: italic;
+        }
+        .footer-tips {
+            background: rgba(75, 139, 190, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        .footer-tips h4 {
+            color: #FFD43B;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .footer-tips ul {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        .footer-tips li {
+            color: #e2e8f0;
+            padding-left: 20px;
+            position: relative;
+        }
+        .footer-tips li:before {
+            content: "→";
+            color: #4B8BBE;
+            position: absolute;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">5</div>
+                <div class="title">금융데이터 분석 유형별 ChatGPT 프롬프트</div>
+            </div>
+            
+            <div class="prompt-grid">
+                <div class="prompt-card">
+                    <h3><i class="fas fa-download"></i>데이터 수집</h3>
+                    <div class="prompt-example">
+                        "yfinance를 사용해서 삼성전자, 현대차, SK하이닉스의 최근 1년 주가 데이터를 한 번에 다운로드하고 데이터프레임으로 저장하는 코드를 작성해주세요."
+                    </div>
+                    <p class="prompt-tip">여러 종목의 데이터를 한 번에 효율적으로 수집할 수 있습니다.</p>
+                </div>
+
+                <div class="prompt-card">
+                    <h3><i class="fas fa-chart-line"></i>기술적 분석</h3>
+                    <div class="prompt-example">
+                        "주가 데이터에서 볼린저 밴드(20일 이동평균, 표준편차 2)를 계산하고, matplotlib으로 시각화하는 코드를 작성해주세요."
+                    </div>
+                    <p class="prompt-tip">다양한 기술적 지표를 쉽게 계산하고 시각화할 수 있습니다.</p>
+                </div>
+
+                <div class="prompt-card">
+                    <h3><i class="fas fa-calculator"></i>수익률 분석</h3>
+                    <div class="prompt-example">
+                        "여러 종목의 일간 수익률을 계산하고, 상관관계를 히트맵으로 시각화하는 코드를 작성해주세요."
+                    </div>
+                    <p class="prompt-tip">수익률 계산과 포트폴리오 분석에 활용할 수 있습니다.</p>
+                </div>
+
+                <div class="prompt-card">
+                    <h3><i class="fas fa-file-export"></i>데이터 정제</h3>
+                    <div class="prompt-example">
+                        "주가 데이터에서 거래량이 0인 날짜를 제외하고, 결측값은 직전 값으로 채우는 코드를 작성해주세요."
+                    </div>
+                    <p class="prompt-tip">데이터 전처리와 정제 작업을 자동화할 수 있습니다.</p>
+                </div>
+            </div>
+
+            <div class="footer-tips">
+                <h4><i class="fas fa-lightbulb"></i> 효과적인 프롬프트 작성 팁</h4>
+                <ul>
+                    <li>사용할 라이브러리를 명확히 지정하기</li>
+                    <li>원하는 출력 형식을 구체적으로 설명하기</li>
+                    <li>데이터의 기간과 종목을 정확히 명시하기</li>
+                    <li>복잡한 작업은 단계별로 나누어 요청하기</li>
+                    <li>에러 발생 시 에러 메시지를 포함하여 질문하기</li>
+                    <li>코드 설명이나 주석을 요청하기</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+    

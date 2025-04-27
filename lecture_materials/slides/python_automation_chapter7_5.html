@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 7</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 44px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .intro {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: #e2e8f0;
+            max-width: 90%;
+        }
+        .two-column {
+            display: flex;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .column {
+            flex: 1;
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            background-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+        }
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .card-title i {
+            margin-right: 10px;
+        }
+        .code-block {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: #e2e8f0;
+            overflow: auto;
+        }
+        .highlight {
+            color: #FFD43B;
+        }
+        .comment {
+            color: #718096;
+            font-style: italic;
+        }
+        .locator-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 8px;
+            margin-top: 15px;
+        }
+        .locator-table th {
+            text-align: left;
+            padding: 12px 15px;
+            background-color: rgba(75, 139, 190, 0.3);
+            color: #FFD43B;
+            font-weight: 600;
+            border-radius: 8px 8px 0 0;
+        }
+        .locator-table td {
+            padding: 12px 15px;
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+        .locator-table tr td:first-child {
+            font-family: 'Courier New', monospace;
+            color: #FFD43B;
+            border-radius: 8px 0 0 8px;
+        }
+        .locator-table tr td:last-child {
+            border-radius: 0 8px 8px 0;
+        }
+        .tip-box {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-left: 4px solid #FFD43B;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .tip-title {
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+        .tip-title i {
+            margin-right: 8px;
+        }
+        .tip-content {
+            font-size: 15px;
+            color: #e2e8f0;
+        }
+        .diagram {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 15px;
+            text-align: center;
+        }
+        .diagram-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 15px;
+        }
+        .diagram-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 120px;
+        }
+        .element-example {
+            display: inline-block;
+            padding: 10px;
+            border: 2px dashed #FFD43B;
+            border-radius: 8px;
+            margin: 10px;
+            position: relative;
+        }
+        .element-label {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #4B8BBE;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">6</div>
+                <div class="title">행동 3: 요소 위치찾기</div>
+            </div>
+            
+            <p class="intro">
+                웹페이지 자동화의 핵심은 원하는 요소를 정확하게 찾는 것입니다. Selenium은 다양한 방법으로 웹페이지의 요소를 찾을 수 있는 기능을 제공합니다.
+            </p>
+            
+            <div class="two-column">
+                <div class="column">
+                    <div class="card">
+                        <h3 class="card-title"><i class="fas fa-search"></i>요소 찾기 메서드</h3>
+                        <div class="card-content">
+                            <p>Selenium에서는 크게 두 가지 형태의 요소 찾기 메서드를 제공합니다:</p>
+                            
+                            <table class="locator-table">
+                                <tr>
+                                    <th>메서드</th>
+                                    <th>설명</th>
+                                </tr>
+                                <tr>
+                                    <td>find_element()</td>
+                                    <td>조건에 맞는 첫 번째 요소만 반환</td>
+                                </tr>
+                                <tr>
+                                    <td>find_elements()</td>
+                                    <td>조건에 맞는 모든 요소를 리스트로 반환</td>
+                                </tr>
+                            </table>
+                            
+                            <div class="code-block">
+                                <span class="comment"># ChatGPT: "셀레니움으로 요소 찾기 기본 코드"</span><br>
+                                <span class="highlight">from</span> selenium <span class="highlight">import</span> webdriver<br>
+                                <span class="highlight">from</span> selenium.webdriver.common.by <span class="highlight">import</span> By<br>
+                                <br>
+                                <span class="comment"># 첫 번째 매칭 요소 찾기</span><br>
+                                element = driver.find_element(By.ID, <span class="highlight">"login-button"</span>)<br>
+                                <br>
+                                <span class="comment"># 모든 매칭 요소 찾기</span><br>
+                                elements = driver.find_elements(By.CLASS_NAME, <span class="highlight">"product-item"</span>)<br>
+                                <br>
+                                <span class="comment"># 찾은 요소의 수 확인</span><br>
+                                print(<span class="highlight">f"총 {len(elements)}개의 상품을 찾았습니다."</span>)
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <h3 class="card-title"><i class="fas fa-code"></i>선택자 활용 예제</h3>
+                        <div class="card-content">
+                            <div class="code-block">
+                                <span class="comment"># ChatGPT: "여러 선택자를 사용한 요소 찾기 예제"</span><br>
+                                <span class="comment"># ID로 요소 찾기</span><br>
+                                login_button = driver.find_element(By.ID, <span class="highlight">"login"</span>)<br>
+                                <br>
+                                <span class="comment"># 클래스명으로 요소 찾기</span><br>
+                                nav_items = driver.find_elements(By.CLASS_NAME, <span class="highlight">"nav-item"</span>)<br>
+                                <br>
+                                <span class="comment"># CSS 선택자로 요소 찾기</span><br>
+                                header = driver.find_element(By.CSS_SELECTOR, <span class="highlight">"header.main-header"</span>)<br>
+                                <br>
+                                <span class="comment"># XPath로 요소 찾기</span><br>
+                                submit_btn = driver.find_element(By.XPATH, <span class="highlight">"//button[@type='submit']"</span>)
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tip-box">
+                        <div class="tip-title"><i class="fas fa-lightbulb"></i>요소 찾기 팁</div>
+                        <div class="tip-content">
+                            <p>1. ID와 같은 고유 식별자를 우선적으로 사용하세요. 가장 빠르고 안정적입니다.</p>
+                            <p>2. 페이지 구조가 변경될 가능성이 있는 경우, XPath보다는 CSS 선택자가 더 안정적입니다.</p>
+                            <p>3. 디버깅에는 Chrome의 개발자 도구를 활용하여 선택자를 테스트해보세요.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="column">
+                    <div class="card">
+                        <h3 class="card-title"><i class="fas fa-list"></i>요소 찾기 선택자 유형</h3>
+                        <div class="card-content">
+                            <table class="locator-table">
+                                <tr>
+                                    <th>선택자</th>
+                                    <th>설명</th>
+                                </tr>
+                                <tr>
+                                    <td>By.ID</td>
+                                    <td>HTML 요소의 id 속성으로 찾기 (가장 빠름)</td>
+                                </tr>
+                                <tr>
+                                    <td>By.NAME</td>
+                                    <td>HTML 요소의 name 속성으로 찾기</td>
+                                </tr>
+                                <tr>
+                                    <td>By.CLASS_NAME</td>
+                                    <td>HTML 요소의 class 속성으로 찾기</td>
+                                </tr>
+                                <tr>
+                                    <td>By.TAG_NAME</td>
+                                    <td>HTML 태그 이름으로 찾기 (예: div, a, button)</td>
+                                </tr>
+                                <tr>
+                                    <td>By.LINK_TEXT</td>
+                                    <td>링크 텍스트가 정확히 일치하는 a 태그 찾기</td>
+                                </tr>
+                                <tr>
+                                    <td>By.PARTIAL_LINK_TEXT</td>
+                                    <td>링크 텍스트의 일부가 일치하는 a 태그 찾기</td>
+                                </tr>
+                                <tr>
+                                    <td>By.CSS_SELECTOR</td>
+                                    <td>CSS 선택자로 요소 찾기 (강력하고 유연함)</td>
+                                </tr>
+                                <tr>
+                                    <td>By.XPATH</td>
+                                    <td>XPath 표현식으로 요소 찾기 (가장 유연함)</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="diagram">
+                        <div class="diagram-title">HTML 요소 구조 예시</div>
+                        <div class="diagram-content">
+                            <div class="element-example">
+                                <span class="element-label">id="login-form"</span>
+                                &lt;form id="login-form" class="user-form"&gt;
+                                <div class="element-example">
+                                    <span class="element-label">name="username"</span>
+                                    &lt;input type="text" name="username" class="input-field"&gt;
+                                </div>
+                                <div class="element-example">
+                                    <span class="element-label">id="login-btn"</span>
+                                    &lt;button id="login-btn" type="submit"&gt;로그인&lt;/button&gt;
+                                </div>
+                                &lt;/form&gt;
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <h3 class="card-title"><i class="fas fa-exclamation-triangle"></i>요소를 찾지 못했을 때 처리</h3>
+                        <div class="card-content">
+                            <div class="code-block">
+                                <span class="comment"># ChatGPT: "셀레니움에서 요소를 찾지 못했을 때 처리하는 코드"</span><br>
+                                <span class="highlight">from</span> selenium.common.exceptions <span class="highlight">import</span> NoSuchElementException<br>
+                                <br>
+                                <span class="highlight">try</span>:<br>
+                                &nbsp;&nbsp;element = driver.find_element(By.ID, <span class="highlight">"non-existent-element"</span>)<br>
+                                &nbsp;&nbsp;element.click()<br>
+                                <span class="highlight">except</span> NoSuchElementException:<br>
+                                &nbsp;&nbsp;print(<span class="highlight">"요소를 찾을 수 없습니다. 페이지 구조가 변경되었을 수 있습니다."</span>)<br>
+                                &nbsp;&nbsp;<span class="comment"># 대체 동작 수행</span><br>
+                                &nbsp;&nbsp;alternative_element = driver.find_element(By.CLASS_NAME, <span class="highlight">"alt-button"</span>)<br>
+                                &nbsp;&nbsp;alternative_element.click()
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+    

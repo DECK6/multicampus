@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 1</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            padding: 60px;
+            text-align: center;
+        }
+        .python-logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .python-logo i {
+            font-size: 80px;
+            color: #FFD43B;
+            margin-right: 20px;
+        }
+        .python-logo .logo-text {
+            font-size: 52px;
+            font-weight: 700;
+            color: #4B8BBE;
+        }
+        .title {
+            font-size: 64px;
+            font-weight: 800;
+            margin-bottom: 30px;
+            background: linear-gradient(to right, #4B8BBE, #FFD43B);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+        }
+        .subtitle {
+            font-size: 36px;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 60px;
+            line-height: 1.4;
+        }
+        .animation-container {
+            position: relative;
+            width: 600px;
+            height: 200px;
+            margin-top: 30px;
+        }
+        .floating-icon {
+            position: absolute;
+            opacity: 0.7;
+            animation: float 3s ease-in-out infinite;
+        }
+        .floating-icon:nth-child(1) {
+            top: 20px;
+            left: 50px;
+            animation-delay: 0s;
+        }
+        .floating-icon:nth-child(2) {
+            top: 60px;
+            left: 200px;
+            animation-delay: 0.6s;
+        }
+        .floating-icon:nth-child(3) {
+            top: 30px;
+            right: 80px;
+            animation-delay: 1.2s;
+        }
+        .floating-icon:nth-child(4) {
+            bottom: 30px;
+            left: 150px;
+            animation-delay: 1.8s;
+        }
+        .floating-icon:nth-child(5) {
+            bottom: 40px;
+            right: 150px;
+            animation-delay: 2.4s;
+        }
+        .floating-icon i {
+            font-size: 42px;
+            color: rgba(255, 212, 59, 0.8);
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        .footer {
+            position: absolute;
+            bottom: 30px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 18px;
+            color: #a0aec0;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="python-logo">
+                <i class="fab fa-python"></i>
+                <div class="logo-text">Python</div>
+            </div>
+            
+            <h1 class="title">파이썬 업무 자동화 교육 교안</h1>
+            <h2 class="subtitle">챕터 1: 업무자동화의 필요성 & 개발환경설정</h2>
+            
+            <div class="animation-container">
+                <div class="floating-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="floating-icon">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <div class="floating-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="floating-icon">
+                    <i class="fas fa-file-code"></i>
+                </div>
+                <div class="floating-icon">
+                    <i class="fas fa-desktop"></i>
+                </div>
+            </div>
+            
+            <div class="footer">
+                파이썬으로 더 스마트하게 일하는 방법
+            </div>
+        </div>
+    </div>
+</body>
+    

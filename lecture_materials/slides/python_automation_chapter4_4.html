@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 4</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 44px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .example-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        .example-box {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .example-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+        .example-title i {
+            color: #FFD43B;
+            margin-right: 10px;
+        }
+        .prompt-box {
+            background-color: rgba(75, 139, 190, 0.3);
+            border-radius: 6px;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #a0aec0;
+        }
+        .prompt-box strong {
+            color: #FFD43B;
+        }
+        pre {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #e2e8f0;
+            flex-grow: 1;
+        }
+        .code-note {
+            font-size: 14px;
+            color: #cbd5e0;
+            margin-top: 10px;
+            font-style: italic;
+        }
+        .code-note strong {
+            color: #FFD43B;
+        }
+        .tips-section {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .tips-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .tips-title i {
+            margin-right: 10px;
+        }
+        .tips-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .tip-item {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+        }
+        .tip-icon {
+            font-size: 24px;
+            color: #4B8BBE;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .tip-text {
+            font-size: 14px;
+            color: #e2e8f0;
+            line-height: 1.5;
+            text-align: center;
+        }
+        .footer {
+            font-size: 16px;
+            color: #a0aec0;
+            text-align: center;
+            margin-top: 30px;
+            font-style: italic;
+        }
+        .highlight {
+            color: #FFD43B;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">5</div>
+                <div class="title">함수 활용 - 실전 예제</div>
+            </div>
+            
+            <div class="example-grid">
+                <div class="example-box">
+                    <div class="example-title">
+                        <i class="fas fa-file-excel"></i>
+                        다수의 엑셀 파일 합치기
+                    </div>
+                    <div class="prompt-box">
+                        <strong>ChatGPT 프롬프트:</strong> "특정 폴더에 있는 여러 개의 엑셀 파일을 하나로 합치는 파이썬 함수를 작성해주세요."
+                    </div>
+                    <pre>
+def merge_excel_files(folder_path, output_file, sheet_name=0):
+    """
+    특정 폴더의 모든 엑셀 파일을 하나의 엑셀 파일로 합치는 함수
+    
+    Args:
+        folder_path (str): 엑셀 파일이 있는 폴더 경로
+        output_file (str): 출력할 엑셀 파일 경로
+        sheet_name (str or int): 가져올 시트 이름 또는 인덱스
+        
+    Returns:
+        bool: 성공 여부
+    """
+    import pandas as pd
+    import os
+    
+    # 결과 데이터프레임 초기화
+    merged_df = pd.DataFrame()
+    
+    # 파일 카운터
+    file_count = 0
+    
+    try:
+        # 폴더 내 모든 파일 확인
+        for filename in os.listdir(folder_path):
+            if filename.endswith('.xlsx') or filename.endswith('.xls'):
+                file_path = os.path.join(folder_path, filename)
+                
+                # 파일 읽기
+                df = pd.read_excel(file_path, sheet_name=sheet_name)
+                
+                # 파일명 열 추가
+                df['파일출처'] = filename
+                
+                # 결과 데이터프레임에 추가
+                merged_df = pd.concat([merged_df, df], ignore_index=True)
+                file_count += 1
+        
+        # 결과 저장
+        if file_count > 0:
+            merged_df.to_excel(output_file, index=False)
+            print(f"{file_count}개 파일을 {output_file}로 합쳤습니다.")
+            return True
+        else:
+            print("처리할 엑셀 파일이 없습니다.")
+            return False
+            
+    except Exception as e:
+        print(f"오류 발생: {e}")
+        return False</pre>
+                    <div class="code-note"><strong>핵심:</strong> os 모듈과 pandas를 활용하여 폴더 내 모든 엑셀 파일을 하나로 통합합니다.</div>
+                </div>
+                
+                <div class="example-box">
+                    <div class="example-title">
+                        <i class="fas fa-calendar-alt"></i>
+                        업무 보고서 자동 생성
+                    </div>
+                    <div class="prompt-box">
+                        <strong>ChatGPT 프롬프트:</strong> "일간 업무 데이터를 분석하여 주간 보고서를 생성하는 함수를 작성해주세요."
+                    </div>
+                    <pre>
+def generate_weekly_report(daily_data_folder, report_output, week_number):
+    """
+    일일 데이터를 분석하여 주간 보고서를 생성하는 함수
+    
+    Args:
+        daily_data_folder (str): 일일 데이터 파일이 있는 폴더
+        report_output (str): 생성할 보고서 파일 경로
+        week_number (int): 주차 번호
+    """
+    import pandas as pd
+    import matplotlib.pyplot as plt
+    import os
+    from datetime import datetime
+    
+    # 모든 일일 데이터 수집
+    all_data = []
+    for file in os.listdir(daily_data_folder):
+        if file.startswith(f'daily_data_week{week_number}') and file.endswith('.csv'):
+            file_path = os.path.join(daily_data_folder, file)
+            daily_df = pd.read_csv(file_path)
+            all_data.append(daily_df)
+    
+    if not all_data:
+        print(f"{week_number}주차 데이터가 없습니다.")
+        return False
+    
+    # 모든 데이터 병합
+    weekly_data = pd.concat(all_data, ignore_index=True)
+    
+    # 데이터 분석
+    total_sales = weekly_data['sales'].sum()
+    avg_sales = weekly_data['sales'].mean()
+    top_product = weekly_data.groupby('product')['sales'].sum().idxmax()
+    
+    # 보고서 생성
+    with open(report_output, 'w', encoding='utf-8') as f:
+        f.write(f"# {week_number}주차 주간 업무 보고서\n\n")
+        f.write(f"생성일자: {datetime.now().strftime('%Y-%m-%d')}\n\n")
+        f.write(f"## 주요 지표\n")
+        f.write(f"- 총 매출: {total_sales:,.0f}원\n")
+        f.write(f"- 평균 일일 매출: {avg_sales:,.0f}원\n")
+        f.write(f"- 최고 판매 제품: {top_product}\n\n")
+        
+        # 추가 분석 및 그래프 작성 코드...
+    
+    print(f"{report_output} 보고서가 생성되었습니다.")
+    return True</pre>
+                    <div class="code-note"><strong>핵심:</strong> 파일명 패턴 매칭으로 관련 데이터만 선택하고 pandas로 분석한 후 보고서를 생성합니다.</div>
+                </div>
+                
+                <div class="example-box">
+                    <div class="example-title">
+                        <i class="fas fa-envelope"></i>
+                        이메일 자동 전송
+                    </div>
+                    <div class="prompt-box">
+                        <strong>ChatGPT 프롬프트:</strong> "CSV 파일에 있는 대상자들에게 맞춤형 이메일을 자동으로 보내는 함수를 만들어주세요."
+                    </div>
+                    <pre>
+def send_bulk_emails(recipients_csv, template_file, subject, sender_email,
+                     smtp_server, smtp_port, username, password):
+    """
+    CSV 파일의 대상자들에게 맞춤형 이메일을 대량 발송하는 함수
+    
+    Args:
+        recipients_csv (str): 수신자 정보가 있는 CSV 파일 경로
+        template_file (str): 이메일 템플릿 HTML 파일 경로
+        subject (str): 이메일 제목
+        sender_email (str): 발신자 이메일
+        smtp_server (str): SMTP 서버 주소
+        smtp_port (int): SMTP 포트
+        username (str): SMTP 로그인 사용자명
+        password (str): SMTP 로그인 비밀번호
+    """
+    import pandas as pd
+    import smtplib
+    from email.mime.multipart import MIMEMultipart
+    from email.mime.text import MIMEText
+    import time
+    
+    # 수신자 데이터 로드
+    recipients = pd.read_csv(recipients_csv)
+    
+    # 이메일 템플릿 로드
+    with open(template_file, 'r', encoding='utf-8') as f:
+        template = f.read()
+    
+    # SMTP 서버 연결
+    try:
+        server = smtplib.SMTP(smtp_server, smtp_port)
+        server.starttls()
+        server.login(username, password)
+        
+        success_count = 0
+        
+        # 각 수신자에게 이메일 발송
+        for _, row in recipients.iterrows():
+            try:
+                # 개인화된 이메일 내용 생성
+                personalized_content = template
+                for col in recipients.columns:
+                    if col != 'email':  # 이메일 열 제외
+                        personalized_content = personalized_content.replace(
+                            f'{{{{{{ {col} }}}}}}', str(row[col])
+                        )
+                
+                # 이메일 메시지 생성
+                msg = MIMEMultipart()
+                msg['From'] = sender_email
+                msg['To'] = row['email']
+                msg['Subject'] = subject
+                msg.attach(MIMEText(personalized_content, 'html'))
+                
+                # 발송
+                server.send_message(msg)
+                success_count += 1
+                
+                # 과도한 요청 방지를 위한 딜레이
+                time.sleep(1)
+                
+            except Exception as e:
+                print(f"{row['email']}에게 발송 실패: {e}")
+        
+        print(f"총 {len(recipients)}명 중 {success_count}명에게 이메일을 발송했습니다.")
+        server.quit()
+        return True
+        
+    except Exception as e:
+        print(f"이메일 발송 중 오류 발생: {e}")
+        return False</pre>
+                    <div class="code-note"><strong>핵심:</strong> pandas로 CSV 데이터를 처리하고 템플릿에 개인화된 변수를 적용하여 대량 이메일을 발송합니다.</div>
+                </div>
+                
+                <div class="example-box">
+                    <div class="example-title">
+                        <i class="fas fa-tachometer-alt"></i>
+                        성능 측정 데코레이터
+                    </div>
+                    <div class="prompt-box">
+                        <strong>ChatGPT 프롬프트:</strong> "함수의 실행 시간을 측정하는 데코레이터 함수를 작성해주세요."
+                    </div>
+                    <pre>
+def measure_performance(func):
+    """
+    함수의 실행 시간을 측정하는 데코레이터
+    
+    Args:
+        func: 측정할 함수
+        
+    Returns:
+        wrapper: 측정 기능이 추가된 함수
+    """
+    import time
+    import functools
+    
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        start_time = time.time()
+        result = func(*args, **kwargs)
+        end_time = time.time()
+        execution_time = end_time - start_time
+        
+        # 함수 이름과 실행 시간 출력
+        print(f"함수 '{func.__name__}' 실행 시간: {execution_time:.4f}초")
+        
+        # 실행 시간이 긴 경우 로그에 기록
+        if execution_time > 1.0:
+            with open('performance_log.txt', 'a', encoding='utf-8') as f:
+                f.write(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - "
+                        f"함수 '{func.__name__}' 실행 시간: {execution_time:.4f}초\n")
+        
+        return result
+    
+    return wrapper
+
+# 사용 예시
+@measure_performance
+def process_large_data(data_size):
+    """대용량 데이터 처리를 시뮬레이션하는 함수"""
+    import time
+    print(f"{data_size}개의 데이터 처리 중...")
+    time.sleep(2)  # 처리 시간 시뮬레이션
+    return f"{data_size}개의 데이터 처리 완료"
+
+# 데코레이터가 적용된 함수 호출
+result = process_large_data(10000)</pre>
+                    <div class="code-note"><strong>핵심:</strong> 데코레이터 패턴을 사용해 함수의 실행 시간을 측정하고 로깅하는 재사용 가능한 코드입니다.</div>
+                </div>
+            </div>
+            
+            <div class="tips-section">
+                <div class="tips-title">
+                    <i class="fas fa-lightbulb"></i>
+                    함수 활용 팁
+                </div>
+                <div class="tips-content">
+                    <div class="tip-item">
+                        <div class="tip-icon"><i class="fas fa-wrench"></i></div>
+                        <div class="tip-text">기능별로 함수를 분리하여 <span class="highlight">모듈화</span>하면 코드 유지보수와 재사용성이 향상됩니다.</div>
+                    </div>
+                    <div class="tip-item">
+                        <div class="tip-icon"><i class="fas fa-tasks"></i></div>
+                        <div class="tip-text">복잡한 업무 자동화는 여러 <span class="highlight">함수를 조합</span>하여 단계별로 처리하면 디버깅이 용이합니다.</div>
+                    </div>
+                    <div class="tip-item">
+                        <div class="tip-icon"><i class="fas fa-file-alt"></i></div>
+                        <div class="tip-text">항상 <span class="highlight">문서화(docstring)</span>를 통해 함수의 목적, 매개변수, 반환값을 명확히 기록하세요.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                "함수는 재사용 가능한 코드의 기본 단위로, 체계적인 함수 설계가 업무 자동화의 성공을 좌우합니다."
+            </div>
+        </div>
+    </div>
+</body>
+    

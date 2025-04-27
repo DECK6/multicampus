@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 - 챕터 8: 웹에서 데이터 가져오기</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 44px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .subtitle {
+            font-size: 22px;
+            color: #e2e8f0;
+            margin-bottom: 25px;
+        }
+        .process-flow {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .process-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 200px;
+            position: relative;
+        }
+        .process-step:not(:last-child):after {
+            content: "";
+            position: absolute;
+            top: 40px;
+            right: -65px;
+            width: 50px;
+            height: 3px;
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        .process-step:not(:last-child):before {
+            content: "";
+            position: absolute;
+            top: 35px;
+            right: -25px;
+            width: 0;
+            height: 0;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-left: 10px solid rgba(255, 255, 255, 0.3);
+        }
+        .process-icon {
+            background: linear-gradient(45deg, #4B8BBE, #306998);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            font-size: 30px;
+            color: #FFD43B;
+        }
+        .process-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #FFD43B;
+            text-align: center;
+        }
+        .code-container {
+            background-color: #1a202c;
+            border-radius: 12px;
+            padding: 20px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: auto;
+            max-height: 380px;
+        }
+        .prompt {
+            color: #A9A9A9;
+            user-select: none;
+        }
+        .code-comment {
+            color: #6A9955;
+        }
+        .keyword {
+            color: #569CD6;
+        }
+        .string {
+            color: #CE9178;
+        }
+        .function {
+            color: #DCDCAA;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(75, 139, 190, 0.3);
+            border: none;
+            color: #e2e8f0;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background: rgba(75, 139, 190, 0.5);
+        }
+        .chat-gpt-prompt {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            border-left: 5px solid #FFD43B;
+        }
+        .chat-gpt-prompt-label {
+            font-size: 16px;
+            font-weight: bold;
+            color: #FFD43B;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .chat-gpt-prompt-label i {
+            margin-right: 8px;
+        }
+        .chat-gpt-prompt-content {
+            font-size: 18px;
+            color: #e2e8f0;
+            font-style: italic;
+        }
+        .tips-box {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin-top: 20px;
+            border-left: 5px solid #4BB543;
+        }
+        .tips-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #4BB543;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .tips-title i {
+            margin-right: 8px;
+        }
+        .tips-content {
+            font-size: 16px;
+            color: #e2e8f0;
+            line-height: 1.5;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #a0aec0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">9</div>
+                <div class="title">프로젝트 구현: 통합 크롤링 솔루션</div>
+            </div>
+            
+            <div class="subtitle">모든 라이브러리를 조합하여 웹 크롤링부터 엑셀 저장, 워드클라우드 생성까지 한 번에 수행하는 통합 프로젝트입니다.</div>
+            
+            <div class="chat-gpt-prompt">
+                <div class="chat-gpt-prompt-label">
+                    <i class="fas fa-robot"></i>ChatGPT 프롬프트
+                </div>
+                <div class="chat-gpt-prompt-content">
+                    "네이버 뉴스 기사 제목을 크롤링하고, 엑셀에 저장한 후 워드클라우드로 시각화하는 완전한 파이썬 코드를 작성해줘"
+                </div>
+            </div>
+            
+            <div class="process-flow">
+                <div class="process-step">
+                    <div class="process-icon">
+                        <i class="fas fa-download"></i>
+                    </div>
+                    <div class="process-title">데이터 수집</div>
+                </div>
+                <div class="process-step">
+                    <div class="process-icon">
+                        <i class="fas fa-filter"></i>
+                    </div>
+                    <div class="process-title">데이터 처리</div>
+                </div>
+                <div class="process-step">
+                    <div class="process-icon">
+                        <i class="fas fa-file-excel"></i>
+                    </div>
+                    <div class="process-title">엑셀 저장</div>
+                </div>
+                <div class="process-step">
+                    <div class="process-icon">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <div class="process-title">워드클라우드</div>
+                </div>
+            </div>
+            
+            <div class="code-container">
+                <button class="copy-btn"><i class="fas fa-copy"></i> 복사</button>
+                <span class="prompt"># 통합 웹 크롤링 프로젝트: 뉴스 제목 수집 → 엑셀 저장 → 워드클라우드 생성</span><br>
+                <span class="keyword">import</span> requests<br>
+                <span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup<br>
+                <span class="keyword">import</span> pandas <span class="keyword">as</span> pd<br>
+                <span class="keyword">from</span> wordcloud <span class="keyword">import</span> WordCloud, STOPWORDS<br>
+                <span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt<br>
+                <span class="keyword">import</span> time<br>
+                <span class="keyword">import</span> re<br><br>
+                
+                <span class="code-comment"># 네이버 뉴스 크롤링 함수</span><br>
+                <span class="keyword">def</span> <span class="function">crawl_news_titles</span>():<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># 헤더 설정 - 웹사이트 차단 방지</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;headers = {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'</span>,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'Referer'</span>: <span class="string">'https://www.naver.com/'</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># 네이버 뉴스 페이지 접속</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;url = <span class="string">"https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=101"</span>  <span class="code-comment"># 경제 뉴스</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;response = requests.<span class="function">get</span>(url, headers=headers)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;soup = BeautifulSoup(response.text, <span class="string">"html.parser"</span>)<br><br>
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># 기사 제목 추출</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;titles = []<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;headlines = soup.<span class="function">select</span>(<span class="string">".sh_text_headline"</span>)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">for</span> headline <span class="keyword">in</span> headlines:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title = headline.<span class="function">get_text</span>().strip()<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;titles.append(title)<br>
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> titles<br><br>
+                
+                <span class="code-comment"># 엑셀로 저장하는 함수</span><br>
+                <span class="keyword">def</span> <span class="function">save_to_excel</span>(titles, filename=<span class="string">"news_titles.xlsx"</span>):<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;df = pd.<span class="function">DataFrame</span>({<span class="string">'제목'</span>: titles})<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;df.<span class="function">to_excel</span>(filename, index=<span class="keyword">False</span>)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">print</span>(<span class="string">f"데이터가 {filename}에 저장되었습니다."</span>)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> df<br><br>
+                
+                <span class="code-comment"># 워드클라우드 생성 함수</span><br>
+                <span class="keyword">def</span> <span class="function">create_wordcloud</span>(df, column=<span class="string">'제목'</span>, filename=<span class="string">"news_wordcloud.png"</span>):<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># 모든 텍스트 합치기</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;text = <span class="string">' '</span>.join(df[column])<br><br>
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># 불용어 설정</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;stopwords = <span class="function">set</span>(STOPWORDS)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;stopwords.<span class="function">update</span>([<span class="string">'있다'</span>, <span class="string">'이다'</span>, <span class="string">'하다'</span>, <span class="string">'되다'</span>, <span class="string">'등'</span>, <span class="string">'수'</span>, <span class="string">'것'</span>])<br><br>
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># 워드클라우드 생성</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;wordcloud = WordCloud(<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;font_path=<span class="string">'C:\\Windows\\Fonts\\malgun.ttf'</span>,  <span class="code-comment"># 한글 폰트</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width=800, height=600,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;background_color=<span class="string">'white'</span>,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stopwords=stopwords,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;max_words=100<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;).<span class="function">generate</span>(text)<br><br>
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># 워드클라우드 저장</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;wordcloud.<span class="function">to_file</span>(filename)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">print</span>(<span class="string">f"워드클라우드가 {filename}으로 저장되었습니다."</span>)<br><br>
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># 화면에 표시</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;plt.<span class="function">figure</span>(figsize=(10, 8))<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;plt.<span class="function">imshow</span>(wordcloud, interpolation=<span class="string">'bilinear'</span>)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;plt.<span class="function">axis</span>(<span class="string">'off'</span>)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;plt.<span class="function">show</span>()<br><br>
+                
+                <span class="code-comment"># 메인 실행 부분</span><br>
+                <span class="keyword">def</span> <span class="function">main</span>():<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">print</span>(<span class="string">"네이버 뉴스 크롤링 시작..."</span>)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;news_titles = <span class="function">crawl_news_titles</span>()<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">print</span>(<span class="string">f"{len(news_titles)}개의 뉴스 제목을 수집했습니다."</span>)<br><br>
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">print</span>(<span class="string">"엑셀로 저장 중..."</span>)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;df = <span class="function">save_to_excel</span>(news_titles)<br><br>
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">print</span>(<span class="string">"워드클라우드 생성 중..."</span>)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="function">create_wordcloud</span>(df)<br><br>
+                
+                <span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="function">main</span>()<br>
+            </div>
+            
+            <div class="tips-box">
+                <div class="tips-title">
+                    <i class="fas fa-lightbulb"></i>실행 팁
+                </div>
+                <div class="tips-content">
+                    <ul class="list-disc pl-5 space-y-1">
+                        <li>웹사이트 구조가 변경되면 CSS 선택자(.sh_text_headline)를 업데이트해야 할 수 있습니다.</li>
+                        <li>한글 워드클라우드를 위해 한글 폰트 경로를 시스템에 맞게 수정하세요.</li>
+                        <li>불용어(stopwords)를 추가하여 불필요한 단어를 제외하세요.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer">
+                이 통합 스크립트를 실행하면 뉴스 기사 제목을 자동으로 크롤링하여 엑셀에 저장하고 워드클라우드로 시각화합니다
+            </div>
+        </div>
+    </div>
+</body>
+    

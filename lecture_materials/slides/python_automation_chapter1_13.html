@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 1</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 40px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 42px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .intro-text {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #e2e8f0;
+            margin-bottom: 25px;
+        }
+        .two-column {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        .left-column {
+            flex: 1;
+        }
+        .right-column {
+            flex: 1;
+        }
+        .interface-overview {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section-title i {
+            color: #FFD43B;
+            margin-right: 10px;
+            font-size: 20px;
+        }
+        .interface-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        .interface-item {
+            display: flex;
+            align-items: flex-start;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 12px;
+            transition: all 0.3s ease;
+        }
+        .interface-item:hover {
+            transform: translateY(-3px);
+            background-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+        .interface-icon {
+            color: #FFD43B;
+            margin-right: 12px;
+            font-size: 18px;
+            min-width: 24px;
+        }
+        .interface-text {
+            font-size: 15px;
+            color: #e2e8f0;
+            line-height: 1.4;
+        }
+        .interface-text strong {
+            color: #90caf9;
+            font-weight: 600;
+        }
+        .cell-types {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .cell-type-cards {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+        }
+        .cell-card {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+            width: 48%;
+            transition: all 0.3s ease;
+        }
+        .cell-card:hover {
+            transform: translateY(-3px);
+            background-color: rgba(75, 139, 190, 0.3);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+        .cell-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .cell-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+        }
+        .cell-icon i {
+            font-size: 18px;
+        }
+        .code-icon {
+            color: #4B8BBE;
+        }
+        .markdown-icon {
+            color: #2ecc71;
+        }
+        .cell-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+        .cell-desc {
+            font-size: 14px;
+            color: #cbd5e0;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+        .cell-example {
+            background-color: rgba(40, 44, 52, 0.7);
+            border-radius: 6px;
+            padding: 10px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 13px;
+        }
+        .code-cell-example {
+            color: #4B8BBE;
+        }
+        .markdown-cell-example {
+            color: #2ecc71;
+        }
+        .shortcuts-list {
+            background-color: rgba(40, 44, 52, 0.5);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .shortcut-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        .shortcut-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+        }
+        .shortcut-keys {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-right: 12px;
+            min-width: 90px;
+        }
+        .key {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-size: 12px;
+            color: #FFD43B;
+            font-weight: 600;
+            display: inline-block;
+        }
+        .shortcut-desc {
+            font-size: 14px;
+            color: #e2e8f0;
+        }
+        .notebook-ui {
+            background-color: rgba(40, 44, 52, 0.5);
+            border-radius: 12px;
+            overflow: visible;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, .1);
+        }
+        .notebook-header {
+            background-color: rgba(75, 139, 190, 0.3);
+            padding: 8px 15px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, .1);
+        }
+        .notebook-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-left: 10px;
+        }
+        .notebook-toolbar {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 6px 15px;
+            display: flex;
+            gap: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, .1);
+        }
+        .toolbar-item {
+            font-size: 12px;
+            color: #cbd5e0;
+            padding: 4px 8px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+        .notebook-content {
+            padding: 15px;
+        }
+        .tips {
+            font-size: 14px;
+            color: #a0aec0;
+            margin-top: 15px;
+            font-style: italic;
+            padding: 15px;
+            border-left: 3px solid #FFD43B;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 0 8px 8px 0;
+        }
+        .workflow-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .workflow-step {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            width: 23%;
+            position: relative;
+            text-align: center;
+        }
+        .workflow-step:not(:last-child):after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: -13%;
+            width: 13%;
+            height: 2px;
+            background-color: rgba(255, 212, 59, 0.5);
+        }
+        .workflow-step:not(:last-child):before {
+            content: "➔";
+            position: absolute;
+            top: 50%;
+            right: -13%;
+            transform: translateY(-50%);
+            color: #FFD43B;
+            font-size: 18px;
+        }
+        .workflow-icon {
+            font-size: 24px;
+            color: #FFD43B;
+            margin-bottom: 10px;
+        }
+        .workflow-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 5px;
+        }
+        .workflow-desc {
+            font-size: 13px;
+            color: #cbd5e0;
+            line-height: 1.3;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">14</div>
+                <div class="title">주피터 노트북 사용법</div>
+            </div>
+            
+            <div class="intro-text">
+                Jupyter Notebook은 코드 작성, 실행, 결과 확인, 문서화를 한 곳에서 할 수 있는 강력한 도구입니다. 쉽게 사용할 수 있지만, 다양한 기능과 단축키를 활용하면 더욱 효율적으로 작업할 수 있습니다. 이번 슬라이드에서는 주피터 노트북의 기본 사용법과 유용한 팁들을 알아보겠습니다.
+            </div>
+            
+            <div class="notebook-ui">
+                <div class="notebook-header">
+                    <i class="fab fa-python" style="color: #FFD43B;"></i>
+                    <div class="notebook-title">Untitled.ipynb</div>
+                </div>
+                <div class="notebook-toolbar">
+                    <div class="toolbar-item">File</div>
+                    <div class="toolbar-item">Edit</div>
+                    <div class="toolbar-item">View</div>
+                    <div class="toolbar-item">Insert</div>
+                    <div class="toolbar-item">Cell</div>
+                    <div class="toolbar-item">Kernel</div>
+                    <div class="toolbar-item">Help</div>
+                </div>
+            </div>
+            
+            <div class="workflow-steps">
+                <div class="workflow-step">
+                    <div class="workflow-icon"><i class="fas fa-file-alt"></i></div>
+                    <div class="workflow-title">노트북 생성</div>
+                    <div class="workflow-desc">새 노트북 생성 또는 기존 파일 열기</div>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-icon"><i class="fas fa-edit"></i></div>
+                    <div class="workflow-title">코드 작성</div>
+                    <div class="workflow-desc">셀에 코드 또는 마크다운 작성</div>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-icon"><i class="fas fa-play"></i></div>
+                    <div class="workflow-title">실행</div>
+                    <div class="workflow-desc">셀 실행 및 결과 확인</div>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-icon"><i class="fas fa-save"></i></div>
+                    <div class="workflow-title">저장 및 공유</div>
+                    <div class="workflow-desc">작업 저장 및 결과 공유</div>
+                </div>
+            </div>
+            
+            <div class="two-column">
+                <div class="left-column">
+                    <div class="interface-overview">
+                        <h3 class="section-title">
+                            <i class="fas fa-desktop"></i>인터페이스 구성
+                        </h3>
+                        <div class="interface-grid">
+                            <div class="interface-item">
+                                <span class="interface-icon"><i class="fas fa-bars"></i></span>
+                                <span class="interface-text"><strong>메뉴바</strong>: 파일 관리, 셀 편집, 커널 제어 등 다양한 메뉴 제공</span>
+                            </div>
+                            <div class="interface-item">
+                                <span class="interface-icon"><i class="fas fa-tools"></i></span>
+                                <span class="interface-text"><strong>툴바</strong>: 자주 사용하는 기능들에 대한 바로가기 버튼</span>
+                            </div>
+                            <div class="interface-item">
+                                <span class="interface-icon"><i class="fas fa-square"></i></span>
+                                <span class="interface-text"><strong>셀(Cell)</strong>: 코드나 텍스트를 입력하고 실행하는 기본 단위</span>
+                            </div>
+                            <div class="interface-item">
+                                <span class="interface-icon"><i class="fas fa-cog"></i></span>
+                                <span class="interface-text"><strong>커널(Kernel)</strong>: 코드를 실행하는 엔진, 재시작 또는 중단 가능</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="cell-types">
+                        <h3 class="section-title">
+                            <i class="fas fa-th-large"></i>셀 유형
+                        </h3>
+                        <div class="cell-type-cards">
+                            <div class="cell-card">
+                                <div class="cell-header">
+                                    <div class="cell-icon">
+                                        <i class="fas fa-code code-icon"></i>
+                                    </div>
+                                    <div class="cell-title">코드 셀</div>
+                                </div>
+                                <div class="cell-desc">
+                                    Python 코드를 작성하고 실행하는 셀입니다. 실행 결과는 셀 아래에 표시됩니다.
+                                </div>
+                                <div class="cell-example code-cell-example">
+                                    # 간단한 계산
+                                    x = 10
+                                    y = 20
+                                    print(f"합계: {x + y}")
+                                </div>
+                            </div>
+                            
+                            <div class="cell-card">
+                                <div class="cell-header">
+                                    <div class="cell-icon">
+                                        <i class="fas fa-font markdown-icon"></i>
+                                    </div>
+                                    <div class="cell-title">마크다운 셀</div>
+                                </div>
+                                <div class="cell-desc">
+                                    서식이 있는 텍스트, 이미지, 링크 등을 포함한 문서를 작성하는 셀입니다.
+                                </div>
+                                <div class="cell-example markdown-cell-example">
+                                    # 제목
+                                    ## 부제목
+                                    
+                                    - 목록 항목 1
+                                    - 목록 항목 2
+                                    
+                                    **굵은 글씨**와 *기울임꼴*
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="shortcuts-list">
+                        <h3 class="section-title">
+                            <i class="fas fa-keyboard"></i>유용한 단축키
+                        </h3>
+                        <div class="shortcut-grid">
+                            <div class="shortcut-item">
+                                <div class="shortcut-keys">
+                                    <span class="key">Shift</span>
+                                    <span>+</span>
+                                    <span class="key">Enter</span>
+                                </div>
+                                <div class="shortcut-desc">셀 실행 후 다음 셀로 이동</div>
+                            </div>
+                            <div class="shortcut-item">
+                                <div class="shortcut-keys">
+                                    <span class="key">Ctrl</span>
+                                    <span>+</span>
+                                    <span class="key">Enter</span>
+                                </div>
+                                <div class="shortcut-desc">셀 실행 후 현재 셀 유지</div>
+                            </div>
+                            <div class="shortcut-item">
+                                <div class="shortcut-keys">
+                                    <span class="key">A</span>
+                                </div>
+                                <div class="shortcut-desc">현재 셀 위에 새 셀 추가</div>
+                            </div>
+                            <div class="shortcut-item">
+                                <div class="shortcut-keys">
+                                    <span class="key">B</span>
+                                </div>
+                                <div class="shortcut-desc">현재 셀 아래에 새 셀 추가</div>
+                            </div>
+                            <div class="shortcut-item">
+                                <div class="shortcut-keys">
+                                    <span class="key">M</span>
+                                </div>
+                                <div class="shortcut-desc">셀 타입을 마크다운으로 변경</div>
+                            </div>
+                            <div class="shortcut-item">
+                                <div class="shortcut-keys">
+                                    <span class="key">Y</span>
+                                </div>
+                                <div class="shortcut-desc">셀 타입을 코드로 변경</div>
+                            </div>
+                            <div class="shortcut-item">
+                                <div class="shortcut-keys">
+                                    <span class="key">D</span>
+                                    <span class="key">D</span>
+                                </div>
+                                <div class="shortcut-desc">현재 셀 삭제 (D 두 번)</div>
+                            </div>
+                            <div class="shortcut-item">
+                                <div class="shortcut-keys">
+                                    <span class="key">Z</span>
+                                </div>
+                                <div class="shortcut-desc">삭제한 셀 되돌리기</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="right-column">
+                    <div class="interface-overview">
+                        <h3 class="section-title">
+                            <i class="fas fa-cogs"></i>기본 작업
+                        </h3>
+                        <div class="interface-grid">
+                            <div class="interface-item">
+                                <span class="interface-icon"><i class="fas fa-file-medical"></i></span>
+                                <span class="interface-text"><strong>새 노트북 생성</strong>: 시작 페이지에서 [New] → [Python 3] 선택</span>
+                            </div>
+                            <div class="interface-item">
+                                <span class="interface-icon"><i class="fas fa-file-upload"></i></span>
+                                <span class="interface-text"><strong>노트북 업로드</strong>: [Upload] 버튼을 클릭하여 .ipynb 파일 업로드</span>
+                            </div>
+                            <div class="interface-item">
+                                <span class="interface-icon"><i class="fas fa-save"></i></span>
+                                <span class="interface-text"><strong>노트북 저장</strong>: Ctrl+S 또는 메뉴에서 [File] → [Save and Checkpoint]</span>
+                            </div>
+                            <div class="interface-item">
+                                <span class="interface-icon"><i class="fas fa-download"></i></span>
+                                <span class="interface-text"><strong>노트북 내보내기</strong>: [File] → [Download as] → 원하는 형식 선택</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="interface-overview">
+                        <h3 class="section-title">
+                            <i class="fas fa-edit"></i>마크다운 활용법
+                        </h3>
+                        <div class="interface-grid">
+                            <div class="interface-item">
+                                <span class="interface-icon"><i class="fas fa-heading"></i></span>
+                                <span class="interface-text"><strong>제목</strong>: # 대제목, ## 중제목, ### 소제목</span>
+                            </div>
+                            <div class="interface-item">
+                                <span class="interface-icon"><i class="fas fa-list-ul"></i></span>
+                                <span class="interface-text"><strong>목록</strong>: * 항목 또는 - 항목 (순서가 없는 목록), 1. 항목 (순서가 있는 목록)</span>
+                            </div>
+                            <div class="interface-item">
+                                <span class="interface-icon"><i class="fas fa-bold"></i></span>
+                                <span class="interface-text"><strong>강조</strong>: **굵은 글씨** 또는 *기울임꼴*</span>
+                            </div>
+                            <div class="interface-item">
+                                <span class="interface-icon"><i class="fas fa-code"></i></span>
+                                <span class="interface-text"><strong>코드</strong>: `인라인 코드`, ```python 여러 줄 코드 ```</span>
+                            </div>
+                            <div class="interface-item">
+                                <span class="interface-icon"><i class="fas fa-link"></i></span>
+                                <span class="interface-text"><strong>링크</strong>: [링크 텍스트](URL)</span>
+                            </div>
+                            <div class="interface-item">
+                                <span class="interface-icon"><i class="fas fa-image"></i></span>
+                                <span class="interface-text"><strong>이미지</strong>: ![대체 텍스트](이미지 URL)</span>
+                            </div>
+                            <div class="interface-item">
+                                <span class="interface-icon"><i class="fas fa-table"></i></span>
+                                <span class="interface-text"><strong>표</strong>: | 열1 | 열2 | 와 같은 형식으로 작성</span>
+                            </div>
+                            <div class="interface-item">
+                                <span class="interface-icon"><i class="fas fa-square-root-alt"></i></span>
+                                <span class="interface-text"><strong>수식</strong>: $$ E = mc^2 $$ 형식으로 LaTeX 수식 작성</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="interface-overview">
+                        <h3 class="section-title">
+                            <i class="fas fa-lightbulb"></i>효율적인 사용 팁
+                        </h3>
+                        <div class="interface-grid">
+                            <div class="interface-item">
+                                <span class="interface-icon"><i class="fas fa-magic"></i></span>
+                                <span class="interface-text"><strong>자동 완성</strong>: 코드 작성 중 Tab 키를 누르면 자동 완성 제안</span>
+                            </div>
+                            <div class="interface-item">
+                                <span class="interface-icon"><i class="fas fa-question-circle"></i></span>
+                                <span class="interface-text"><strong>도움말</strong>: 함수 뒤에 ? 또는 ?? 입력 후 실행 (예: print?)</span>
+                            </div>
+                            <div class="interface-item">
+                                <span class="interface-icon"><i class="fas fa-tasks"></i></span>
+                                <span class="interface-text"><strong>커널 관리</strong>: 오류 발생 시 [Kernel] → [Restart] 실행</span>
+                            </div>
+                            <div class="interface-item">
+                                <span class="interface-icon"><i class="fas fa-history"></i></span>
+                                <span class="interface-text"><strong>체크포인트</strong>: 중요 지점에서 주기적으로 저장하여 작업 보호</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tips">
+                        <strong>Tip:</strong> 주피터 노트북의 단축키를 이용하면 작업 효율이 크게 높아집니다. 명령 모드(파란색 테두리)와 편집 모드(녹색 테두리)의 단축키가 다르니 주의하세요. Esc 키를 눌러 명령 모드로, Enter 키를 눌러 편집 모드로 전환할 수 있습니다. 단축키 목록을 보려면 [Help] → [Keyboard Shortcuts]를 클릭하세요.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+    

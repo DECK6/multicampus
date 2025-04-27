@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 1</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 40px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 42px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .intro-text {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #e2e8f0;
+            margin-bottom: 25px;
+        }
+        .two-column {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        .left-column {
+            flex: 1;
+        }
+        .right-column {
+            flex: 1;
+        }
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section-title i {
+            color: #FFD43B;
+            margin-right: 10px;
+            font-size: 20px;
+        }
+        .best-practices {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        .practices-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        .practice-item {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            transition: all 0.3s ease;
+        }
+        .practice-item:hover {
+            transform: translateY(-3px);
+            background-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+        .practice-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .practice-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(45deg, #4B8BBE, #306998);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+        }
+        .practice-icon i {
+            font-size: 18px;
+            color: #FFD43B;
+        }
+        .practice-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+        .practice-desc {
+            font-size: 14px;
+            color: #cbd5e0;
+            line-height: 1.5;
+        }
+        .code-comparison {
+            background-color: rgba(40, 44, 52, 0.8);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            font-family: 'Consolas', 'Monaco', monospace;
+        }
+        .comparison-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        .code-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #e2e8f0;
+            display: flex;
+            align-items: center;
+        }
+        .code-title i {
+            margin-right: 8px;
+            font-size: 16px;
+        }
+        .good-title {
+            color: #68D391;
+        }
+        .bad-title {
+            color: #F56565;
+        }
+        .code-blocks {
+            display: flex;
+            gap: 20px;
+        }
+        .code-block {
+            flex: 1;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 15px;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #e2e8f0;
+            position: relative;
+        }
+        .good-practice {
+            border-left: 4px solid #68D391;
+        }
+        .bad-practice {
+            border-left: 4px solid #F56565;
+        }
+        .keyword { color: #c678dd; }
+        .string { color: #98c379; }
+        .comment { color: #7f848e; font-style: italic; }
+        .function { color: #61afef; }
+        .variable { color: #e06c75; }
+        .library { color: #e5c07b; }
+        .dos-donts {
+            margin-bottom: 25px;
+        }
+        .dos-donts-header {
+            display: flex;
+            margin-bottom: 15px;
+        }
+        .dos-header, .donts-header {
+            flex: 1;
+            font-size: 18px;
+            font-weight: 600;
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px 8px 0 0;
+        }
+        .dos-header {
+            background-color: rgba(104, 211, 145, 0.2);
+            color: #68D391;
+        }
+        .donts-header {
+            background-color: rgba(245, 101, 101, 0.2);
+            color: #F56565;
+        }
+        .dos-donts-content {
+            display: flex;
+            gap: 20px;
+        }
+        .dos-list, .donts-list {
+            flex: 1;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 0 0 8px 8px;
+            padding: 15px;
+        }
+        .dos-list {
+            border-top: 3px solid rgba(104, 211, 145, 0.5);
+        }
+        .donts-list {
+            border-top: 3px solid rgba(245, 101, 101, 0.5);
+        }
+        .do-item, .dont-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .do-item:last-child, .dont-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        .do-icon, .dont-icon {
+            min-width: 24px;
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        .do-icon {
+            color: #68D391;
+        }
+        .dont-icon {
+            color: #F56565;
+        }
+        .do-text, .dont-text {
+            font-size: 14px;
+            color: #e2e8f0;
+            line-height: 1.5;
+        }
+        .security-tips {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        .tips-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .tip-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .tip-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        .tip-icon {
+            color: #FFD43B;
+            margin-right: 12px;
+            font-size: 18px;
+            min-width: 24px;
+        }
+        .tip-content {
+            flex: 1;
+        }
+        .tip-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 5px;
+        }
+        .tip-desc {
+            font-size: 14px;
+            color: #cbd5e0;
+            line-height: 1.5;
+        }
+        .resources-box {
+            background-color: rgba(40, 44, 52, 0.5);
+            border-radius: 12px;
+            padding: 20px;
+        }
+        .resources-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .resource-item {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            width: calc(50% - 5px);
+        }
+        .resource-icon {
+            color: #FFD43B;
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        .resource-text {
+            font-size: 14px;
+            color: #e2e8f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">17</div>
+                <div class="title">파이썬 자동화의 모범 사례 및 팁</div>
+            </div>
+            
+            <div class="intro-text">
+                파이썬 자동화 스크립트를 효과적으로 개발하고 유지보수하기 위해서는 몇 가지 핵심 모범 사례와 팁을 따르는 것이 중요합니다. 이번 페이지에서는 안정적이고 보안에 강한 자동화 코드를 작성하는 방법과 자주 발생하는 실수를 피하는 방법을 알아보겠습니다. 이러한 모범 사례는 개발 시간을 단축하고 장기적으로 유지보수가 용이한 자동화 솔루션을 만드는 데 도움이 됩니다.
+            </div>
+            
+            <div class="two-column">
+                <div class="left-column">
+                    <div class="best-practices">
+                        <h3 class="section-title">
+                            <i class="fas fa-award"></i>자동화 코드 모범 사례
+                        </h3>
+                        <div class="practices-grid">
+                            <div class="practice-item">
+                                <div class="practice-header">
+                                    <div class="practice-icon">
+                                        <i class="fas fa-shield-alt"></i>
+                                    </div>
+                                    <div class="practice-title">철저한 예외 처리</div>
+                                </div>
+                                <div class="practice-desc">
+                                    자동화 스크립트는 예상치 못한 상황(네트워크 오류, 파일 접근 실패 등)에 대비하여 포괄적인 예외 처리를 구현해야 합니다. try-except 블록을 사용하여 각 작업 단계별로 오류를 포착하고 처리하세요.
+                                </div>
+                            </div>
+                            
+                            <div class="practice-item">
+                                <div class="practice-header">
+                                    <div class="practice-icon">
+                                        <i class="fas fa-book"></i>
+                                    </div>
+                                    <div class="practice-title">상세한 로깅</div>
+                                </div>
+                                <div class="practice-desc">
+                                    logging 모듈을 사용하여 자동화 프로세스의 모든 중요 단계와 이벤트를 기록하세요. 로그 파일을 통해 문제 진단 및 프로세스 모니터링이 가능해집니다.
+                                </div>
+                            </div>
+                            
+                            <div class="practice-item">
+                                <div class="practice-header">
+                                    <div class="practice-icon">
+                                        <i class="fas fa-code"></i>
+                                    </div>
+                                    <div class="practice-title">모듈화된 코드</div>
+                                </div>
+                                <div class="practice-desc">
+                                    스크립트를 기능별로 모듈화하고 함수로 분리하여 가독성과 재사용성을 높이세요. 각 함수는 하나의 작업만 수행하도록 설계하는 것이 좋습니다.
+                                </div>
+                            </div>
+                            
+                            <div class="practice-item">
+                                <div class="practice-header">
+                                    <div class="practice-icon">
+                                        <i class="fas fa-key"></i>
+                                    </div>
+                                    <div class="practice-title">보안 고려사항</div>
+                                </div>
+                                <div class="practice-desc">
+                                    API 키, 비밀번호 등의 민감한 정보는 환경 변수나 보안 저장소에 저장하세요. 소스 코드에 직접 하드코딩하지 마세요.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="code-comparison">
+                        <div class="comparison-header">
+                            <div class="code-title good-title"><i class="fas fa-check-circle"></i>올바른 예외 처리 예시</div>
+                            <div class="code-title bad-title"><i class="fas fa-times-circle"></i>잘못된 예외 처리 예시</div>
+                        </div>
+                        <div class="code-blocks">
+                            <div class="code-block good-practice">
+<pre><code>import logging<br># 로깅 설정<br>logging.basicConfig(<br>    level=logging.INFO,<br>    format='%(asctime)s - %(levelname)s - %(message)s',<br>    filename='automation.log'<br>)<br><br>def process_file(file_path):<br>    try:<br>        logging.info(f"파일 처리 시작: {file_path}")<br>        with open(file_path, 'r') as file:<br>            data = file.read()<br>        # 파일 처리 로직<br>        logging.info("파일 처리 완료")<br>        return data<br>    except FileNotFoundError:<br>        logging.error(f"파일을 찾을 수 없음: {file_path}")<br>        return None<br>    except PermissionError:<br>        logging.error(f"파일 접근 권한 없음: {file_path}")<br>        return None<br>    except Exception as e:<br>        logging.error(f"예상치 못한 오류: {e}")<br>        return None</code></pre>
+                            </div>
+                            <div class="code-block bad-practice">
+<pre><code># 로깅 없음<br>def process_file(file_path):<br>    # 예외 처리 없음<br>    file = open(file_path, 'r')<br>    data = file.read()<br>    file.close()<br>    <br># 또는 모든 예외를 무시<br>try:<br>    file = open(file_path, 'r')<br>    data = file.read()<br>    file.close()<br>    return data<br>except:<br>    # 너무 광범위한 예외 처리<br>    print("오류 발생") # 제한된 정보만 제공<br>    return None</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dos-donts">
+                        <div class="dos-donts-header">
+                            <div class="dos-header">권장사항 (Do's)</div>
+                            <div class="donts-header">금지사항 (Don'ts)</div>
+                        </div>
+                        <div class="dos-donts-content">
+                            <div class="dos-list">
+                                <div class="do-item">
+                                    <div class="do-icon"><i class="fas fa-check-circle"></i></div>
+                                    <div class="do-text">설정 정보를 별도의 구성 파일에 저장하여 코드와 분리</div>
+                                </div>
+                                <div class="do-item">
+                                    <div class="do-icon"><i class="fas fa-check-circle"></i></div>
+                                    <div class="do-text">작업 전 백업 메커니즘 구현하기</div>
+                                </div>
+                                <div class="do-item">
+                                    <div class="do-icon"><i class="fas fa-check-circle"></i></div>
+                                    <div class="do-text">가독성을 위해 변수와 함수에 명확한 이름 사용</div>
+                                </div>
+                                <div class="do-item">
+                                    <div class="do-icon"><i class="fas fa-check-circle"></i></div>
+                                    <div class="do-text">주요 함수와 모듈에 문서화 주석(docstring) 추가</div>
+                                </div>
+                            </div>
+                            <div class="donts-list">
+                                <div class="dont-item">
+                                    <div class="dont-icon"><i class="fas fa-times-circle"></i></div>
+                                    <div class="dont-text">소스 코드에 API 키나 비밀번호 하드코딩하기</div>
+                                </div>
+                                <div class="dont-item">
+                                    <div class="dont-icon"><i class="fas fa-times-circle"></i></div>
+                                    <div class="dont-text">너무 광범위한 예외 처리 사용 (except: 만 사용)</div>
+                                </div>
+                                <div class="dont-item">
+                                    <div class="dont-icon"><i class="fas fa-times-circle"></i></div>
+                                    <div class="dont-text">과도하게 복잡한 함수 작성 (한 함수에 여러 기능 포함)</div>
+                                </div>
+                                <div class="dont-item">
+                                    <div class="dont-icon"><i class="fas fa-times-circle"></i></div>
+                                    <div class="dont-text">중요한 자원 사용 후 명시적으로 해제하지 않기</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="right-column">
+                    <div class="security-tips">
+                        <h3 class="section-title">
+                            <i class="fas fa-lock"></i>자동화 스크립트 보안 팁
+                        </h3>
+                        <ul class="tips-list">
+                            <li class="tip-item">
+                                <div class="tip-icon"><i class="fas fa-key"></i></div>
+                                <div class="tip-content">
+                                    <div class="tip-title">환경 변수 활용</div>
+                                    <div class="tip-desc">
+                                        API 키, 데이터베이스 비밀번호 등의 민감한 정보는 환경 변수로 관리하세요. Python의 os.environ이나 dotenv 패키지를 활용하면 편리합니다.
+                                        <pre class="mt-2 text-xs bg-gray-900 p-2 rounded">
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+api_key = os.environ.get("API_KEY")</pre>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="tip-item">
+                                <div class="tip-icon"><i class="fas fa-user-lock"></i></div>
+                                <div class="tip-content">
+                                    <div class="tip-title">최소 권한 원칙</div>
+                                    <div class="tip-desc">
+                                        자동화 스크립트가 사용하는 계정이나 API 키에는 필요한 최소한의 권한만 부여하세요. 읽기 전용 작업에는 읽기 권한만 있는 계정을 사용하는 것이 안전합니다.
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="tip-item">
+                                <div class="tip-icon"><i class="fas fa-shield-alt"></i></div>
+                                <div class="tip-content">
+                                    <div class="tip-title">입력 데이터 검증</div>
+                                    <div class="tip-desc">
+                                        외부에서 들어오는 모든 데이터는 사용 전에 반드시 검증하세요. 특히 파일 경로, URL 등 시스템 리소스에 접근하는 데 사용되는 입력은 철저히 검증해야 합니다.
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="tip-item">
+                                <div class="tip-icon"><i class="fas fa-file-code"></i></div>
+                                <div class="tip-content">
+                                    <div class="tip-title">보안 업데이트 유지</div>
+                                    <div class="tip-desc">
+                                        사용하는 라이브러리와 패키지를 주기적으로 업데이트하세요. 종속성 관리 도구(pip, pipenv, poetry)를 사용하여 패키지 버전을 고정하고 보안 취약점이 발견되면 즉시 업데이트하세요.
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="code-comparison">
+                        <div class="comparison-header">
+                            <div class="code-title good-title">
+                                <i class="fas fa-check-circle"></i>효율적인 파일 처리 예시
+                            </div>
+                            <div class="code-title bad-title">
+                                <i class="fas fa-times-circle"></i>비효율적인 파일 처리 예시
+                            </div>
+                        </div>
+                        <div class="code-blocks">
+                            <div class="code-block good-practice">
+<pre><code># 컨텍스트 매니저 사용<br>def process_large_file(file_path):<br>    try:<br>        # 파일을 한 번에 메모리에 로드하지 않고<br>        # 라인별로 처리하여 메모리 효율성 향상<br>        results = []<br>        with open(file_path, 'r') as file:<br>            for line in file:<br>                if is_valid(line):<br>                    results.append(<br>                        process_line(line)<br>                    )<br>        return results<br>    except Exception as e:<br>        logging.error(f"파일 처리 오류: {e}")<br>        return []</code></pre>
+                            </div>
+                            <div class="code-block bad-practice">
+<pre><code># 컨텍스트 매니저 미사용<br>def process_large_file(file_path):<br>    # 전체 파일을 메모리에 한 번에 로드<br>    # 큰 파일의 경우 메모리 문제 발생<br>    file = open(file_path, 'r')<br>    content = file.readlines()<br>    file.close() <br>    # 파일을 닫지 않으면 리소스 누수<br>    results = []<br>    for line in content:<br>        if is_valid(line):<br>            results.append(<br>                process_line(line)<br>            )<br>    return results</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="resources-box">
+                        <h3 class="section-title">
+                            <i class="fas fa-book"></i>추가 학습 자료
+                        </h3>
+                        <div class="resources-list">
+                            <div class="resource-item">
+                                <div class="resource-icon"><i class="fas fa-globe"></i></div>
+                                <div class="resource-text">Python 공식 문서 - 코딩 스타일 가이드</div>
+                            </div>
+                            <div class="resource-item">
+                                <div class="resource-icon"><i class="fas fa-book"></i></div>
+                                <div class="resource-text">Effective Python: 90 Specific Ways</div>
+                            </div>
+                            <div class="resource-item">
+                                <div class="resource-icon"><i class="fas fa-shield-alt"></i></div>
+                                <div class="resource-text">Python 자동화 스크립트 보안 체크리스트</div>
+                            </div>
+                            <div class="resource-item">
+                                <div class="resource-icon"><i class="fas fa-video"></i></div>
+                                <div class="resource-text">PyCon - 파이썬 자동화 모범 사례 강연</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+    

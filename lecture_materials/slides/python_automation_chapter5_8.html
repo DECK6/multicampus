@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 자동화 교육 교안 - 챕터 5: 물리자동화의 이해</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .intro-text {
+            color: #e2e8f0;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            max-width: 90%;
+        }
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        .code-block {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            margin: 10px 0;
+            color: #e2e8f0;
+            overflow-x: auto;
+            border-left: 4px solid #4B8BBE;
+        }
+        .code-block pre {
+            margin: 0;
+            white-space: pre-wrap;
+        }
+        .prompt-box {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            border-left: 3px solid #4B8BBE;
+        }
+        .prompt-label {
+            font-size: 14px;
+            font-weight: bold;
+            color: #FFD43B;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+        .prompt-label i {
+            margin-right: 6px;
+        }
+        .prompt-text {
+            font-style: italic;
+            color: #cbd5e0;
+        }
+        .app-showcase {
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+        }
+        .app-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #FFD43B;
+            display: flex;
+            align-items: center;
+        }
+        .app-title i {
+            margin-right: 10px;
+            font-size: 22px;
+        }
+        .app-desc {
+            color: #e2e8f0;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .app-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .feature-tag {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-radius: 20px;
+            padding: 5px 12px;
+            font-size: 14px;
+            color: #e2e8f0;
+            border: 1px solid rgba(75, 139, 190, 0.4);
+        }
+        .ui-mockup {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+        .ui-header {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 10px;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .ui-element {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            padding: 8px;
+            margin-bottom: 10px;
+            color: #e2e8f0;
+            font-size: 14px;
+        }
+        .ui-button {
+            background: linear-gradient(45deg, #4B8BBE, #306998);
+            border-radius: 4px;
+            padding: 8px 15px;
+            display: inline-block;
+            margin: 8px;
+            color: white;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .workflow-diagram {
+            margin: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .workflow-step {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 12px;
+            width: 22%;
+            text-align: center;
+            color: #e2e8f0;
+        }
+        .workflow-arrow {
+            color: #4B8BBE;
+            font-size: 24px;
+        }
+        .tip-box {
+            background-color: rgba(255, 212, 59, 0.1);
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin-top: 25px;
+            border: 1px solid rgba(255, 212, 59, 0.3);
+        }
+        .tip-title {
+            display: flex;
+            align-items: center;
+            color: #FFD43B;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .tip-title i {
+            margin-right: 8px;
+        }
+        .tip-content {
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">9</div>
+                <div class="title">ChatGPT로 만드는 자동화 GUI 프로그램</div>
+            </div>
+            
+            <p class="intro-text">
+                이번 페이지에서는 ChatGPT를 활용하여 PyAutoGUI 기능을 갖춘 GUI 프로그램을 개발하는 과정을 살펴봅니다.
+                사용자 친화적인 인터페이스와 강력한 자동화 기능을 결합한 실용적인 응용 프로그램을 만들어 봅시다.
+            </p>
+            
+            <div class="app-showcase">
+                <h3 class="app-title"><i class="fas fa-clipboard-check"></i>실습 예제: 스크린샷 자동화 도구</h3>
+                <p class="app-desc">
+                    지정된 영역의 스크린샷을 주기적으로 찍고 저장하는 간단한 GUI 프로그램을 만들어 보겠습니다.
+                    이 도구는 화면 모니터링, 변화 감지, 증거 수집 등 다양한 목적으로 활용할 수 있습니다.
+                </p>
+                <div class="app-features">
+                    <div class="feature-tag"><i class="fas fa-mouse-pointer"></i> 영역 선택</div>
+                    <div class="feature-tag"><i class="fas fa-clock"></i> 타이머 설정</div>
+                    <div class="feature-tag"><i class="fas fa-camera"></i> 자동 스크린샷</div>
+                    <div class="feature-tag"><i class="fas fa-folder"></i> 파일 저장</div>
+                </div>
+                
+                <div class="workflow-diagram">
+                    <div class="workflow-step">영역 선택</div>
+                    <div class="workflow-arrow"><i class="fas fa-arrow-right"></i></div>
+                    <div class="workflow-step">타이머 설정</div>
+                    <div class="workflow-arrow"><i class="fas fa-arrow-right"></i></div>
+                    <div class="workflow-step">자동 촬영</div>
+                    <div class="workflow-arrow"><i class="fas fa-arrow-right"></i></div>
+                    <div class="workflow-step">결과 저장</div>
+                </div>
+            </div>
+            
+            <div class="two-column">
+                <div>
+                    <div class="prompt-box">
+                        <div class="prompt-label"><i class="fas fa-comment-alt"></i>ChatGPT 프롬프트</div>
+                        <p class="prompt-text">"PyAutoGUI와 Tkinter를 사용해서 다음 기능을 가진 스크린샷 자동화 도구를 만들어줘:
+                        1. 사용자가 화면의 특정 영역을 선택할 수 있는 기능
+                        2. 스크린샷 간격(초 단위)을 설정할 수 있는 입력 필드
+                        3. 스크린샷 저장 폴더 선택 기능
+                        4. 시작/정지 버튼
+                        5. 상태 표시 영역"</p>
+                    </div>
+                    
+                    <div class="code-block">
+<pre>import tkinter as tk
+from tkinter import filedialog, messagebox
+import pyautogui
+import time
+import os
+from datetime import datetime
+import threading
+
+class ScreenshotApp:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("자동 스크린샷 도구")
+        self.root.geometry("500x400")
+        self.root.resizable(False, False)
+        
+        self.running = False
+        self.thread = None
+        
+        # 영역 선택 변수
+        self.region = {"x1": 0, "y1": 0, "x2": 0, "y2": 0}
+        self.save_path = os.path.join(os.path.expanduser("~"), "Screenshots")
+        
+        self.setup_ui()
+    
+    def setup_ui(self):
+        # 영역 선택 프레임
+        region_frame = tk.LabelFrame(self.root, text="스크린샷 영역")
+        region_frame.pack(fill="x", padx=10, pady=10)
+        
+        tk.Button(region_frame, text="영역 선택하기", 
+                 command=self.select_region).pack(pady=10)
+        
+        self.region_label = tk.Label(region_frame, 
+                                    text="선택된 영역: 없음")
+        self.region_label.pack(pady=5)
+        
+        # 설정 프레임
+        settings_frame = tk.LabelFrame(self.root, text="설정")
+        settings_frame.pack(fill="x", padx=10, pady=10)
+        
+        tk.Label(settings_frame, text="스크린샷 간격(초):").grid(
+            row=0, column=0, padx=5, pady=5, sticky="w")
+        self.interval_entry = tk.Entry(settings_frame, width=10)
+        self.interval_entry.insert(0, "5")
+        self.interval_entry.grid(row=0, column=1, padx=5, pady=5)
+        
+        tk.Label(settings_frame, text="저장 경로:").grid(
+            row=1, column=0, padx=5, pady=5, sticky="w")
+        self.path_label = tk.Label(settings_frame, 
+                                 text=self.save_path, 
+                                 anchor="w")
+        self.path_label.grid(row=1, column=1, padx=5, pady=5, sticky="w")
+        tk.Button(settings_frame, text="찾아보기", 
+                command=self.select_path).grid(
+                    row=1, column=2, padx=5, pady=5)
+        
+        # 제어 프레임
+        control_frame = tk.Frame(self.root)
+        control_frame.pack(fill="x", padx=10, pady=20)
+        
+        self.start_button = tk.Button(control_frame, text="시작", 
+                                     command=self.start_screenshots,
+                                     bg="#4CAF50", fg="white", width=10)
+        self.start_button.pack(side="left", padx=10)
+        
+        self.stop_button = tk.Button(control_frame, text="정지", 
+                                   command=self.stop_screenshots,
+                                   bg="#F44336", fg="white", width=10,
+                                   state="disabled")
+        self.stop_button.pack(side="left", padx=10)
+        
+        # 상태 표시 영역
+        status_frame = tk.LabelFrame(self.root, text="상태")
+        status_frame.pack(fill="both", expand=True, padx=10, pady=10)
+        
+        self.status_text = tk.Text(status_frame, height=8, width=50)
+        self.status_text.pack(padx=5, pady=5, fill="both", expand=True)
+        self.status_text.config(state="disabled")
+        
+    def update_status(self, message):
+        self.status_text.config(state="normal")
+        self.status_text.insert(tk.END, 
+                              f"[{datetime.now().strftime('%H:%M:%S')}] {message}\n")
+        self.status_text.see(tk.END)
+        self.status_text.config(state="disabled")
+    
+    def select_region(self):
+        self.root.iconify()  # 창 최소화
+        time.sleep(0.5)
+        self.update_status("영역을 선택하세요...")
+        
+        try:
+            region = pyautogui.screenshot()
+            x1, y1, x2, y2 = pyautogui.dragRel.box()
+            self.region = {"x1": x1, "y1": y1, 
+                          "x2": x2, "y2": y2,
+                          "width": x2-x1, "height": y2-y1}
+            self.region_label.config(
+                text=f"선택된 영역: ({x1}, {y1}) - ({x2}, {y2})")
+            self.update_status(f"영역 선택 완료: {x2-x1}x{y2-y1} 픽셀")
+        except Exception as e:
+            self.update_status(f"영역 선택 오류: {str(e)}")
+        
+        self.root.deiconify()  # 창 복원
+    
+    def select_path(self):
+        path = filedialog.askdirectory()
+        if path:
+            self.save_path = path
+            self.path_label.config(text=path)
+            self.update_status(f"저장 경로 변경: {path}")
+    
+    def take_screenshots(self):
+        interval = float(self.interval_entry.get())
+        count = 1
+        
+        while self.running:
+            try:
+                if all(self.region.values()):
+                    filename = f"screenshot_{datetime.now().strftime('%Y%m%d_%H%M%S')}.png"
+                    full_path = os.path.join(self.save_path, filename)
+                    
+                    img = pyautogui.screenshot(region=(
+                        self.region["x1"], self.region["y1"],
+                        self.region["width"], self.region["height"]))
+                    img.save(full_path)
+                    
+                    self.update_status(f"스크린샷 #{count} 저장: {filename}")
+                    count += 1
+                else:
+                    self.update_status("오류: 영역이 선택되지 않았습니다.")
+                    self.stop_screenshots()
+                    break
+            except Exception as e:
+                self.update_status(f"오류 발생: {str(e)}")
+            
+            time.sleep(interval)
+    
+    def start_screenshots(self):
+        if not os.path.exists(self.save_path):
+            os.makedirs(self.save_path)
+        
+        try:
+            float(self.interval_entry.get())
+        except ValueError:
+            messagebox.showerror("오류", "유효한 간격(초)을 입력하세요.")
+            return
+        
+        self.running = True
+        self.thread = threading.Thread(target=self.take_screenshots)
+        self.thread.daemon = True
+        self.thread.start()
+        
+        self.start_button.config(state="disabled")
+        self.stop_button.config(state="normal")
+        self.update_status("스크린샷 자동화 시작됨")
+    
+    def stop_screenshots(self):
+        self.running = False
+        self.start_button.config(state="normal")
+        self.stop_button.config(state="disabled")
+        self.update_status("스크린샷 자동화 중지됨")
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = ScreenshotApp(root)
+    root.mainloop()</pre>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="ui-mockup">
+                        <div class="ui-header">자동 스크린샷 도구</div>
+                        
+                        <div style="text-align: left; padding: 10px; margin-bottom: 20px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px;">
+                            <div style="font-weight: 600; color: #FFD43B; margin-bottom: 10px;">스크린샷 영역</div>
+                            <div class="ui-button" style="width: 120px;">영역 선택하기</div>
+                            <div class="ui-element">선택된 영역: (100, 200) - (500, 450)</div>
+                        </div>
+                        
+                        <div style="text-align: left; padding: 10px; margin-bottom: 20px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px;">
+                            <div style="font-weight: 600; color: #FFD43B; margin-bottom: 10px;">설정</div>
+                            <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                                <span style="width: 130px;">스크린샷 간격(초):</span>
+                                <div class="ui-element" style="width: 60px; margin: 0;">5</div>
+                            </div>
+                            <div style="display: flex; align-items: center;">
+                                <span style="width: 130px;">저장 경로:</span>
+                                <div class="ui-element" style="flex: 1; margin: 0 10px 0 0;">C:/Users/User/Screenshots</div>
+                                <div class="ui-button" style="margin: 0; padding: 5px 10px;">찾아보기</div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-bottom: 20px; display: flex; justify-content: center;">
+                            <div class="ui-button" style="background: linear-gradient(45deg, #4CAF50, #2E7D32);">시작</div>
+                            <div class="ui-button" style="background: linear-gradient(45deg, #F44336, #C62828);">정지</div>
+                        </div>
+                        
+                        <div style="text-align: left; padding: 10px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px;">
+                            <div style="font-weight: 600; color: #FFD43B; margin-bottom: 10px;">상태</div>
+                            <div style="background: rgba(0, 0, 0, 0.2); border-radius: 4px; padding: 10px; height: 100px; overflow-y: auto; font-family: monospace; font-size: 12px; color: #e2e8f0;">
+                                [14:25:30] 영역 선택 완료: 400x250 픽셀<br>
+                                [14:25:35] 저장 경로 변경: C:/Users/User/Screenshots<br>
+                                [14:25:37] 스크린샷 자동화 시작됨<br>
+                                [14:25:42] 스크린샷 #1 저장: screenshot_20240415_142542.png<br>
+                                [14:25:47] 스크린샷 #2 저장: screenshot_20240415_142547.png
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tip-box">
+                        <div class="tip-title"><i class="fas fa-lightbulb"></i> GUI 개발 팁</div>
+                        <div class="tip-content">
+                            <ul class="list-disc pl-5 space-y-2">
+                                <li><strong>코드 분석하기:</strong> ChatGPT가 생성한 코드를 이해하고 필요에 맞게 수정하세요.</li>
+                                <li><strong>에러 처리:</strong> 사용자 입력 검증과 예외 처리를 꼼꼼히 추가하세요.</li>
+                                <li><strong>스레딩 활용:</strong> UI가 멈추지 않도록 자동화 작업은 별도 스레드에서 실행하세요.</li>
+                                <li><strong>사용자 피드백:</strong> 상태 표시나 진행 상황을 보여주는 기능을 추가하세요.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+    

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 - 챕터 8: 웹에서 데이터 가져오기</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 44px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .explanation {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-left: 5px solid #4B8BBE;
+        }
+        .explanation p {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #e2e8f0;
+            margin-bottom: 15px;
+        }
+        .explanation p:last-child {
+            margin-bottom: 0;
+        }
+        .code-container {
+            background-color: #1a202c;
+            border-radius: 12px;
+            padding: 20px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: visible;
+        }
+        .prompt {
+            color: #A9A9A9;
+            user-select: none;
+        }
+        .code-comment {
+            color: #6A9955;
+        }
+        .keyword {
+            color: #569CD6;
+        }
+        .string {
+            color: #CE9178;
+        }
+        .function {
+            color: #DCDCAA;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(75, 139, 190, 0.3);
+            border: none;
+            color: #e2e8f0;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background: rgba(75, 139, 190, 0.5);
+        }
+        .dual-container {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .dual-column {
+            flex: 1;
+        }
+        .preview-container {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+        .preview-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .options-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        .options-table th {
+            background-color: rgba(75, 139, 190, 0.3);
+            color: #FFD43B;
+            text-align: left;
+            padding: 12px 15px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .options-table td {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px 15px;
+            font-size: 15px;
+            color: #e2e8f0;
+        }
+        .options-table tr:hover td {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        .chat-gpt-prompt {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin-bottom: 25px;
+            border-left: 5px solid #FFD43B;
+        }
+        .chat-gpt-prompt-label {
+            font-size: 16px;
+            font-weight: bold;
+            color: #FFD43B;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .chat-gpt-prompt-label i {
+            margin-right: 8px;
+        }
+        .chat-gpt-prompt-content {
+            font-size: 18px;
+            color: #e2e8f0;
+            font-style: italic;
+        }
+        .wordcloud-preview {
+            width: 350px;
+            height: 250px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 8px;
+            position: relative;
+            overflow: visible;
+        }
+        .word {
+            position: absolute;
+            font-weight: bold;
+            transform-origin: center;
+        }
+        .word-1 {
+            font-size: 40px;
+            color: #3182ce;
+            top: 100px;
+            left: 120px;
+        }
+        .word-2 {
+            font-size: 32px;
+            color: #4299e1;
+            top: 60px;
+            left: 200px;
+        }
+        .word-3 {
+            font-size: 28px;
+            color: #63b3ed;
+            top: 150px;
+            left: 180px;
+        }
+        .word-4 {
+            font-size: 24px;
+            color: #90cdf4;
+            top: 80px;
+            left: 50px;
+        }
+        .word-5 {
+            font-size: 22px;
+            color: #2b6cb0;
+            top: 130px;
+            left: 250px;
+        }
+        .word-6 {
+            font-size: 18px;
+            color: #2c5282;
+            top: 180px;
+            left: 100px;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #a0aec0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">8</div>
+                <div class="title">WordCloud로 데이터 시각화</div>
+            </div>
+            
+            <div class="chat-gpt-prompt">
+                <div class="chat-gpt-prompt-label">
+                    <i class="fas fa-robot"></i>ChatGPT 프롬프트
+                </div>
+                <div class="chat-gpt-prompt-content">
+                    "파이썬으로 크롤링한 텍스트 데이터를 워드클라우드로 시각화하는 코드를 작성해줘"
+                </div>
+            </div>
+            
+            <div class="explanation">
+                <p><strong>WordCloud</strong>는 텍스트 데이터에서 단어의 빈도수에 따라 크기와 색상을 다르게 표현하는 시각화 도구입니다. 크롤링으로 수집한 뉴스 기사 제목이나 내용을 분석할 때 유용합니다.</p>
+                <p>단어의 출현 빈도가 높을수록 크게 표시되어, 방대한 텍스트 데이터에서 핵심 키워드를 직관적으로 파악할 수 있습니다.</p>
+            </div>
+            
+            <div class="dual-container">
+                <div class="dual-column">
+                    <div class="code-container">
+                        <button class="copy-btn"><i class="fas fa-copy"></i> 복사</button>
+                        <span class="prompt"># WordCloud 생성 기본 코드</span><br>
+                        <span class="keyword">import</span> pandas <span class="keyword">as</span> pd<br>
+                        <span class="keyword">from</span> wordcloud <span class="keyword">import</span> WordCloud, STOPWORDS<br>
+                        <span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt<br><br>
+                        
+                        <span class="code-comment"># 엑셀 파일에서 데이터 불러오기</span><br>
+                        df = pd.<span class="function">read_excel</span>(<span class="string">'news_titles.xlsx'</span>)<br>
+                        text = <span class="string">' '</span>.join(df[<span class="string">'제목'</span>])<br><br>
+                        
+                        <span class="code-comment"># 불용어 설정 (제외할 단어들)</span><br>
+                        stopwords = <span class="function">set</span>(STOPWORDS)<br>
+                        stopwords.<span class="function">update</span>([<span class="string">'있다'</span>, <span class="string">'이다'</span>, <span class="string">'하다'</span>])<br><br>
+                        
+                        <span class="code-comment"># WordCloud 객체 생성</span><br>
+                        wordcloud = WordCloud(<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;font_path=<span class="string">'C:\\Windows\\Fonts\\malgun.ttf'</span>,  <span class="code-comment"># 한글 폰트</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;width=800, <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;height=600, <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;background_color=<span class="string">'white'</span>,<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;stopwords=stopwords,<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;max_words=100,<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;max_font_size=150<br>
+                        ).<span class="function">generate</span>(text)<br><br>
+                        
+                        <span class="code-comment"># 이미지로 저장</span><br>
+                        wordcloud.<span class="function">to_file</span>(<span class="string">'news_wordcloud.png'</span>)<br><br>
+                        
+                        <span class="code-comment"># 화면에 출력</span><br>
+                        plt.<span class="function">figure</span>(figsize=(10, 8))<br>
+                        plt.<span class="function">imshow</span>(wordcloud, interpolation=<span class="string">'bilinear'</span>)<br>
+                        plt.<span class="function">axis</span>(<span class="string">'off'</span>)<br>
+                        plt.<span class="function">show</span>()<br>
+                    </div>
+                </div>
+                
+                <div class="dual-column">
+                    <div class="preview-container">
+                        <div class="preview-title">워드 클라우드 미리보기</div>
+                        <div class="wordcloud-preview">
+                            <div class="word word-1">경제</div>
+                            <div class="word word-2">기업</div>
+                            <div class="word word-3">정책</div>
+                            <div class="word word-4">시장</div>
+                            <div class="word word-5">투자</div>
+                            <div class="word word-6">성장</div>
+                        </div>
+                        <p style="text-align: center; margin-top: 15px; font-size: 14px; color: #e2e8f0;">* 실제 생성된 워드 클라우드는 단어의 빈도수에 따라 다르게 표시됩니다</p>
+                    </div>
+                </div>
+            </div>
+            
+            <table class="options-table">
+                <thead>
+                    <tr>
+                        <th>주요 설정 옵션</th>
+                        <th>설명</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>font_path</td>
+                        <td>한글 표시를 위한 폰트 경로 설정 (한글 처리를 위해 필수)</td>
+                    </tr>
+                    <tr>
+                        <td>background_color</td>
+                        <td>배경 색상 지정 (white, black, transparent 등)</td>
+                    </tr>
+                    <tr>
+                        <td>max_words</td>
+                        <td>워드 클라우드에 표시할 단어의 최대 개수</td>
+                    </tr>
+                    <tr>
+                        <td>mask</td>
+                        <td>특정 이미지 형태로 워드 클라우드 생성 (numpy 배열)</td>
+                    </tr>
+                    <tr>
+                        <td>stopwords</td>
+                        <td>제외할 단어 목록 (불용어) 설정</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="footer">
+                워드 클라우드를 통해 크롤링한 텍스트 데이터의 주요 키워드를 직관적으로 파악할 수 있습니다
+            </div>
+        </div>
+    </div>
+</body>
+    

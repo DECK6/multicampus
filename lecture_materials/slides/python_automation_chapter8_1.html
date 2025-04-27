@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 - 챕터 8: 웹에서 데이터 가져오기</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 44px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .benefit-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            height: 100%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            background-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+        }
+        .card-icon {
+            background: linear-gradient(45deg, #4B8BBE, #306998);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .card-icon i {
+            font-size: 24px;
+            color: #FFD43B;
+        }
+        .card-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #e2e8f0;
+        }
+        .card-description {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #cbd5e0;
+        }
+        .definition-box {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 40px;
+            border-left: 5px solid #FFD43B;
+        }
+        .definition-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 15px;
+        }
+        .definition-content {
+            font-size: 18px;
+            line-height: 1.7;
+            color: #e2e8f0;
+        }
+        .footer {
+            margin-top: 40px;
+            font-size: 18px;
+            color: #a0aec0;
+            text-align: center;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">2</div>
+                <div class="title">웹 크롤링 개요</div>
+            </div>
+            
+            <div class="definition-box">
+                <div class="definition-title">웹 크롤링이란?</div>
+                <div class="definition-content">
+                    <p>웹 크롤링은 웹 페이지에서 필요한 정보를 자동으로 수집하는 프로세스입니다. 프로그래밍을 통해 인터넷에서 원하는 데이터를 가져와 분석하고 활용할 수 있도록 합니다.</p>
+                </div>
+            </div>
+            
+            <div class="benefit-cards">
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <h3 class="card-title">데이터 수집 자동화</h3>
+                    <p class="card-description">수동으로 웹사이트 정보를 수집하는 시간을 절약하고, 대량의 데이터를 일관된 방식으로 자동 수집할 수 있습니다.</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3 class="card-title">데이터 분석</h3>
+                    <p class="card-description">수집한 데이터를 가공하여 트렌드 분석, 시장 조사, 경쟁사 모니터링 등 다양한 분석 작업에 활용할 수 있습니다.</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-magic"></i>
+                    </div>
+                    <h3 class="card-title">업무 효율화</h3>
+                    <p class="card-description">반복적인 정보 검색 및 수집 업무를 자동화하여 업무 효율성을 높이고 인적 오류를 줄일 수 있습니다.</p>
+                </div>
+            </div>
+            
+            <div class="benefit-cards" style="margin-top: 30px;">
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="card-title">Python 라이브러리</h3>
+                    <p class="card-description">BeautifulSoup, Requests, Selenium 등 파이썬의 강력한 라이브러리를 활용하여 쉽게 웹 크롤링을 구현할 수 있습니다.</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-file-excel"></i>
+                    </div>
+                    <h3 class="card-title">데이터 저장</h3>
+                    <p class="card-description">수집한 데이터를 엑셀, CSV, 데이터베이스 등 다양한 형식으로 저장하고 관리할 수 있습니다.</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 class="card-title">AI 활용</h3>
+                    <p class="card-description">ChatGPT와 같은 AI 기술을 활용하여 크롤링 코드 작성을 도와주고 성능을 향상시킬 수 있습니다.</p>
+                </div>
+            </div>
+            
+            <div class="footer">
+                "웹 크롤링은 데이터 수집 작업을 자동화하여 업무 생산성을 크게 향상시킵니다"
+            </div>
+        </div>
+    </div>
+</body>
+    

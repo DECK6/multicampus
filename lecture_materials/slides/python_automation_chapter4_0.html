@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 4</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .header {
+            margin-bottom: 30px;
+        }
+        .chapter {
+            font-size: 24px;
+            font-weight: 500;
+            color: #a0aec0;
+            margin-bottom: 10px;
+        }
+        .title {
+            font-size: 62px;
+            font-weight: 700;
+            color: #FFD43B;
+            line-height: 1.2;
+        }
+        .subtitle {
+            font-size: 32px;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-top: 15px;
+        }
+        .main-content {
+            display: flex;
+            flex-grow: 1;
+        }
+        .left-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .right-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .topic-list {
+            margin-top: 30px;
+        }
+        .topic-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        .topic-icon {
+            background: linear-gradient(45deg, #4B8BBE, #306998);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+        }
+        .topic-icon i {
+            font-size: 24px;
+            color: #FFD43B;
+        }
+        .topic-text {
+            font-size: 22px;
+            font-weight: 500;
+            color: #e2e8f0;
+        }
+        .python-logo {
+            font-size: 220px;
+            color: #4B8BBE;
+            opacity: 0.8;
+            text-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+        }
+        .footer {
+            margin-top: 40px;
+            font-size: 18px;
+            color: #a0aec0;
+            text-align: center;
+        }
+        .page-number {
+            position: absolute;
+            bottom: 40px;
+            right: 60px;
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="chapter">챕터 4</div>
+                <div class="title">일반적인 회사의 업무 흐름에 맞는<br>업무자동화 기술</div>
+                <div class="subtitle">기타(예외처리/함수/라이브러리등) & ChatGPT 활용</div>
+            </div>
+            
+            <div class="main-content">
+                <div class="left-content">
+                    <div class="topic-list">
+                        <div class="topic-item">
+                            <div class="topic-icon">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="topic-text">예외처리의 개념과 방법</div>
+                        </div>
+                        
+                        <div class="topic-item">
+                            <div class="topic-icon">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <div class="topic-text">파이썬 함수 활용</div>
+                        </div>
+                        
+                        <div class="topic-item">
+                            <div class="topic-icon">
+                                <i class="fas fa-box"></i>
+                            </div>
+                            <div class="topic-text">유용한 파이썬 라이브러리</div>
+                        </div>
+                        
+                        <div class="topic-item">
+                            <div class="topic-icon">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="topic-text">ChatGPT 활용 코드 자동 생성</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="right-content">
+                    <div class="python-logo">
+                        <i class="fab fa-python"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                "효율적인 업무 자동화를 위한 파이썬 고급 기술과 AI 활용"
+            </div>
+            
+            <div class="page-number">1</div>
+        </div>
+    </div>
+</body>
+    

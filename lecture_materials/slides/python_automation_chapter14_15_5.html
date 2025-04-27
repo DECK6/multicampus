@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 14 & 15</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 40px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .code-block {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Consolas', monospace;
+        }
+        .code-title {
+            color: #FFD43B;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">6</div>
+                <h2 class="text-2xl font-bold text-yellow-400">이메일 템플릿 적용과 첨부파일 추가</h2>
+            </div>
+
+            <div class="code-block">
+                <div class="code-title">
+                    <i class="fas fa-code mr-2"></i>ChatGPT Prompt: "Create Python code to send HTML email with attachments"
+                </div>
+                <pre class="text-gray-300 text-sm">
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from email.mime.application import MIMEApplication
+import os
+
+def send_html_email_with_attachment(sender_email, app_password, receiver_email, 
+                                  subject, html_content, attachment_path=None):
+    # 메시지 생성
+    message = MIMEMultipart()
+    message["From"] = sender_email
+    message["To"] = receiver_email
+    message["Subject"] = subject
+
+    # HTML 본문 추가
+    html_part = MIMEText(html_content, "html")
+    message.attach(html_part)
+
+    # 첨부파일 추가
+    if attachment_path and os.path.exists(attachment_path):
+        with open(attachment_path, "rb") as f:
+            attachment = MIMEApplication(f.read())
+            attachment.add_header(
+                "Content-Disposition", 
+                "attachment", 
+                filename=os.path.basename(attachment_path)
+            )
+            message.attach(attachment)
+
+    # 이메일 전송
+    with smtplib.SMTP("smtp.gmail.com", 587) as server:
+        server.starttls()
+        server.login(sender_email, app_password)
+        server.send_message(message)</pre>
+            </div>
+
+            <div class="grid grid-cols-2 gap-6 mt-6">
+                <div class="bg-blue-900 bg-opacity-20 p-4 rounded-lg">
+                    <h3 class="text-yellow-400 text-lg font-semibold mb-3">
+                        <i class="fas fa-file-alt mr-2"></i>지원되는 첨부파일 형식
+                    </h3>
+                    <ul class="space-y-2 text-sm">
+                        <li>PDF 문서 (.pdf)</li>
+                        <li>Microsoft Office 파일 (.docx, .xlsx, .pptx)</li>
+                        <li>이미지 파일 (.jpg, .png, .gif)</li>
+                        <li>압축 파일 (.zip, .rar)</li>
+                    </ul>
+                </div>
+
+                <div class="bg-blue-900 bg-opacity-20 p-4 rounded-lg">
+                    <h3 class="text-yellow-400 text-lg font-semibold mb-3">
+                        <i class="fas fa-exclamation-circle mr-2"></i>첨부파일 제한사항
+                    </h3>
+                    <ul class="space-y-2 text-sm">
+                        <li>Gmail 첨부 용량 제한: 25MB</li>
+                        <li>실행 파일(.exe) 첨부 불가</li>
+                        <li>대용량 파일은 클라우드 링크 권장</li>
+                        <li>특수문자가 포함된 파일명 주의</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-6 bg-yellow-900 bg-opacity-20 p-4 rounded-lg">
+                <h3 class="text-yellow-400 font-semibold mb-2">
+                    <i class="fas fa-lightbulb mr-2"></i>실무 활용 팁
+                </h3>
+                <ul class="text-sm space-y-2">
+                    <li>첨부파일 이름은 영문/숫자 조합 권장</li>
+                    <li>첨부파일 존재 여부 확인 로직 필수</li>
+                    <li>대량 발송 시 첨부파일 캐싱 고려</li>
+                    <li>이메일 클라이언트별 호환성 테스트 필요</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+    

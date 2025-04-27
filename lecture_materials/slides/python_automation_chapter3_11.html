@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 3</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 40px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 38px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .subtitle {
+            font-size: 20px;
+            font-weight: 400;
+            color: #e2e8f0;
+            margin-bottom: 25px;
+        }
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        .section {
+            background: rgba(75, 139, 190, 0.15);
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        .section:hover {
+            background: rgba(75, 139, 190, 0.25);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #FFD43B;
+            display: flex;
+            align-items: center;
+        }
+        .section-icon {
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        .section-content {
+            font-size: 15px;
+            line-height: 1.5;
+            color: #e2e8f0;
+        }
+        .code-block {
+            margin-top: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 13px;
+            color: #e2e8f0;
+            position: relative;
+        }
+        .code-prompt {
+            background: #4B8BBE;
+            border-radius: 4px;
+            padding: 6px 10px;
+            margin-bottom: 8px;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 12px;
+            color: white;
+        }
+        .code-prompt i {
+            margin-right: 6px;
+            color: #FFD43B;
+        }
+        .code-line {
+            margin-bottom: 4px;
+        }
+        .highlight {
+            color: #FFD43B;
+        }
+        .string {
+            color: #9cdcfe;
+        }
+        .comment {
+            color: #a0aec0;
+            font-style: italic;
+        }
+        .indent {
+            margin-left: 20px;
+        }
+        .output-preview {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin-top: 8px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 12px;
+            color: #cbd5e0;
+        }
+        .output-title {
+            color: #a0aec0;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+        .footer {
+            margin-top: 25px;
+            font-size: 16px;
+            color: #a0aec0;
+            text-align: center;
+            font-style: italic;
+        }
+        .note {
+            background: rgba(255, 212, 59, 0.1);
+            border-left: 3px solid #FFD43B;
+            padding: 10px 15px;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #e2e8f0;
+        }
+        .note-title {
+            color: #FFD43B;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        .badge-yellow {
+            background-color: rgba(255, 212, 59, 0.2);
+            color: #FFD43B;
+            border: 1px solid #FFD43B;
+        }
+        .library-item {
+            background: rgba(75, 139, 190, 0.2);
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+        .library-item:hover {
+            background: rgba(75, 139, 190, 0.3);
+        }
+        .library-name {
+            font-weight: 600;
+            color: #FFD43B;
+            font-size: 15px;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+        .library-name i {
+            margin-right: 8px;
+        }
+        .library-desc {
+            font-size: 13px;
+            color: #e2e8f0;
+        }
+        .feature-list {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        .feature-item {
+            padding: 4px 10px;
+            background: rgba(75, 139, 190, 0.3);
+            border-radius: 20px;
+            font-size: 12px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        .feature-icon {
+            margin-right: 5px;
+            font-size: 10px;
+            color: #FFD43B;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">12</div>
+                <div class="title">Excel 자동화 실전 활용</div>
+            </div>
+            
+            <p class="subtitle">업무에서 가장 많이 사용되는 Excel 파일을 파이썬으로 자동화하는 방법을 알아봅니다. 대규모 데이터 처리, 보고서 자동 생성, 데이터 분석 등 다양한 작업을 효율적으로 처리할 수 있습니다.</p>
+            
+            <div class="main-content">
+                <div class="left-column">
+                    <div class="section">
+                        <div class="section-title">
+                            <i class="fas fa-file-excel section-icon"></i>
+                            Excel 자동화 라이브러리
+                        </div>
+                        <div class="section-content">
+                            <p>파이썬에서 Excel 파일을 처리하기 위한 다양한 라이브러리가 있습니다. 각 라이브러리는 특징과 활용 목적이 다릅니다.</p>
+                            
+                            <div class="library-item">
+                                <div class="library-name">
+                                    <i class="fas fa-table"></i>pandas
+                                </div>
+                                <div class="library-desc">
+                                    데이터 분석용 라이브러리로, Excel 파일을 데이터프레임으로 읽고 쓸 수 있습니다. 대용량 데이터 처리와 분석에 적합합니다.
+                                </div>
+                                <div class="feature-list">
+                                    <div class="feature-item"><i class="fas fa-check feature-icon"></i>데이터 분석</div>
+                                    <div class="feature-item"><i class="fas fa-check feature-icon"></i>간편한 사용법</div>
+                                    <div class="feature-item"><i class="fas fa-check feature-icon"></i>빠른 속도</div>
+                                </div>
+                            </div>
+                            
+                            <div class="library-item">
+                                <div class="library-name">
+                                    <i class="fas fa-file-code"></i>openpyxl
+                                </div>
+                                <div class="library-desc">
+                                    Excel 파일의 세부적인 형식과 스타일을 제어할 수 있는 라이브러리로, 복잡한 서식이나 수식을 다룰 때 유용합니다.
+                                </div>
+                                <div class="feature-list">
+                                    <div class="feature-item"><i class="fas fa-check feature-icon"></i>서식 지정</div>
+                                    <div class="feature-item"><i class="fas fa-check feature-icon"></i>수식 작업</div>
+                                    <div class="feature-item"><i class="fas fa-check feature-icon"></i>차트 생성</div>
+                                </div>
+                            </div>
+                            
+                            <div class="library-item">
+                                <div class="library-name">
+                                    <i class="fas fa-exchange-alt"></i>xlwings
+                                </div>
+                                <div class="library-desc">
+                                    Excel 애플리케이션을 직접 제어할 수 있는 라이브러리로, 실시간 상호작용이 필요한 경우에 사용합니다.
+                                </div>
+                                <div class="feature-list">
+                                    <div class="feature-item"><i class="fas fa-check feature-icon"></i>실시간 제어</div>
+                                    <div class="feature-item"><i class="fas fa-check feature-icon"></i>VBA 대체</div>
+                                    <div class="feature-item"><i class="fas fa-check feature-icon"></i>매크로 자동화</div>
+                                </div>
+                            </div>
+                            
+                            <div class="note">
+                                <div class="note-title">라이브러리 선택 가이드</div>
+                                <ul class="list-disc pl-5">
+                                    <li><strong>데이터 분석/처리:</strong> pandas</li>
+                                    <li><strong>복잡한 보고서/서식:</strong> openpyxl</li>
+                                    <li><strong>Excel UI와 상호작용:</strong> xlwings</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="right-column">
+                    <div class="section">
+                        <div class="section-title">
+                            <i class="fas fa-laptop-code section-icon"></i>
+                            여러 Excel 파일 병합 자동화
+                            <span class="badge badge-yellow">시간 절약</span>
+                        </div>
+                        <div class="section-content">
+                            <p>여러 개의 Excel 파일에서 데이터를 추출하여 하나의 파일로 병합하는 자동화 스크립트입니다.</p>
+                            
+                            <div class="code-block">
+                                <div class="code-prompt">
+                                    <i class="fas fa-robot"></i>여러 지점의 월간 판매 보고서 엑셀 파일을 하나로 통합하는 코드를 작성해줘
+                                </div>
+                                <div class="code-line"><span class="highlight">import</span> pandas <span class="highlight">as</span> pd</div>
+                                <div class="code-line"><span class="highlight">import</span> glob</div>
+                                <div class="code-line"><span class="highlight">import</span> os</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 모든 지점 보고서 파일 가져오기</span></div>
+                                <div class="code-line">보고서_폴더 = <span class="string">'./월간보고서/'</span></div>
+                                <div class="code-line">보고서_파일목록 = glob.glob(보고서_폴더 + <span class="string">'*.xlsx'</span>)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 모든 데이터를 저장할 빈 데이터프레임</span></div>
+                                <div class="code-line">통합_데이터 = pd.DataFrame()</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="highlight">for</span> 파일경로 <span class="highlight">in</span> 보고서_파일목록:</div>
+                                <div class="code-line indent">지점명 = os.path.basename(파일경로).split(<span class="string">'_'</span>)[0]</div>
+                                <div class="code-line indent">print(f<span class="string">"{지점명} 보고서 처리 중..."</span>)</div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent"><span class="comment"># 엑셀 파일 읽기</span></div>
+                                <div class="code-line indent">df = pd.read_excel(파일경로, sheet_name=<span class="string">'판매데이터'</span>)</div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent"><span class="comment"># 지점 정보 추가</span></div>
+                                <div class="code-line indent">df[<span class="string">'지점'</span>] = 지점명</div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent"><span class="comment"># 통합 데이터에 추가</span></div>
+                                <div class="code-line indent">통합_데이터 = pd.concat([통합_데이터, df], ignore_index=True)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 피벗 테이블 생성 (지점별, 상품별 판매량 집계)</span></div>
+                                <div class="code-line">피벗_데이터 = pd.pivot_table(</div>
+                                <div class="code-line indent">통합_데이터,</div>
+                                <div class="code-line indent">values=<span class="string">'판매량'</span>,</div>
+                                <div class="code-line indent">index=<span class="string">'상품명'</span>,</div>
+                                <div class="code-line indent">columns=<span class="string">'지점'</span>,</div>
+                                <div class="code-line indent">aggfunc=<span class="string">'sum'</span>,</div>
+                                <div class="code-line indent">fill_value=0</div>
+                                <div class="code-line">)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 합계 행 추가</span></div>
+                                <div class="code-line">피벗_데이터.loc[<span class="string">'총합계'</span>] = 피벗_데이터.sum()</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 결과 저장</span></div>
+                                <div class="code-line"><span class="highlight">with</span> pd.ExcelWriter(<span class="string">'통합월간보고서.xlsx'</span>) <span class="highlight">as</span> writer:</div>
+                                <div class="code-line indent">통합_데이터.to_excel(writer, sheet_name=<span class="string">'전체데이터'</span>, index=False)</div>
+                                <div class="code-line indent">피벗_데이터.to_excel(writer, sheet_name=<span class="string">'지점별요약'</span>)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line">print(<span class="string">"통합 보고서가 생성되었습니다."</span>)</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">
+                            <i class="fas fa-paint-brush section-icon"></i>
+                            서식 있는 보고서 생성
+                        </div>
+                        <div class="section-content">
+                            <p>openpyxl을 사용하여 서식이 적용된 전문적인 Excel 보고서를 자동으로 생성할 수 있습니다.</p>
+                            
+                            <div class="code-block">
+                                <div class="code-prompt">
+                                    <i class="fas fa-robot"></i>openpyxl로 서식이 있는 판매 보고서를 자동 생성하는 코드를 작성해줘
+                                </div>
+                                <div class="code-line"><span class="highlight">import</span> openpyxl</div>
+                                <div class="code-line"><span class="highlight">from</span> openpyxl.styles <span class="highlight">import</span> Font, PatternFill, Alignment, Border, Side</div>
+                                <div class="code-line"><span class="highlight">from</span> openpyxl.chart <span class="highlight">import</span> BarChart, Reference</div>
+                                <div class="code-line"><span class="highlight">import</span> pandas <span class="highlight">as</span> pd</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 샘플 데이터 생성</span></div>
+                                <div class="code-line">데이터 = {</div>
+                                <div class="code-line indent"><span class="string">'상품'</span>: [<span class="string">'노트북'</span>, <span class="string">'태블릿'</span>, <span class="string">'스마트폰'</span>, <span class="string">'모니터'</span>, <span class="string">'키보드'</span>],</div>
+                                <div class="code-line indent"><span class="string">'판매량'</span>: [52, 28, 75, 35, 48],</div>
+                                <div class="code-line indent"><span class="string">'단가'</span>: [1200000, 800000, 950000, 350000, 90000]</div>
+                                <div class="code-line">}</div>
+                                <div class="code-line"></div>
+                                <div class="code-line">df = pd.DataFrame(데이터)</div>
+                                <div class="code-line">df[<span class="string">'매출액'</span>] = df[<span class="string">'판매량'</span>] * df[<span class="string">'단가'</span>]</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 새 워크북 생성</span></div>
+                                <div class="code-line">wb = openpyxl.Workbook()</div>
+                                <div class="code-line">ws = wb.active</div>
+                                <div class="code-line">ws.title = <span class="string">"제품별 판매 현황"</span></div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 제목 추가</span></div>
+                                <div class="code-line">ws[<span class="string">'A1'</span>] = <span class="string">"2023년 3분기 제품별 판매 현황"</span></div>
+                                <div class="code-line">ws.merge_cells(<span class="string">'A1:E1'</span>)</div>
+                                <div class="code-line">ws[<span class="string">'A1'</span>].font = Font(size=16, bold=True, color=<span class="string">"4B8BBE"</span>)</div>
+                                <div class="code-line">ws[<span class="string">'A1'</span>].alignment = Alignment(horizontal=<span class="string">'center'</span>)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 헤더 추가</span></div>
+                                <div class="code-line">헤더 = [<span class="string">'제품명'</span>, <span class="string">'판매수량'</span>, <span class="string">'단가'</span>, <span class="string">'매출액'</span>, <span class="string">'비고'</span>]</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="highlight">for</span> col_num, 헤더명 <span class="highlight">in</span> enumerate(헤더, 1):</div>
+                                <div class="code-line indent">cell = ws.cell(row=3, column=col_num, value=헤더명)</div>
+                                <div class="code-line indent">cell.font = Font(bold=True, color=<span class="string">"FFFFFF"</span>)</div>
+                                <div class="code-line indent">cell.fill = PatternFill(<span class="string">"solid"</span>, fgColor=<span class="string">"4B8BBE"</span>)</div>
+                                <div class="code-line indent">cell.alignment = Alignment(horizontal=<span class="string">'center'</span>)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 데이터 추가 및 서식 지정</span></div>
+                                <div class="code-line"><span class="highlight">for</span> i, row <span class="highlight">in</span> enumerate(df.itertuples(), 1):</div>
+                                <div class="code-line indent">row_num = i + 3</div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent">ws.cell(row=row_num, column=1).value = row.상품</div>
+                                <div class="code-line indent">ws.cell(row=row_num, column=2).value = row.판매량</div>
+                                <div class="code-line indent">ws.cell(row=row_num, column=3).value = row.단가</div>
+                                <div class="code-line indent">ws.cell(row=row_num, column=4).value = row.매출액</div>
+                                <div class="code-line"></div>
+                                <div class="code-line indent"><span class="comment"># 조건부 서식 (매출액이 높은 경우 표시)</span></div>
+                                <div class="code-line indent"><span class="highlight">if</span> row.매출액 > 50000000:</div>
+                                <div class="code-line indent indent">ws.cell(row=row_num, column=5).value = <span class="string">"우수"</span></div>
+                                <div class="code-line indent indent">ws.cell(row=row_num, column=5).font = Font(color=<span class="string">"FF0000"</span>, bold=True)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 차트 생성</span></div>
+                                <div class="code-line">chart = BarChart()</div>
+                                <div class="code-line">데이터_영역 = Reference(ws, min_row=3, max_row=8, min_col=2, max_col=2)</div>
+                                <div class="code-line">카테고리 = Reference(ws, min_row=4, max_row=8, min_col=1)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line">chart.add_data(데이터_영역, titles_from_data=True)</div>
+                                <div class="code-line">chart.set_categories(카테고리)</div>
+                                <div class="code-line">chart.title = <span class="string">"제품별 판매수량"</span></div>
+                                <div class="code-line"></div>
+                                <div class="code-line">ws.add_chart(chart, <span class="string">"G4"</span>)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 파일 저장</span></div>
+                                <div class="code-line">wb.save(<span class="string">'판매보고서.xlsx'</span>)</div>
+                            </div>
+                            
+                            <div class="note">
+                                <div class="note-title">실무 응용 사례</div>
+                                <p>다양한 업무에 Excel 자동화를 적용할 수 있습니다:</p>
+                                <ul class="list-disc pl-5">
+                                    <li>일일/주간/월간 판매 보고서 자동 생성</li>
+                                    <li>다양한 소스의 데이터 통합 및 분석</li>
+                                    <li>고객/제품 데이터 일괄 처리</li>
+                                    <li>대량 데이터 서식 변환 및 정리</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                "엑셀에서 하루 종일 하던 작업을 파이썬으로 자동화하면 단 몇 초 만에 완료할 수 있습니다"
+            </div>
+        </div>
+    </div>
+</body>
+    

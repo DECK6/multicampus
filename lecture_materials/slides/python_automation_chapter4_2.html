@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 4</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 44px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .code-examples {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-bottom: 20px;
+        }
+        .code-box {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        .box-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 12px;
+        }
+        .prompt {
+            background-color: rgba(75, 139, 190, 0.3);
+            border-radius: 6px;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #a0aec0;
+        }
+        .prompt strong {
+            color: #FFD43B;
+        }
+        pre {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #e2e8f0;
+        }
+        .code-description {
+            margin-top: 12px;
+            font-size: 14px;
+            color: #cbd5e0;
+            line-height: 1.4;
+        }
+        .key-point {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .key-point-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 15px;
+        }
+        .key-point-content {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        .point-item {
+            display: flex;
+            align-items: flex-start;
+        }
+        .point-icon {
+            color: #FFD43B;
+            margin-right: 10px;
+            margin-top: 3px;
+        }
+        .point-text {
+            font-size: 15px;
+            color: #e2e8f0;
+            line-height: 1.5;
+        }
+        .footer {
+            font-size: 16px;
+            color: #a0aec0;
+            text-align: center;
+            margin-top: 20px;
+            font-style: italic;
+        }
+        .python-color {
+            color: #4B8BBE;
+        }
+        .yellow-color {
+            color: #FFD43B;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">3</div>
+                <div class="title">예외 처리 - 실전 코드 예제</div>
+            </div>
+            
+            <div class="code-examples">
+                <div class="code-box">
+                    <div class="box-title">기본 try-except-else-finally 구조</div>
+                    <div class="prompt">
+                        <strong>ChatGPT 프롬프트:</strong> "파이썬에서 try-except-else-finally 구조의 간단한 예제 코드를 보여주세요."
+                    </div>
+                    <pre>
+try:
+    user_input = int(input("숫자를 입력하세요: "))
+    result = 100 / user_input
+except ValueError:
+    print("유효한 숫자를 입력해주세요.")
+except ZeroDivisionError:
+    print("0으로 나눌 수 없습니다.")
+else:
+    print(f"계산 결과: {result}")
+finally:
+    print("작업이 완료되었습니다.")</pre>
+                    <div class="code-description">
+                        <span class="yellow-color">※ 핵심 포인트:</span> else 블록은 예외가 발생하지 않았을 때만 실행되며, finally 블록은 예외 발생 여부와 상관없이 항상 실행됩니다.
+                    </div>
+                </div>
+                
+                <div class="code-box">
+                    <div class="box-title">여러 예외 한번에 처리하기</div>
+                    <div class="prompt">
+                        <strong>ChatGPT 프롬프트:</strong> "파이썬에서 여러 예외를 하나의 except 블록으로 처리하는 방법을 알려주세요."
+                    </div>
+                    <pre>
+try:
+    data = {"name": "홍길동"}
+    print(data["age"])
+    result = 10 / 0
+except (KeyError, ZeroDivisionError, TypeError) as e:
+    print(f"오류 발생: {type(e).__name__}")
+    print(f"오류 메시지: {e}")
+    
+    # 예외 유형에 따른 세부 처리
+    if isinstance(e, KeyError):
+        print("존재하지 않는 키에 접근했습니다.")
+    elif isinstance(e, ZeroDivisionError):
+        print("0으로 나눌 수 없습니다.")</pre>
+                    <div class="code-description">
+                        <span class="yellow-color">※ 핵심 포인트:</span> 여러 예외 유형을 튜플로 묶어 한 번에 처리할 수 있으며, 예외 인스턴스를 변수에 저장해 활용할 수 있습니다.
+                    </div>
+                </div>
+                
+                <div class="code-box">
+                    <div class="box-title">사용자 정의 예외 클래스</div>
+                    <div class="prompt">
+                        <strong>ChatGPT 프롬프트:</strong> "파이썬에서 업무 자동화를 위한 사용자 정의 예외 클래스를 만드는 방법을 알려주세요."
+                    </div>
+                    <pre>
+class MinimumBalanceError(Exception):
+    """잔액이 최소 금액보다 적을 때 발생하는 예외"""
+    def __init__(self, balance, minimum):
+        self.balance = balance
+        self.minimum = minimum
+        self.message = f"잔액({balance:,}원)이 최소 금액({minimum:,}원)보다 적습니다."
+        super().__init__(self.message)
+
+def withdraw(balance, amount, minimum=1000):
+    if balance - amount < minimum:
+        raise MinimumBalanceError(balance - amount, minimum)
+    return balance - amount
+
+try:
+    new_balance = withdraw(5000, 4500)
+    print(f"출금 후 잔액: {new_balance}원")
+except MinimumBalanceError as e:
+    print(f"오류: {e}")</pre>
+                    <div class="code-description">
+                        <span class="yellow-color">※ 핵심 포인트:</span> Exception 클래스를 상속받아 목적에 맞는 예외 클래스를 직접 정의할 수 있습니다. 이는 업무 로직에 특화된 예외 처리에 유용합니다.
+                    </div>
+                </div>
+                
+                <div class="code-box">
+                    <div class="box-title">업무 자동화 예외 처리 - 파일 처리</div>
+                    <div class="prompt">
+                        <strong>ChatGPT 프롬프트:</strong> "여러 개의 엑셀 파일을 읽어서 처리하는 과정에서 오류 발생 시 건너뛰는 예외 처리 코드를 작성해주세요."
+                    </div>
+                    <pre>
+import os
+import pandas as pd
+from datetime import datetime
+
+def process_excel_files(directory):
+    # 오류 로그 파일 준비
+    log_file = f"error_log_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
+    success_count = 0
+    error_count = 0
+    
+    # 디렉토리 내 모든 파일 처리
+    for filename in os.listdir(directory):
+        if filename.endswith('.xlsx') or filename.endswith('.xls'):
+            file_path = os.path.join(directory, filename)
+            try:
+                # 파일 읽기 시도
+                df = pd.read_excel(file_path)
+                
+                # 여기서 데이터 처리 작업 수행
+                # ...
+                
+                success_count += 1
+                print(f"처리 완료: {filename}")
+                
+            except Exception as e:
+                # 오류 발생 시 로그에 기록하고 다음 파일로
+                error_count += 1
+                with open(log_file, 'a') as f:
+                    f.write(f"{filename}: {type(e).__name__} - {str(e)}\n")
+                print(f"처리 실패: {filename} - {type(e).__name__}")
+                continue
+    
+    return success_count, error_count</pre>
+                    <div class="code-description">
+                        <span class="yellow-color">※ 핵심 포인트:</span> 예외 처리를 통해 일부 파일에서 오류가 발생하더라도 전체 작업이 중단되지 않고 계속 진행됩니다. 오류는 로그 파일에 기록해 나중에 확인할 수 있습니다.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="key-point">
+                <div class="key-point-title">예외 처리 모범 사례</div>
+                <div class="key-point-content">
+                    <div class="point-item">
+                        <div class="point-icon"><i class="fas fa-check-circle"></i></div>
+                        <div class="point-text">구체적인 예외를 먼저 처리하고, 광범위한 예외는 나중에 처리하세요.</div>
+                    </div>
+                    <div class="point-item">
+                        <div class="point-icon"><i class="fas fa-check-circle"></i></div>
+                        <div class="point-text">bare except(except:)는 모든 예외를 잡아 디버깅을 어렵게 만들 수 있으므로 피하세요.</div>
+                    </div>
+                    <div class="point-item">
+                        <div class="point-icon"><i class="fas fa-check-circle"></i></div>
+                        <div class="point-text">예외 발생 시 로그를 남겨 나중에 문제를 분석할 수 있게 하세요.</div>
+                    </div>
+                    <div class="point-item">
+                        <div class="point-icon"><i class="fas fa-check-circle"></i></div>
+                        <div class="point-text">finally 블록에서는 리소스를 정리하는 코드(파일 닫기 등)를 배치하세요.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                "적절한 예외 처리는 업무 자동화 프로그램의 안정성과 신뢰성을 높이는 핵심 요소입니다."
+            </div>
+        </div>
+    </div>
+</body>
+    

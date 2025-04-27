@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 자동화 교육 교안 - 챕터 5: 물리자동화의 이해</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .intro-text {
+            color: #e2e8f0;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            max-width: 90%;
+        }
+        .function-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .function-card {
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .function-card:hover {
+            transform: translateY(-5px);
+            background-color: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+        .function-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #FFD43B;
+            display: flex;
+            align-items: center;
+        }
+        .function-title i {
+            margin-right: 10px;
+            font-size: 22px;
+        }
+        .function-desc {
+            color: #e2e8f0;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+        .code-block {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            margin: 10px 0;
+            color: #e2e8f0;
+            overflow-x: auto;
+            border-left: 4px solid #4B8BBE;
+        }
+        .code-block pre {
+            margin: 0;
+            white-space: pre-wrap;
+        }
+        .prompt-box {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 15px;
+            border-left: 3px solid #4B8BBE;
+        }
+        .prompt-label {
+            font-size: 14px;
+            font-weight: bold;
+            color: #FFD43B;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+        .prompt-label i {
+            margin-right: 6px;
+        }
+        .prompt-text {
+            font-style: italic;
+            color: #cbd5e0;
+        }
+        .note-section {
+            margin-top: 30px;
+            background-color: rgba(255, 212, 59, 0.1);
+            border-radius: 12px;
+            padding: 15px 20px;
+            border: 1px solid rgba(255, 212, 59, 0.3);
+        }
+        .note-title {
+            display: flex;
+            align-items: center;
+            color: #FFD43B;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .note-title i {
+            margin-right: 8px;
+        }
+        .note-content {
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+        .dependency-badge {
+            display: inline-block;
+            background-color: rgba(75, 139, 190, 0.3);
+            border-radius: 20px;
+            padding: 4px 12px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            border: 1px solid rgba(75, 139, 190, 0.5);
+        }
+        .example-image {
+            width: 100%;
+            max-width: 450px;
+            margin: 10px auto;
+            display: block;
+            border-radius: 8px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            background-color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">5</div>
+                <div class="title">스크린샷 & 이미지 인식</div>
+            </div>
+            
+            <p class="intro-text">
+                PyAutoGUI를 사용하면 화면 전체 또는 일부분의 스크린샷을 찍고, 이미지를 검색하여 화면에서 특정 
+                요소를 찾아낼 수 있습니다. 이를 통해 화면에 나타나는 버튼, 아이콘, 텍스트 등을 인식하여 자동화 작업을 수행할 수 있습니다.
+            </p>
+            
+            <div class="mb-5">
+                <span class="dependency-badge"><i class="fas fa-puzzle-piece"></i> Pillow(PIL) 필요</span>
+                <span class="dependency-badge"><i class="fas fa-puzzle-piece"></i> Linux에서는 scrot 필요</span>
+                <span class="dependency-badge"><i class="fas fa-puzzle-piece"></i> OpenCV (선택사항, 이미지 매칭 정확도 향상)</span>
+            </div>
+            
+            <div class="function-grid">
+                <div class="function-card">
+                    <h3 class="function-title"><i class="fas fa-camera"></i>스크린샷 캡처</h3>
+                    <p class="function-desc">화면 전체 또는 특정 영역의 스크린샷을 찍어 Pillow 이미지 객체로 반환하거나 파일로 저장합니다.</p>
+                    <div class="code-block">
+<pre>import pyautogui
+
+# 전체 화면 스크린샷 캡처
+screenshot = pyautogui.screenshot()
+
+# 스크린샷을 파일로 저장
+pyautogui.screenshot('screenshot.png')
+
+# 특정 영역만 캡처 (left, top, width, height)
+region_screenshot = pyautogui.screenshot(
+    region=(0, 0, 300, 400)
+)</pre>
+                    </div>
+                    <div class="prompt-box">
+                        <div class="prompt-label"><i class="fas fa-comment-alt"></i>ChatGPT 프롬프트</div>
+                        <p class="prompt-text">"PyAutoGUI로 스크린샷을 찍고 현재 날짜와 시간으로 파일명을 저장하는 코드를 작성해줘"</p>
+                    </div>
+                </div>
+                
+                <div class="function-card">
+                    <h3 class="function-title"><i class="fas fa-search"></i>화면에서 이미지 찾기</h3>
+                    <p class="function-desc">화면에서 특정 이미지의 위치를 찾아 좌표를 반환합니다. 버튼, 아이콘 등을 인식할 때 유용합니다.</p>
+                    <div class="code-block">
+<pre># 화면에서 이미지 위치 찾기 (x, y, width, height)
+location = pyautogui.locateOnScreen('button.png')
+
+# 여러 일치 항목 모두 찾기 (제너레이터 반환)
+locations = pyautogui.locateAllOnScreen('icon.png')
+for loc in locations:
+    print(loc)  # 각 위치 출력
+
+# 이미지 중앙 좌표 찾기 (클릭하기 좋음)
+x, y = pyautogui.locateCenterOnScreen('button.png')
+pyautogui.click(x, y)  # 찾은 버튼 클릭
+
+# 간단하게 이미지 클릭
+pyautogui.click('button.png')  # 바로 이미지 클릭</pre>
+                    </div>
+                    <div class="prompt-box">
+                        <div class="prompt-label"><i class="fas fa-comment-alt"></i>ChatGPT 프롬프트</div>
+                        <p class="prompt-text">"PyAutoGUI로 화면에서 특정 버튼 이미지를 찾아 클릭하는 코드를 작성해줘"</p>
+                    </div>
+                </div>
+                
+                <div class="function-card">
+                    <h3 class="function-title"><i class="fas fa-sliders-h"></i>이미지 검색 옵션</h3>
+                    <p class="function-desc">이미지 검색의 정확도와 속도를 조절할 수 있는 다양한 옵션을 제공합니다.</p>
+                    <div class="code-block">
+<pre># 그레이스케일 모드로 검색 (약 30% 속도 향상)
+location = pyautogui.locateOnScreen(
+    'button.png', grayscale=True
+)
+
+# 정확도 조절 (OpenCV 필요)
+location = pyautogui.locateOnScreen(
+    'button.png', confidence=0.8  # 80% 일치
+)
+
+# 특정 영역만 검색하여 속도 향상
+location = pyautogui.locateOnScreen(
+    'button.png', region=(0, 0, 600, 400)
+)</pre>
+                    </div>
+                </div>
+                
+                <div class="function-card">
+                    <h3 class="function-title"><i class="fas fa-tint"></i>픽셀 색상 확인</h3>
+                    <p class="function-desc">화면의 특정 위치 픽셀 색상을 RGB 값으로 확인하고 특정 색상과 일치하는지 검사할 수 있습니다.</p>
+                    <div class="code-block">
+<pre># 특정 좌표의 픽셀 색상 가져오기
+pixel_color = pyautogui.pixel(100, 200)
+# 반환값: RGB(red=130, green=135, blue=144)
+
+# 픽셀 색상이 특정 RGB 값과 일치하는지 확인
+if pyautogui.pixelMatchesColor(100, 200, (130, 135, 144)):
+    print("색상이 일치합니다!")
+
+# 허용 오차 설정
+pyautogui.pixelMatchesColor(100, 200, (140, 125, 134), 
+    tolerance=10)  # RGB 각 값 ±10 범위 내 일치</pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="note-section">
+                <div class="note-title"><i class="fas fa-exclamation-circle"></i> 주의사항</div>
+                <p class="note-content">이미지 인식 함수는 처리 시간이 길 수 있습니다(1~2초 소요). 화면 해상도, 색상 설정, 스케일링에 따라 인식률이 달라질 수 있으며, 이미지가 찾아지지 않으면 <code>ImageNotFoundException</code> 예외가 발생합니다. 예외 처리와 타임아웃 설정을 고려하세요.</p>
+            </div>
+        </div>
+    </div>
+</body>
+    

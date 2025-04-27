@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 2</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 44px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .intro {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: #e2e8f0;
+        }
+        .operator-sections {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        .operator-section {
+            flex: 1;
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 20px;
+        }
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section-title i {
+            margin-right: 10px;
+        }
+        .operator-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 10px;
+        }
+        .operator-table th {
+            text-align: left;
+            padding: 8px 12px;
+            color: #cbd5e0;
+            font-weight: 600;
+            font-size: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .operator-row {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+        .operator-row:hover {
+            background-color: rgba(75, 139, 190, 0.2);
+            transform: translateX(5px);
+        }
+        .operator-table td {
+            padding: 12px;
+            font-size: 15px;
+            color: #e2e8f0;
+        }
+        .operator-symbol {
+            font-weight: bold;
+            color: #FFD43B;
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
+            width: 60px;
+        }
+        .code-section {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 20px;
+            border-left: 4px solid #4B8BBE;
+            position: relative;
+        }
+        .code-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .code-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-left: 10px;
+        }
+        .code-content {
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            line-height: 1.5;
+            color: #f8f8f2;
+            white-space: pre;
+            overflow-x: auto;
+        }
+        .prompt-badge {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background-color: #10a37f;
+            color: white;
+            font-size: 14px;
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .prompt-badge i {
+            margin-right: 8px;
+        }
+        .keyword {
+            color: #ff79c6;
+        }
+        .number {
+            color: #bd93f9;
+        }
+        .string {
+            color: #f1fa8c;
+        }
+        .comment {
+            color: #6272a4;
+        }
+        .output {
+            color: #50fa7b;
+        }
+        .operator {
+            color: #FFD43B;
+        }
+        .boolean {
+            color: #8be9fd;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">7</div>
+                <div class="title">파이썬 기본연산 - 비교/논리연산자</div>
+            </div>
+            
+            <div class="intro">
+                파이썬에서 비교 연산자와 논리 연산자는 조건을 판단하고 결과에 따른 코드 실행을 제어하는 데 필수적입니다. 이 연산자들은 데이터 검증, 조건부 로직 구현, 반복문 제어 등 다양한 상황에서 활용됩니다.
+            </div>
+            
+            <div class="operator-sections">
+                <div class="operator-section">
+                    <div class="section-title">
+                        <i class="fas fa-equals"></i>
+                        비교 연산자 (Comparison Operators)
+                    </div>
+                    <table class="operator-table">
+                        <thead>
+                            <tr>
+                                <th>연산자</th>
+                                <th>설명</th>
+                                <th>예시</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="operator-row">
+                                <td class="operator-symbol">==</td>
+                                <td>같음</td>
+                                <td>x == y</td>
+                            </tr>
+                            <tr class="operator-row">
+                                <td class="operator-symbol">!=</td>
+                                <td>같지 않음</td>
+                                <td>x != y</td>
+                            </tr>
+                            <tr class="operator-row">
+                                <td class="operator-symbol">></td>
+                                <td>초과</td>
+                                <td>x > y</td>
+                            </tr>
+                            <tr class="operator-row">
+                                <td class="operator-symbol"><</td>
+                                <td>미만</td>
+                                <td>x < y</td>
+                            </tr>
+                            <tr class="operator-row">
+                                <td class="operator-symbol">>=</td>
+                                <td>이상</td>
+                                <td>x >= y</td>
+                            </tr>
+                            <tr class="operator-row">
+                                <td class="operator-symbol"><=</td>
+                                <td>이하</td>
+                                <td>x <= y</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="operator-section">
+                    <div class="section-title">
+                        <i class="fas fa-sitemap"></i>
+                        논리 연산자 (Logical Operators)
+                    </div>
+                    <table class="operator-table">
+                        <thead>
+                            <tr>
+                                <th>연산자</th>
+                                <th>설명</th>
+                                <th>예시</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="operator-row">
+                                <td class="operator-symbol">and</td>
+                                <td>두 조건이 모두 참일 때 참</td>
+                                <td>x > 0 and x < 10</td>
+                            </tr>
+                            <tr class="operator-row">
+                                <td class="operator-symbol">or</td>
+                                <td>두 조건 중 하나라도 참이면 참</td>
+                                <td>x < 0 or x > 10</td>
+                            </tr>
+                            <tr class="operator-row">
+                                <td class="operator-symbol">not</td>
+                                <td>조건의 결과를 반대로 변환</td>
+                                <td>not x > 10</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="mt-4 p-3 bg-opacity-20 bg-blue-500 rounded-lg">
+                        <p class="text-sm"><i class="fas fa-info-circle mr-2"></i><strong>참고:</strong> 파이썬에서는 숫자 0, 빈 문자열(""), 빈 리스트([]), None 등은 False로 평가되고, 그 외의 값들은 True로 평가됩니다.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="code-section">
+                <div class="prompt-badge">
+                    <i class="fas fa-robot"></i>
+                    ChatGPT 프롬프트: 파이썬의 비교 연산자와 논리 연산자를 활용하는 간단한 조건문 예제를 작성해줘
+                </div>
+                
+                <div class="code-header">
+                    <i class="fas fa-code" style="color: #FFD43B;"></i>
+                    <div class="code-title">비교 및 논리 연산자 활용 예제</div>
+                </div>
+                
+                <div class="code-content"><span class="comment"># 비교 연산자와 논리 연산자 활용 예제</span>
+
+<span class="comment"># 나이와 회원 상태 변수 설정</span>
+age = <span class="number">25</span>
+is_member = <span class="boolean">True</span>
+points = <span class="number">750</span>
+
+<span class="comment"># 비교 연산자 사용</span>
+is_adult = age >= <span class="number">18</span>
+print(<span class="string">f"성인 여부: {is_adult}"</span>)              <span class="output"># 출력: 성인 여부: True</span>
+
+<span class="comment"># 논리 연산자 사용</span>
+<span class="keyword">if</span> age >= <span class="number">18</span> <span class="operator">and</span> is_member:
+    print(<span class="string">"성인 회원입니다."</span>)                   <span class="output"># 출력: 성인 회원입니다.</span>
+
+<span class="comment"># 복합 조건문</span>
+<span class="keyword">if</span> age >= <span class="number">18</span> <span class="operator">and</span> (is_member <span class="operator">or</span> points > <span class="number">500</span>):
+    discount = <span class="number">20</span>
+<span class="keyword">elif</span> age >= <span class="number">18</span> <span class="operator">or</span> points > <span class="number">1000</span>:
+    discount = <span class="number">10</span>
+<span class="keyword">else</span>:
+    discount = <span class="number">0</span>
+print(<span class="string">f"적용 할인율: {discount}%"</span>)            <span class="output"># 출력: 적용 할인율: 20%</span>
+
+<span class="comment"># not 연산자 사용</span>
+<span class="keyword">if</span> <span class="operator">not</span> is_member:
+    print(<span class="string">"회원이 아닙니다."</span>)
+<span class="keyword">else</span>:
+    print(<span class="string">"회원입니다."</span>)                       <span class="output"># 출력: 회원입니다.</span>
+
+<span class="comment"># 단락 평가(Short-circuit evaluation) 예시</span>
+result = is_member <span class="operator">and</span> <span class="string">"VIP"</span> <span class="operator">or</span> <span class="string">"손님"</span>
+print(<span class="string">f"고객 등급: {result}"</span>)                <span class="output"># 출력: 고객 등급: VIP</span></div>
+            </div>
+        </div>
+    </div>
+</body>
+    

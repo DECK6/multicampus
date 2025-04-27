@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 1</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 40px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 42px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .intro-text {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #e2e8f0;
+            margin-bottom: 25px;
+        }
+        .two-column {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        .left-column {
+            flex: 1;
+        }
+        .right-column {
+            flex: 1;
+        }
+        .libraries-section {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section-title i {
+            color: #FFD43B;
+            margin-right: 10px;
+            font-size: 20px;
+        }
+        .library-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        .library-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            transition: all 0.3s ease;
+        }
+        .library-card:hover {
+            transform: translateY(-3px);
+            background-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+        .library-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #90caf9;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        .library-name i {
+            margin-right: 8px;
+        }
+        .library-description {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #cbd5e0;
+        }
+        .use-cases {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .use-case-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        .use-case-card {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            align-items: flex-start;
+            transition: all 0.3s ease;
+        }
+        .use-case-card:hover {
+            transform: translateY(-3px);
+            background-color: rgba(75, 139, 190, 0.3);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+        .use-case-icon {
+            background: linear-gradient(45deg, #4B8BBE, #306998);
+            min-width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+        .use-case-icon i {
+            font-size: 16px;
+            color: #FFD43B;
+        }
+        .use-case-content {
+            flex: 1;
+        }
+        .use-case-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 5px;
+        }
+        .use-case-description {
+            font-size: 14px;
+            line-height: 1.4;
+            color: #cbd5e0;
+        }
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .benefit-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .benefit-card:hover {
+            transform: translateY(-3px);
+            background-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+        .benefit-icon {
+            font-size: 28px;
+            color: #FFD43B;
+            margin-bottom: 10px;
+        }
+        .benefit-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 5px;
+        }
+        .benefit-description {
+            font-size: 14px;
+            line-height: 1.4;
+            color: #cbd5e0;
+        }
+        .code-section {
+            background-color: rgba(40, 44, 52, 0.8);
+            border-radius: 12px;
+            padding: 20px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            margin-bottom: 20px;
+        }
+        .prompt {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-radius: 8px;
+            padding: 10px 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #FFD43B;
+        }
+        .prompt-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 5px;
+        }
+        .prompt-text {
+            font-size: 14px;
+            color: #e2e8f0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .code-block {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #e2e8f0;
+            white-space: pre;
+            overflow-x: auto;
+        }
+        .keyword { color: #c678dd; }
+        .string { color: #98c379; }
+        .comment { color: #7f848e; font-style: italic; }
+        .function { color: #61afef; }
+        .variable { color: #e06c75; }
+        .library { color: #e5c07b; }
+        .flow-chart {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .flow-item {
+            background-color: rgba(75, 139, 190, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            width: 22%;
+            text-align: center;
+            position: relative;
+        }
+        .flow-item:not(:last-child):after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: -15%;
+            width: 15%;
+            height: 2px;
+            background-color: rgba(255, 212, 59, 0.5);
+        }
+        .flow-item:not(:last-child):before {
+            content: "➔";
+            position: absolute;
+            top: 50%;
+            right: -15%;
+            transform: translateY(-50%);
+            color: #FFD43B;
+            font-size: 18px;
+        }
+        .flow-icon {
+            font-size: 24px;
+            color: #FFD43B;
+            margin-bottom: 10px;
+        }
+        .flow-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 5px;
+        }
+        .flow-description {
+            font-size: 12px;
+            color: #cbd5e0;
+        }
+        .tips {
+            font-size: 14px;
+            color: #a0aec0;
+            margin-top: 15px;
+            font-style: italic;
+            padding: 15px;
+            border-left: 3px solid #FFD43B;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 0 8px 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">10</div>
+                <div class="title">협업 활용</div>
+            </div>
+            
+            <div class="intro-text">
+                파이썬을 활용하면 팀원 간 협업과 공유 문서 관리를 자동화하여 업무 효율성을 크게 높일 수 있습니다. 실시간 데이터 공유, 공동 작업 문서 관리, 업무 상태 추적 등 다양한 협업 과정을 자동화하여 팀의 생산성을 향상시킬 수 있습니다.
+            </div>
+            
+            <div class="two-column">
+                <div class="left-column">
+                    <div class="libraries-section">
+                        <h3 class="section-title">
+                            <i class="fas fa-puzzle-piece"></i>주요 라이브러리 및 도구
+                        </h3>
+                        <div class="library-cards">
+                            <div class="library-card">
+                                <div class="library-name">
+                                    <i class="fab fa-google"></i>Google API
+                                </div>
+                                <div class="library-description">
+                                    Google Docs, Sheets, Drive 등 Google 서비스와 통합하여 문서를 자동으로 생성, 수정, 공유할 수 있습니다.
+                                </div>
+                            </div>
+                            
+                            <div class="library-card">
+                                <div class="library-name">
+                                    <i class="fas fa-table"></i>gspread
+                                </div>
+                                <div class="library-description">
+                                    Google Sheets API의 파이썬 래퍼로, 스프레드시트 데이터를 쉽게 읽고 쓸 수 있어 공유 데이터 관리에 적합합니다.
+                                </div>
+                            </div>
+                            
+                            <div class="library-card">
+                                <div class="library-name">
+                                    <i class="fab fa-slack"></i>Slack API
+                                </div>
+                                <div class="library-description">
+                                    Slack 메시지 전송, 채널 관리, 파일 공유 등을 자동화하여 팀 커뮤니케이션을 효율적으로 관리할 수 있습니다.
+                                </div>
+                            </div>
+                            
+                            <div class="library-card">
+                                <div class="library-name">
+                                    <i class="fab fa-microsoft"></i>Office365-REST-API
+                                </div>
+                                <div class="library-description">
+                                    Microsoft Office 365 서비스(Teams, SharePoint, OneDrive)와 통합하여 문서 관리 및 협업을 자동화합니다.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="benefits-grid">
+                        <div class="benefit-card">
+                            <div class="benefit-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="benefit-title">시간 절약</div>
+                            <div class="benefit-description">반복적인 데이터 취합 및 공유 업무 자동화로 시간 단축</div>
+                        </div>
+                        
+                        <div class="benefit-card">
+                            <div class="benefit-icon">
+                                <i class="fas fa-sync-alt"></i>
+                            </div>
+                            <div class="benefit-title">실시간 동기화</div>
+                            <div class="benefit-description">여러 소스의 데이터를 자동으로 통합하고 실시간 업데이트</div>
+                        </div>
+                        
+                        <div class="benefit-card">
+                            <div class="benefit-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="benefit-title">일관성 유지</div>
+                            <div class="benefit-description">데이터 처리 및 보고 방식의 표준화로 일관성 확보</div>
+                        </div>
+                    </div>
+                    
+                    <div class="use-cases">
+                        <h3 class="section-title">
+                            <i class="fas fa-lightbulb"></i>활용 사례
+                        </h3>
+                        <div class="use-case-grid">
+                            <div class="use-case-card">
+                                <div class="use-case-icon">
+                                    <i class="fas fa-poll"></i>
+                                </div>
+                                <div class="use-case-content">
+                                    <div class="use-case-title">실시간 설문 결과 공유</div>
+                                    <div class="use-case-description">설문 응답을 자동으로 수집하여 실시간으로 공유 문서에 반영</div>
+                                </div>
+                            </div>
+                            
+                            <div class="use-case-card">
+                                <div class="use-case-icon">
+                                    <i class="fas fa-project-diagram"></i>
+                                </div>
+                                <div class="use-case-content">
+                                    <div class="use-case-title">프로젝트 진행 현황 대시보드</div>
+                                    <div class="use-case-description">여러 시스템의 작업 상태를 자동으로 취합하여 대시보드 업데이트</div>
+                                </div>
+                            </div>
+                            
+                            <div class="use-case-card">
+                                <div class="use-case-icon">
+                                    <i class="fas fa-calendar-check"></i>
+                                </div>
+                                <div class="use-case-content">
+                                    <div class="use-case-title">일정 및 작업 관리</div>
+                                    <div class="use-case-description">팀원 일정을 통합하고 작업 할당 및 진행 상황을 자동으로 추적</div>
+                                </div>
+                            </div>
+                            
+                            <div class="use-case-card">
+                                <div class="use-case-icon">
+                                    <i class="fas fa-file-alt"></i>
+                                </div>
+                                <div class="use-case-content">
+                                    <div class="use-case-title">자동화된 보고서 생성</div>
+                                    <div class="use-case-description">여러 팀원의 데이터를 자동으로 통합하여 주간/월간 보고서 생성</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="right-column">
+                    <div class="code-section">
+                        <div class="prompt">
+                            <div class="prompt-title">ChatGPT 프롬프트:</div>
+                            <div class="prompt-text">"Google Sheets API와 gspread를 사용하여 스프레드시트 데이터를 읽고 업데이트하는 파이썬 코드를 작성해주세요."</div>
+                        </div>
+                        
+                        <div class="code-block"><span class="comment"># Google Sheets 연동 예제</span>
+<span class="keyword">import</span> <span class="library">gspread</span>
+<span class="keyword">from</span> <span class="library">oauth2client.service_account</span> <span class="keyword">import</span> ServiceAccountCredentials
+<span class="keyword">import</span> <span class="library">pandas</span> <span class="keyword">as</span> <span class="library">pd</span>
+<span class="keyword">from</span> <span class="library">datetime</span> <span class="keyword">import</span> datetime
+
+<span class="comment"># API 접근 범위 설정</span>
+<span class="variable">scope</span> = [
+    <span class="string">'https://spreadsheets.google.com/feeds'</span>,
+    <span class="string">'https://www.googleapis.com/auth/drive'</span>
+]
+
+<span class="comment"># 인증 정보 설정</span>
+<span class="variable">credentials</span> = ServiceAccountCredentials.<span class="function">from_json_keyfile_name</span>(
+    <span class="string">'client_secret.json'</span>, <span class="variable">scope</span>
+)
+
+<span class="comment"># gspread 클라이언트 인증</span>
+<span class="variable">gc</span> = <span class="library">gspread</span>.<span class="function">authorize</span>(<span class="variable">credentials</span>)
+
+<span class="comment"># 스프레드시트 열기 - URL 또는 이름으로 접근 가능</span>
+<span class="variable">spreadsheet</span> = <span class="variable">gc</span>.<span class="function">open</span>(<span class="string">'팀 프로젝트 현황'</span>)
+
+<span class="comment"># 워크시트 선택</span>
+<span class="variable">worksheet</span> = <span class="variable">spreadsheet</span>.<span class="function">worksheet</span>(<span class="string">'작업 현황'</span>)
+
+<span class="comment"># 모든 데이터 가져오기</span>
+<span class="variable">data</span> = <span class="variable">worksheet</span>.<span class="function">get_all_records</span>()
+<span class="keyword">print</span>(<span class="string">f"스프레드시트에서 {</span><span class="function">len</span>(<span class="variable">data</span>)<span class="string">}개의 행을 불러왔습니다."</span>)
+
+<span class="comment"># pandas DataFrame으로 변환</span>
+<span class="variable">df</span> = <span class="library">pd</span>.<span class="function">DataFrame</span>(<span class="variable">data</span>)
+<span class="keyword">print</span>(<span class="variable">df</span>.head())
+
+<span class="comment"># 데이터 업데이트 예시 - 상태가 '진행 중'인 항목 찾기</span>
+<span class="variable">in_progress</span> = <span class="variable">df</span>[<span class="variable">df</span>[<span class="string">'상태'</span>] == <span class="string">'진행 중'</span>]
+<span class="keyword">print</span>(<span class="string">f"진행 중인 작업: {</span><span class="function">len</span>(<span class="variable">in_progress</span>)<span class="string">}개"</span>)
+
+<span class="comment"># 특정 셀 업데이트 (예: A2 셀 업데이트)</span>
+<span class="variable">worksheet</span>.<span class="function">update</span>(<span class="string">'G2'</span>, <span class="string">'완료'</span>)
+
+<span class="comment"># 현재 날짜로 마지막 업데이트 시간 기록</span>
+<span class="variable">now</span> = <span class="library">datetime</span>.<span class="function">now</span>().strftime(<span class="string">"%Y-%m-%d %H:%M:%S"</span>)
+<span class="variable">worksheet</span>.<span class="function">update</span>(<span class="string">'J2'</span>, <span class="variable">now</span>)
+
+<span class="comment"># 여러 셀 한 번에 업데이트</span>
+<span class="variable">cell_list</span> = <span class="variable">worksheet</span>.<span class="function">range</span>(<span class="string">'A4:C4'</span>)
+<span class="variable">cell_values</span> = [<span class="string">'새 작업'</span>, <span class="string">'김철수'</span>, <span class="string">'UI 개선'</span>]
+
+<span class="keyword">for</span> <span class="variable">i</span>, <span class="variable">val</span> <span class="keyword">in</span> <span class="function">enumerate</span>(<span class="variable">cell_values</span>):
+    <span class="variable">cell_list</span>[<span class="variable">i</span>].value = <span class="variable">val</span>
+
+<span class="variable">worksheet</span>.<span class="function">update_cells</span>(<span class="variable">cell_list</span>)
+
+<span class="keyword">print</span>(<span class="string">"스프레드시트 업데이트가 완료되었습니다!"</span>)</div>
+                    </div>
+                    
+                    <div class="code-section">
+                        <div class="prompt">
+                            <div class="prompt-title">ChatGPT 프롬프트:</div>
+                            <div class="prompt-text">"Slack API를 사용하여 데이터를 자동으로 수집하고 팀 채널에 보고서를 게시하는 파이썬 코드를 작성해주세요."</div>
+                        </div>
+                        
+                        <div class="code-block"><span class="comment"># Slack API 연동 예제</span>
+<span class="keyword">import</span> <span class="library">requests</span>
+<span class="keyword">import</span> <span class="library">pandas</span> <span class="keyword">as</span> <span class="library">pd</span>
+<span class="keyword">import</span> <span class="library">matplotlib.pyplot</span> <span class="keyword">as</span> <span class="library">plt</span>
+<span class="keyword">from</span> <span class="library">slack_sdk</span> <span class="keyword">import</span> WebClient
+<span class="keyword">from</span> <span class="library">slack_sdk.errors</span> <span class="keyword">import</span> SlackApiError
+<span class="keyword">import</span> <span class="library">io</span>
+<span class="keyword">from</span> <span class="library">datetime</span> <span class="keyword">import</span> datetime
+
+<span class="comment"># Slack API 토큰 설정</span>
+<span class="variable">slack_token</span> = <span class="string">"xoxb-your-token"</span>
+<span class="variable">client</span> = WebClient(token=<span class="variable">slack_token</span>)
+<span class="variable">channel_id</span> = <span class="string">"C0123456789"</span>  <span class="comment"># 메시지를 보낼 채널 ID</span>
+
+<span class="comment"># 데이터 수집 함수 - 예시로 내부 API에서 판매 데이터 가져오기</span>
+<span class="keyword">def</span> <span class="function">collect_sales_data</span>():
+    <span class="comment"># 실제로는 API나 데이터베이스에서 데이터를 가져옴</span>
+    <span class="comment"># 여기서는 예시 데이터 생성</span>
+    <span class="variable">data</span> = {
+        <span class="string">'날짜'</span>: [<span class="string">'2024-06-01'</span>, <span class="string">'2024-06-02'</span>, <span class="string">'2024-06-03'</span>, <span class="string">'2024-06-04'</span>, <span class="string">'2024-06-05'</span>],
+        <span class="string">'판매액'</span>: [1250000, 980000, 1450000, 1320000, 1680000],
+        <span class="string">'방문자 수'</span>: [320, 285, 350, 310, 410]
+    }
+    <span class="keyword">return</span> <span class="library">pd</span>.<span class="function">DataFrame</span>(<span class="variable">data</span>)
+
+<span class="comment"># 데이터 분석 및 차트 생성</span>
+<span class="keyword">def</span> <span class="function">create_sales_chart</span>(<span class="variable">df</span>):
+    <span class="library">plt</span>.figure(figsize=(10, 6))
+    <span class="library">plt</span>.plot(<span class="variable">df</span>[<span class="string">'날짜'</span>], <span class="variable">df</span>[<span class="string">'판매액'</span>], <span class="string">'o-'</span>, color=<span class="string">'#4B8BBE'</span>, label=<span class="string">'판매액'</span>)
+    <span class="library">plt</span>.title(<span class="string">'최근 5일간 판매 추이'</span>, fontsize=16)
+    <span class="library">plt</span>.xlabel(<span class="string">'날짜'</span>)
+    <span class="library">plt</span>.ylabel(<span class="string">'판매액 (원)'</span>)
+    <span class="library">plt</span>.grid(True, linestyle=<span class="string">'--'</span>, alpha=0.7)
+    <span class="library">plt</span>.tight_layout()
+    
+    <span class="comment"># 이미지를 바이트 스트림으로 저장</span>
+    <span class="variable">img_data</span> = <span class="library">io</span>.BytesIO()
+    <span class="library">plt</span>.savefig(<span class="variable">img_data</span>, format=<span class="string">'png'</span>)
+    <span class="variable">img_data</span>.seek(0)
+    <span class="keyword">return</span> <span class="variable">img_data</span>
+
+<span class="comment"># Slack에 메시지 전송</span>
+<span class="keyword">def</span> <span class="function">send_report_to_slack</span>(<span class="variable">df</span>, <span class="variable">img_data</span>):
+    <span class="comment"># 현재 날짜</span>
+    <span class="variable">today</span> = <span class="library">datetime</span>.<span class="function">now</span>().strftime(<span class="string">"%Y년 %m월 %d일"</span>)
+    
+    <span class="comment"># 판매 요약 계산</span>
+    <span class="variable">total_sales</span> = <span class="variable">df</span>[<span class="string">'판매액'</span>].sum()
+    <span class="variable">avg_sales</span> = <span class="variable">df</span>[<span class="string">'판매액'</span>].mean()
+    <span class="variable">max_day</span> = <span class="variable">df</span>.loc[<span class="variable">df</span>[<span class="string">'판매액'</span>].idxmax()][<span class="string">'날짜'</span>]
+    
+    <span class="comment"># 메시지 텍스트 구성</span>
+    <span class="variable">message_text</span> = <span class="string">f"""
+:chart_with_upwards_trend: *{</span><span class="variable">today</span><span class="string">} 판매 보고서*
+
+*요약:*
+• 총 판매액: {</span><span class="variable">total_sales</span>:,<span class="string">}원
+• 일평균 판매액: {</span><span class="variable">avg_sales</span>:,.0f<span class="string">}원
+• 최고 매출일: {</span><span class="variable">max_day</span><span class="string">} ({</span><span class="variable">df</span>.loc[<span class="variable">df</span>[<span class="string">'판매액'</span>].idxmax()][<span class="string">'판매액'</span>]:,<span class="string">}원)
+
+자세한 내용은 첨부된 차트를 참고해주세요.
+"""</span>
+    
+    <span class="keyword">try</span>:
+        <span class="comment"># 차트 이미지 업로드</span>
+        <span class="variable">image_upload</span> = <span class="variable">client</span>.files_upload_v2(
+            file=<span class="variable">img_data</span>.getvalue(),
+            filename=<span class="string">f"sales_report_{</span><span class="library">datetime</span>.<span class="function">now</span>().strftime(<span class="string">'%Y%m%d'</span>)<span class="string">}.png"</span>,
+            initial_comment=<span class="variable">message_text</span>,
+            channel=<span class="variable">channel_id</span>
+        )
+        <span class="keyword">print</span>(<span class="string">"보고서가 Slack에 성공적으로 전송되었습니다!"</span>)
+        <span class="keyword">return</span> <span class="keyword">True</span>
+    <span class="keyword">except</span> SlackApiError <span class="keyword">as</span> <span class="variable">e</span>:
+        <span class="keyword">print</span>(<span class="string">f"Slack 메시지 전송 중 오류: {</span><span class="variable">e</span><span class="string">}"</span>)
+        <span class="keyword">return</span> <span class="keyword">False</span>
+
+<span class="comment"># 메인 실행 부분</span>
+<span class="keyword">if</span> <span class="variable">__name__</span> == <span class="string">"__main__"</span>:
+    <span class="comment"># 데이터 수집</span>
+    <span class="variable">sales_data</span> = <span class="function">collect_sales_data</span>()
+    
+    <span class="comment"># 차트 생성</span>
+    <span class="variable">chart_image</span> = <span class="function">create_sales_chart</span>(<span class="variable">sales_data</span>)
+    
+    <span class="comment"># Slack에 보고서 전송</span>
+    <span class="function">send_report_to_slack</span>(<span class="variable">sales_data</span>, <span class="variable">chart_image</span>)</div>
+                    </div>
+                    
+                    <div class="flow-chart">
+                        <div class="flow-item">
+                            <div class="flow-icon"><i class="fas fa-database"></i></div>
+                            <div class="flow-title">데이터 수집</div>
+                            <div class="flow-description">다양한 소스에서 데이터 자동 수집</div>
+                        </div>
+                        <div class="flow-item">
+                            <div class="flow-icon"><i class="fas fa-filter"></i></div>
+                            <div class="flow-title">데이터 처리</div>
+                            <div class="flow-description">정제, 분석, 시각화</div>
+                        </div>
+                        <div class="flow-item">
+                            <div class="flow-icon"><i class="fas fa-share-alt"></i></div>
+                            <div class="flow-title">정보 공유</div>
+                            <div class="flow-description">결과를 공유 문서에 통합</div>
+                        </div>
+                        <div class="flow-item">
+                            <div class="flow-icon"><i class="fas fa-bell"></i></div>
+                            <div class="flow-title">알림 전송</div>
+                            <div class="flow-description">팀원에게 자동 알림</div>
+                        </div>
+                    </div>
+                    
+                    <div class="tips">
+                        <strong>Tip:</strong> API 키나 인증 정보는 보안을 위해 환경 변수나 별도의 구성 파일에 저장하고, 버전 관리 시스템에는 포함시키지 마세요. 또한 데이터 변경 전에 백업을 생성하거나 변경 사항을 로깅하여 문제 발생 시 복구할 수 있도록 하는 것이 좋습니다.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+    

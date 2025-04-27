@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 6</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 44px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .explanation-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: visible;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            background-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+        }
+        .card-icon {
+            background: linear-gradient(45deg, #4B8BBE, #306998);
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .card-icon i {
+            font-size: 30px;
+            color: #FFD43B;
+        }
+        .card-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #e2e8f0;
+        }
+        .card-description {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #cbd5e0;
+        }
+        .info-point {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+        .info-point i {
+            color: #FFD43B;
+            margin-right: 10px;
+            margin-top: 2px;
+        }
+        .info-text {
+            flex: 1;
+        }
+        .selenium-flow {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 40px;
+            position: relative;
+        }
+        .flow-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #FFD43B;
+            text-align: center;
+        }
+        .flow-diagram {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0 auto;
+            max-width: 900px;
+        }
+        .flow-item {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            width: 160px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        .flow-icon {
+            margin-bottom: 10px;
+            font-size: 28px;
+            color: #4B8BBE;
+        }
+        .flow-text {
+            font-size: 14px;
+            font-weight: 500;
+            color: #e2e8f0;
+        }
+        .flow-arrow {
+            flex-grow: 0;
+            width: 80px;
+            height: 4px;
+            background-color: rgba(75, 139, 190, 0.7);
+            position: relative;
+        }
+        .flow-arrow::after {
+            content: '';
+            position: absolute;
+            right: -10px;
+            top: -8px;
+            border-width: 10px 0 10px 15px;
+            border-style: solid;
+            border-color: transparent transparent transparent rgba(75, 139, 190, 0.7);
+        }
+        .footer {
+            margin-top: 40px;
+            font-size: 18px;
+            color: #a0aec0;
+            text-align: center;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">5</div>
+                <div class="title">웹 브라우저와 서버 그리고 Selenium의 원리</div>
+            </div>
+            
+            <div class="explanation-cards">
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-browser"></i>
+                    </div>
+                    <h3 class="card-title">웹 브라우저의 작동 원리</h3>
+                    <div class="info-point">
+                        <i class="fas fa-check-circle"></i>
+                        <div class="info-text">HTML, CSS, JavaScript 코드를 해석하여 시각적으로 렌더링</div>
+                    </div>
+                    <div class="info-point">
+                        <i class="fas fa-check-circle"></i>
+                        <div class="info-text">DOM(Document Object Model) 구조로 웹페이지를 표현</div>
+                    </div>
+                    <div class="info-point">
+                        <i class="fas fa-check-circle"></i>
+                        <div class="info-text">HTTP/HTTPS 프로토콜을 통해 서버와 통신</div>
+                    </div>
+                    <div class="info-point">
+                        <i class="fas fa-check-circle"></i>
+                        <div class="info-text">페이지 로딩, 이벤트 처리, 자원 관리 담당</div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <h3 class="card-title">웹 서버의 역할</h3>
+                    <div class="info-point">
+                        <i class="fas fa-check-circle"></i>
+                        <div class="info-text">클라이언트의 HTTP 요청을 수신하고 처리</div>
+                    </div>
+                    <div class="info-point">
+                        <i class="fas fa-check-circle"></i>
+                        <div class="info-text">정적 파일(HTML, CSS, 이미지 등) 제공</div>
+                    </div>
+                    <div class="info-point">
+                        <i class="fas fa-check-circle"></i>
+                        <div class="info-text">동적 콘텐츠 생성(PHP, Python, Node.js 등)</div>
+                    </div>
+                    <div class="info-point">
+                        <i class="fas fa-check-circle"></i>
+                        <div class="info-text">데이터베이스와 통신하여 정보 저장/조회</div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 class="card-title">Selenium의 기본 개념</h3>
+                    <div class="info-point">
+                        <i class="fas fa-check-circle"></i>
+                        <div class="info-text">브라우저 자동화를 위한 오픈소스 도구</div>
+                    </div>
+                    <div class="info-point">
+                        <i class="fas fa-check-circle"></i>
+                        <div class="info-text">WebDriver API를 통해 브라우저 제어</div>
+                    </div>
+                    <div class="info-point">
+                        <i class="fas fa-check-circle"></i>
+                        <div class="info-text">크롬, 파이어폭스, 엣지 등 다양한 브라우저 지원</div>
+                    </div>
+                    <div class="info-point">
+                        <i class="fas fa-check-circle"></i>
+                        <div class="info-text">자동 로그인, 데이터 수집, 폼 제출 등 가능</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="selenium-flow">
+                <h3 class="flow-title">Selenium 자동화 작동 프로세스</h3>
+                <div class="flow-diagram">
+                    <div class="flow-item">
+                        <div class="flow-icon">
+                            <i class="fab fa-python"></i>
+                        </div>
+                        <div class="flow-text">파이썬 코드</div>
+                    </div>
+                    
+                    <div class="flow-arrow"></div>
+                    
+                    <div class="flow-item">
+                        <div class="flow-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="flow-text">Selenium API</div>
+                    </div>
+                    
+                    <div class="flow-arrow"></div>
+                    
+                    <div class="flow-item">
+                        <div class="flow-icon">
+                            <i class="fas fa-plug"></i>
+                        </div>
+                        <div class="flow-text">WebDriver</div>
+                    </div>
+                    
+                    <div class="flow-arrow"></div>
+                    
+                    <div class="flow-item">
+                        <div class="flow-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <div class="flow-text">웹 브라우저</div>
+                    </div>
+                    
+                    <div class="flow-arrow"></div>
+                    
+                    <div class="flow-item">
+                        <div class="flow-icon">
+                            <i class="fas fa-server"></i>
+                        </div>
+                        <div class="flow-text">웹 서버</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                "Selenium은 Python 코드와 웹 브라우저 사이의 다리 역할을 하며, 복잡한 웹 작업을 자동화합니다."
+            </div>
+        </div>
+    </div>
+</body>
+    

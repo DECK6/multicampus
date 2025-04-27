@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 3</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 40px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 38px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .subtitle {
+            font-size: 20px;
+            font-weight: 400;
+            color: #e2e8f0;
+            margin-bottom: 25px;
+        }
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        .section {
+            background: rgba(75, 139, 190, 0.15);
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        .section:hover {
+            background: rgba(75, 139, 190, 0.25);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #FFD43B;
+            display: flex;
+            align-items: center;
+        }
+        .section-icon {
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        .section-content {
+            font-size: 15px;
+            line-height: 1.5;
+            color: #e2e8f0;
+        }
+        .code-block {
+            margin-top: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 13px;
+            color: #e2e8f0;
+            position: relative;
+        }
+        .code-prompt {
+            background: #4B8BBE;
+            border-radius: 4px;
+            padding: 6px 10px;
+            margin-bottom: 8px;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 12px;
+            color: white;
+        }
+        .code-prompt i {
+            margin-right: 6px;
+            color: #FFD43B;
+        }
+        .code-line {
+            margin-bottom: 4px;
+        }
+        .highlight {
+            color: #FFD43B;
+        }
+        .string {
+            color: #9cdcfe;
+        }
+        .comment {
+            color: #a0aec0;
+            font-style: italic;
+        }
+        .indent {
+            margin-left: 20px;
+        }
+        .output-preview {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin-top: 8px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 12px;
+            color: #cbd5e0;
+        }
+        .output-title {
+            color: #a0aec0;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+        .footer {
+            margin-top: 25px;
+            font-size: 16px;
+            color: #a0aec0;
+            text-align: center;
+            font-style: italic;
+        }
+        .note {
+            background: rgba(255, 212, 59, 0.1);
+            border-left: 3px solid #FFD43B;
+            padding: 10px 15px;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #e2e8f0;
+        }
+        .note-title {
+            color: #FFD43B;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        .badge-yellow {
+            background-color: rgba(255, 212, 59, 0.2);
+            color: #FFD43B;
+            border: 1px solid #FFD43B;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 5px;
+        }
+        .feature-icon {
+            color: #FFD43B;
+            margin-right: 8px;
+            font-size: 14px;
+            margin-top: 2px;
+        }
+        .feature-text {
+            font-size: 14px;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">10</div>
+                <div class="title">파일 작업 자동화</div>
+            </div>
+            
+            <p class="subtitle">파이썬을 사용하여 파일 처리 작업을 자동화하는 방법을 알아봅니다. 데이터 구조, 조건문, 반복문을 활용한 실전 파일 자동화 예제를 살펴보겠습니다.</p>
+            
+            <div class="main-content">
+                <div class="left-column">
+                    <div class="section">
+                        <div class="section-title">
+                            <i class="fas fa-folder-open section-icon"></i>
+                            파일 및 디렉토리 조작
+                        </div>
+                        <div class="section-content">
+                            <p>파이썬의 <code class="highlight">os</code> 모듈과 <code class="highlight">pathlib</code> 모듈을 사용하여 파일과 디렉토리를 효과적으로 처리할 수 있습니다.</p>
+                            
+                            <div class="code-block">
+                                <div class="code-prompt">
+                                    <i class="fas fa-robot"></i>파이썬으로 디렉토리 내의 모든 파일을 나열하고 특정 확장자 파일만 필터링하는 코드를 작성해줘
+                                </div>
+                                <div class="code-line"><span class="highlight">import</span> os</div>
+                                <div class="code-line"><span class="highlight">from</span> pathlib <span class="highlight">import</span> Path</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># os 모듈을 사용한 방식</span></div>
+                                <div class="code-line">폴더_경로 = <span class="string">"./문서"</span></div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 디렉토리 존재 확인 및 생성</span></div>
+                                <div class="code-line"><span class="highlight">if not</span> os.path.exists(폴더_경로):</div>
+                                <div class="code-line indent">os.makedirs(폴더_경로)</div>
+                                <div class="code-line indent">print(f<span class="string">"{폴더_경로} 폴더를 생성했습니다."</span>)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 디렉토리 내 모든 파일 목록 가져오기</span></div>
+                                <div class="code-line">파일_목록 = os.listdir(폴더_경로)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 특정 확장자 파일만 필터링 (예: Excel 파일)</span></div>
+                                <div class="code-line">엑셀_파일 = []</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="highlight">for</span> 파일명 <span class="highlight">in</span> 파일_목록:</div>
+                                <div class="code-line indent"><span class="highlight">if</span> 파일명.endswith((<span class="string">".xlsx"</span>, <span class="string">".xls"</span>)):</div>
+                                <div class="code-line indent indent">엑셀_파일.append(파일명)</div>
+                                <div class="code-line indent indent">파일_경로 = os.path.join(폴더_경로, 파일명)</div>
+                                <div class="code-line indent indent">크기 = os.path.getsize(파일_경로) // 1024  <span class="comment"># KB 단위</span></div>
+                                <div class="code-line indent indent">print(f<span class="string">"{파일명} - {크기}KB"</span>)</div>
+                            </div>
+                            
+                            <div class="code-block">
+                                <div class="code-prompt">
+                                    <i class="fas fa-robot"></i>pathlib을 사용한 현대적인 파일 처리 코드 예시를 보여줘
+                                </div>
+                                <div class="code-line"><span class="comment"># pathlib을 사용한 현대적 방식 (Python 3.4+)</span></div>
+                                <div class="code-line">폴더 = Path(<span class="string">"./문서"</span>)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 폴더 생성 (exists_ok=True는 이미 존재해도 오류 없음)</span></div>
+                                <div class="code-line">폴더.mkdir(exist_ok=True)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 모든 엑셀 파일 찾기 (glob 패턴 사용)</span></div>
+                                <div class="code-line">엑셀_파일 = list(폴더.glob(<span class="string">"*.xlsx"</span>)) + list(폴더.glob(<span class="string">"*.xls"</span>))</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="highlight">for</span> 파일 <span class="highlight">in</span> 엑셀_파일:</div>
+                                <div class="code-line indent">크기 = 파일.stat().st_size // 1024</div>
+                                <div class="code-line indent">print(f<span class="string">"{파일.name} - {크기}KB"</span>)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="right-column">
+                    <div class="section">
+                        <div class="section-title">
+                            <i class="fas fa-file-import section-icon"></i>
+                            여러 파일 읽고 처리하기
+                        </div>
+                        <div class="section-content">
+                            <p>조건문과 반복문을 활용하여 여러 파일을 효율적으로 처리하는 방법을 알아봅니다.</p>
+                            
+                            <div class="code-block">
+                                <div class="code-prompt">
+                                    <i class="fas fa-robot"></i>여러 엑셀 파일을 하나의 데이터프레임으로 통합하는 코드를 작성해줘
+                                </div>
+                                <div class="code-line"><span class="highlight">import</span> pandas <span class="highlight">as</span> pd</div>
+                                <div class="code-line"><span class="highlight">import</span> os</div>
+                                <div class="code-line"><span class="highlight">import</span> glob</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 여러 엑셀 파일 통합하기</span></div>
+                                <div class="code-line">파일_목록 = glob.glob(<span class="string">"./매출/*.xlsx"</span>)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="highlight">if not</span> 파일_목록:</div>
+                                <div class="code-line indent">print(<span class="string">"처리할 엑셀 파일이 없습니다."</span>)</div>
+                                <div class="code-line indent"><span class="highlight">exit</span>()</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 모든 데이터를 담을 빈 데이터프레임</span></div>
+                                <div class="code-line">통합_데이터 = pd.DataFrame()</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="highlight">for</span> 파일_경로 <span class="highlight">in</span> 파일_목록:</div>
+                                <div class="code-line indent">파일명 = os.path.basename(파일_경로)</div>
+                                <div class="code-line indent">print(f<span class="string">"{파일명} 처리 중..."</span>)</div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent"><span class="highlight">try</span>:</div>
+                                <div class="code-line indent indent"><span class="comment"># 엑셀 파일 읽기</span></div>
+                                <div class="code-line indent indent">df = pd.read_excel(파일_경로)</div>
+                                <div class="code-line indent indent"></div>
+                                <div class="code-line indent indent"><span class="comment"># 파일 정보 추가</span></div>
+                                <div class="code-line indent indent">df[<span class="string">'파일출처'</span>] = 파일명</div>
+                                <div class="code-line indent indent"></div>
+                                <div class="code-line indent indent"><span class="comment"># 데이터 정제 (예: 결측치 처리)</span></div>
+                                <div class="code-line indent indent">df = df.dropna(subset=[<span class="string">'상품코드'</span>, <span class="string">'판매량'</span>])</div>
+                                <div class="code-line indent indent"></div>
+                                <div class="code-line indent indent"><span class="comment"># 통합 데이터프레임에 추가</span></div>
+                                <div class="code-line indent indent">통합_데이터 = pd.concat([통합_데이터, df], ignore_index=True)</div>
+                                <div class="code-line indent indent"></div>
+                                <div class="code-line indent indent">print(f<span class="string">"  - {len(df)}개 행 처리 완료"</span>)</div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent"><span class="highlight">except</span> Exception <span class="highlight">as</span> e:</div>
+                                <div class="code-line indent indent">print(f<span class="string">"  - 오류 발생: {e}"</span>)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 통합 데이터 저장</span></div>
+                                <div class="code-line">통합_데이터.to_excel(<span class="string">"통합_매출데이터.xlsx"</span>, index=False)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line">print(f<span class="string">"총 {len(통합_데이터)}개 행이 통합되어 저장되었습니다."</span>)</div>
+                            </div>
+                            
+                            <div class="note">
+                                <div class="note-title">오류 처리의 중요성</div>
+                                <p>자동화 스크립트에서는 <code class="highlight">try-except</code> 구문을 활용한 오류 처리가 매우 중요합니다. 파일이 손상되었거나 형식이 맞지 않아도 전체 처리가 중단되지 않고 계속 진행되도록 해야 합니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">
+                            <i class="fas fa-file-export section-icon"></i>
+                            파일 자동 생성 및 변환
+                            <span class="badge badge-yellow">시간 절약</span>
+                        </div>
+                        <div class="section-content">
+                            <p>특정 조건에 따라 파일을 자동으로 생성하거나 변환하는 작업을 자동화할 수 있습니다.</p>
+                            
+                            <div class="feature-grid">
+                                <div class="feature-item">
+                                    <i class="fas fa-check feature-icon"></i>
+                                    <div class="feature-text">CSV ↔ Excel 변환</div>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-check feature-icon"></i>
+                                    <div class="feature-text">파일명 일괄 변경</div>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-check feature-icon"></i>
+                                    <div class="feature-text">정기 보고서 자동 생성</div>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-check feature-icon"></i>
+                                    <div class="feature-text">파일 백업 자동화</div>
+                                </div>
+                            </div>
+                            
+                            <div class="code-block">
+                                <div class="code-prompt">
+                                    <i class="fas fa-robot"></i>모든 CSV 파일을 엑셀로 변환하는 스크립트를 작성해줘
+                                </div>
+                                <div class="code-line"><span class="highlight">import</span> pandas <span class="highlight">as</span> pd</div>
+                                <div class="code-line"><span class="highlight">import</span> os</div>
+                                <div class="code-line"><span class="highlight">from</span> pathlib <span class="highlight">import</span> Path</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># CSV를 Excel로 변환하는 함수</span></div>
+                                <div class="code-line"><span class="highlight">def</span> csv_to_excel(csv_path, excel_path):</div>
+                                <div class="code-line indent"><span class="highlight">try</span>:</div>
+                                <div class="code-line indent indent">df = pd.read_csv(csv_path, encoding=<span class="string">'utf-8'</span>)</div>
+                                <div class="code-line indent indent">df.to_excel(excel_path, index=False)</div>
+                                <div class="code-line indent indent"><span class="highlight">return</span> True</div>
+                                <div class="code-line indent"><span class="highlight">except</span> Exception <span class="highlight">as</span> e:</div>
+                                <div class="code-line indent indent">print(f<span class="string">"변환 오류 ({csv_path}): {e}"</span>)</div>
+                                <div class="code-line indent indent"><span class="highlight">return</span> False</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 작업 폴더 지정</span></div>
+                                <div class="code-line">작업_폴더 = Path(<span class="string">"./데이터"</span>)</div>
+                                <div class="code-line">결과_폴더 = 작업_폴더 / <span class="string">"엑셀변환결과"</span></div>
+                                <div class="code-line">결과_폴더.mkdir(exist_ok=True)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 모든 CSV 파일 찾기</span></div>
+                                <div class="code-line">csv_파일목록 = list(작업_폴더.glob(<span class="string">"*.csv"</span>))</div>
+                                <div class="code-line">성공_카운트 = 0</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="highlight">for</span> csv_파일 <span class="highlight">in</span> csv_파일목록:</div>
+                                <div class="code-line indent">엑셀_파일명 = f<span class="string">"{csv_파일.stem}.xlsx"</span></div>
+                                <div class="code-line indent">엑셀_경로 = 결과_폴더 / 엑셀_파일명</div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent">print(f<span class="string">"{csv_파일.name} → {엑셀_파일명} 변환 중..."</span>)</div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent"><span class="highlight">if</span> csv_to_excel(csv_파일, 엑셀_경로):</div>
+                                <div class="code-line indent indent">성공_카운트 += 1</div>
+                                <div class="code-line"></div>
+                                <div class="code-line">print(f<span class="string">"\n변환 완료: 총 {len(csv_파일목록)}개 중 {성공_카운트}개 성공"</span>)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                "파일 처리 자동화는 대부분의 업무 효율화에 있어 핵심적인 기반이 됩니다"
+            </div>
+        </div>
+    </div>
+</body>
+    

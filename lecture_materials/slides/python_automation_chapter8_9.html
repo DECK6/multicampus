@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 - 챕터 8: 웹에서 데이터 가져오기</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 44px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .subtitle {
+            font-size: 22px;
+            color: #e2e8f0;
+            margin-bottom: 30px;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        .benefit-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            background-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+        }
+        .benefit-icon {
+            background: linear-gradient(45deg, #4B8BBE, #306998);
+            min-width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #FFD43B;
+        }
+        .benefit-content h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 8px;
+        }
+        .benefit-content p {
+            font-size: 16px;
+            color: #e2e8f0;
+            line-height: 1.5;
+        }
+        .prompt-box {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        .prompt-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .prompt-examples {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .prompt-example {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            font-size: 16px;
+            color: #e2e8f0;
+            border-left: 4px solid #FFD43B;
+        }
+        .prompt-example strong {
+            color: #FFD43B;
+        }
+        .comparison-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .comparison-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+        }
+        .comparison-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .comparison-content {
+            font-size: 16px;
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+        .code-snippet {
+            font-family: 'Consolas', 'Monaco', monospace;
+            background-color: #1a202c;
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 10px;
+            font-size: 14px;
+            white-space: pre;
+            overflow-x: auto;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #a0aec0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">10</div>
+                <div class="title">ChatGPT로 크롤러 성능 향상하기</div>
+            </div>
+            
+            <div class="subtitle">인공지능을 활용해 웹 크롤링 작업의 효율성과 정확도를 높이는 방법</div>
+            
+            <div class="grid-container">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="benefit-content">
+                        <h3>코드 생성 자동화</h3>
+                        <p>복잡한 크롤링 패턴을 위한 코드를 자동으로 생성하여 개발 시간을 단축하고 작업 효율성을 높입니다.</p>
+                    </div>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-bug"></i>
+                    </div>
+                    <div class="benefit-content">
+                        <h3>문제 해결 및 디버깅</h3>
+                        <p>크롤링 중 발생하는 오류를 분석하고 해결책을 제시하여 빠른 디버깅이 가능합니다.</p>
+                    </div>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-redo-alt"></i>
+                    </div>
+                    <div class="benefit-content">
+                        <h3>웹사이트 변경 대응</h3>
+                        <p>웹사이트 구조가 변경되어도 새로운 HTML 구조를 분석하고 적응할 수 있는 코드를 제안합니다.</p>
+                    </div>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="benefit-content">
+                        <h3>차단 우회 전략</h3>
+                        <p>웹사이트 차단을 우회하는 방법(헤더 설정, 요청 간격 조정, 프록시 사용 등)을 제안합니다.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="prompt-box">
+                <div class="prompt-title">
+                    <i class="fas fa-robot" style="color: #FFD43B;"></i>
+                    효과적인 ChatGPT 프롬프트 예시
+                </div>
+                <div class="prompt-examples">
+                    <div class="prompt-example">
+                        "<strong>다음 웹페이지 HTML 코드에서 뉴스 제목을 추출하는 BeautifulSoup 코드를 작성해줘:</strong> [HTML 코드 붙여넣기]"
+                    </div>
+                    <div class="prompt-example">
+                        "<strong>이 크롤링 코드가 자주 차단되는 문제를 해결할 수 있도록 개선해줘:</strong> [기존 코드 붙여넣기]"
+                    </div>
+                    <div class="prompt-example">
+                        "<strong>웹 크롤링 데이터를 효율적으로 정제하고 워드클라우드를 생성하는 파이프라인을 만들어줘.</strong> 한글 처리에 특별히 주의해서 코드를 작성해줘."
+                    </div>
+                </div>
+            </div>
+            
+            <div class="comparison-container">
+                <div class="comparison-card">
+                    <div class="comparison-title">기존 방식</div>
+                    <div class="comparison-content">
+                        <p>웹 요소를 수동으로 검사하고 분석하여 크롤링 코드 작성</p>
+                        <div class="code-snippet">
+# 수동으로 작성한 코드
+titles = soup.find_all("div", class_="news_headline")
+for title in titles:
+    print(title.text.strip())</div>
+                    </div>
+                </div>
+                
+                <div class="comparison-card">
+                    <div class="comparison-title">ChatGPT 활용</div>
+                    <div class="comparison-content">
+                        <p>페이지 구조를 바탕으로 더 견고하고 유연한 코드 생성</p>
+                        <div class="code-snippet">
+# ChatGPT가 최적화한 코드
+titles = soup.select("div.news_headline h3.title, div.news_headline a.title")
+for title in titles:
+    print(title.get_text(strip=True))</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                ChatGPT를 활용하면 초보자도 복잡한 웹 크롤링 작업을 효과적으로 수행할 수 있습니다
+            </div>
+        </div>
+    </div>
+</body>
+    

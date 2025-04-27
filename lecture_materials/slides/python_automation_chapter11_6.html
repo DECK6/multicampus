@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>금융데이터 분석 유형별 연습문제</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 40px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .exercise-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .exercise-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+        }
+        .exercise-card h3 {
+            color: #FFD43B;
+            font-size: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .exercise-card i {
+            margin-right: 10px;
+        }
+        .exercise-content {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            color: #e2e8f0;
+        }
+        .hint {
+            background: rgba(75, 139, 190, 0.2);
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 14px;
+            color: #a0aec0;
+        }
+        .code-snippet {
+            font-family: 'Consolas', monospace;
+            font-size: 14px;
+            color: #FFD43B;
+            margin: 10px 0;
+        }
+        .solution-tip {
+            margin-top: 10px;
+            font-style: italic;
+            color: #cbd5e0;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">7</div>
+                <div class="title">금융데이터 분석 실습 문제</div>
+            </div>
+            
+            <div class="exercise-grid">
+                <div class="exercise-card">
+                    <h3><i class="fas fa-tasks"></i>연습문제 1: 데이터 수집 및 전처리</h3>
+                    <div class="exercise-content">
+                        KOSPI 상위 10개 종목의 최근 1년 주가 데이터를 수집하고, 다음 작업을 수행하세요:
+                        <ul class="list-disc pl-5 mt-2">
+                            <li>결측치 처리</li>
+                            <li>일별 수익률 계산</li>
+                            <li>거래량 기준 상위 5일 추출</li>
+                        </ul>
+                    </div>
+                    <div class="hint">
+                        <i class="fas fa-lightbulb"></i> ChatGPT 프롬프트:
+                        <div class="code-snippet">
+                            "yfinance로 KOSPI 상위 10개 종목의 주가 데이터를 수집하고, 결측치를 처리한 후 일별 수익률을 계산하는 코드를 작성해주세요."
+                        </div>
+                    </div>
+                </div>
+
+                <div class="exercise-card">
+                    <h3><i class="fas fa-chart-line"></i>연습문제 2: 기술적 분석</h3>
+                    <div class="exercise-content">
+                        삼성전자 주가에 대해 다음 기술적 지표를 계산하고 시각화하세요:
+                        <ul class="list-disc pl-5 mt-2">
+                            <li>20일/60일 이동평균선</li>
+                            <li>볼린저 밴드</li>
+                            <li>RSI 지표</li>
+                        </ul>
+                    </div>
+                    <div class="hint">
+                        <i class="fas fa-lightbulb"></i> ChatGPT 프롬프트:
+                        <div class="code-snippet">
+                            "삼성전자 주가 데이터로 볼린저 밴드와 RSI를 계산하고, matplotlib으로 시각화하는 코드를 작성해주세요."
+                        </div>
+                    </div>
+                </div>
+
+                <div class="exercise-card">
+                    <h3><i class="fas fa-calculator"></i>연습문제 3: 포트폴리오 분석</h3>
+                    <div class="exercise-content">
+                        KOSPI 상위 5개 종목으로 포트폴리오를 구성하고 분석하세요:
+                        <ul class="list-disc pl-5 mt-2">
+                            <li>종목 간 상관관계 분석</li>
+                            <li>포트폴리오 수익률 계산</li>
+                            <li>샤프 비율 계산</li>
+                        </ul>
+                    </div>
+                    <div class="hint">
+                        <i class="fas fa-lightbulb"></i> ChatGPT 프롬프트:
+                        <div class="code-snippet">
+                            "5개 종목의 수익률로 상관관계 히트맵을 그리고, 동일 비중 포트폴리오의 샤프 비율을 계산하는 코드를 작성해주세요."
+                        </div>
+                    </div>
+                </div>
+
+                <div class="exercise-card">
+                    <h3><i class="fas fa-file-export"></i>연습문제 4: 리포트 자동화</h3>
+                    <div class="exercise-content">
+                        일별 주가 분석 리포트를 자동으로 생성하세요:
+                        <ul class="list-disc pl-5 mt-2">
+                            <li>주요 통계 계산</li>
+                            <li>그래프 자동 생성</li>
+                            <li>Excel 파일로 저장</li>
+                        </ul>
+                    </div>
+                    <div class="hint">
+                        <i class="fas fa-lightbulb"></i> ChatGPT 프롬프트:
+                        <div class="code-snippet">
+                            "주가 데이터의 주요 통계와 그래프를 포함하는 엑셀 리포트를 자동으로 생성하는 코드를 작성해주세요."
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+    

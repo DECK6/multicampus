@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 1</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 40px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 42px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .intro-text {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #e2e8f0;
+            margin-bottom: 25px;
+        }
+        .two-column {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        .left-column {
+            flex: 1;
+        }
+        .right-column {
+            flex: 1;
+        }
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section-title i {
+            color: #FFD43B;
+            margin-right: 10px;
+            font-size: 20px;
+        }
+        .features-card {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 12px;
+            transition: all 0.3s ease;
+        }
+        .feature-item:hover {
+            transform: translateY(-3px);
+            background-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+        .feature-icon {
+            color: #FFD43B;
+            margin-right: 12px;
+            font-size: 18px;
+            min-width: 24px;
+        }
+        .feature-text {
+            font-size: 15px;
+            color: #e2e8f0;
+            line-height: 1.4;
+        }
+        .feature-text strong {
+            color: #90caf9;
+            font-weight: 600;
+        }
+        .jupyter-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .jupyter-logo i {
+            font-size: 50px;
+            color: #FFD43B;
+            margin-right: 15px;
+        }
+        .jupyter-logo-text {
+            font-size: 36px;
+            font-weight: 700;
+            color: #e2e8f0;
+        }
+        .use-cases {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .use-case-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        .use-case-card {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            align-items: flex-start;
+            transition: all 0.3s ease;
+        }
+        .use-case-card:hover {
+            transform: translateY(-3px);
+            background-color: rgba(75, 139, 190, 0.3);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+        .use-case-icon {
+            background: linear-gradient(45deg, #4B8BBE, #306998);
+            min-width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+        .use-case-icon i {
+            font-size: 16px;
+            color: #FFD43B;
+        }
+        .use-case-content {
+            flex: 1;
+        }
+        .use-case-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 5px;
+        }
+        .use-case-description {
+            font-size: 14px;
+            line-height: 1.4;
+            color: #cbd5e0;
+        }
+        .notebook-ui {
+            background-color: rgba(40, 44, 52, 0.5);
+            border-radius: 12px;
+            overflow: visible;
+            margin-top: 20px;
+            border: 1px solid rgba(255, 255, 255,.1);
+        }
+        .notebook-header {
+            background-color: rgba(75, 139, 190, 0.3);
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, .1);
+        }
+        .notebook-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-left: 10px;
+        }
+        .notebook-toolbar {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 8px 15px;
+            display: flex;
+            gap: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, .1);
+        }
+        .toolbar-btn {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #e2e8f0;
+            border: none;
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        .notebook-content {
+            padding: 15px;
+        }
+        .cell {
+            border-left: 3px solid transparent;
+            padding: 8px 15px;
+            margin-bottom: 10px;
+        }
+        .markdown-cell {
+            border-left-color: #2ecc71;
+        }
+        .markdown-content {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #e2e8f0;
+        }
+        .code-cell {
+            border-left-color: #4B8BBE;
+        }
+        .input-area {
+            background-color: rgba(40, 44, 52, 0.7);
+            padding: 8px;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 13px;
+            color: #e2e8f0;
+            margin-bottom: 5px;
+        }
+        .output-area {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 8px;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 13px;
+            color: #cbd5e0;
+        }
+        .advantages-list {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+        }
+        .advantage-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            background-color: rgba(75, 139, 190, 0.2);
+            border-radius: 8px;
+            padding: 12px;
+            transition: all 0.3s ease;
+        }
+        .advantage-item:hover {
+            background-color: rgba(75, 139, 190, 0.3);
+            transform: translateX(5px);
+        }
+        .advantage-icon {
+            color: #FFD43B;
+            margin-right: 12px;
+            font-size: 18px;
+        }
+        .advantage-text {
+            font-size: 15px;
+            color: #e2e8f0;
+        }
+        .quote {
+            font-size: 14px;
+            color: #a0aec0;
+            margin-top: 20px;
+            font-style: italic;
+            padding: 15px;
+            border-left: 3px solid #FFD43B;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 0 8px 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">12</div>
+                <div class="title">주피터 노트북 소개</div>
+            </div>
+            
+            <div class="jupyter-logo">
+                <i class="fab fa-python"></i>
+                <div class="jupyter-logo-text">Jupyter Notebook</div>
+            </div>
+            
+            <div class="intro-text">
+                Jupyter Notebook은 코드 작성, 실행, 시각화와 텍스트를 하나의 문서로 통합할 수 있는 오픈소스 웹 애플리케이션입니다. 파이썬 자동화 개발 시 코드를 단계별로 실행하고 결과를 즉시 확인할 수 있어 개발 속도와 효율성이 크게 향상됩니다. 대화형 컴퓨팅 환경을 제공하여 데이터 분석, 과학 연구, 교육 등 다양한 분야에서 널리 활용되고 있습니다.
+            </div>
+            
+            <div class="two-column">
+                <div class="left-column">
+                    <div class="features-card">
+                        <h3 class="section-title">
+                            <i class="fas fa-star"></i>주요 특징
+                        </h3>
+                        <div class="features-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon"><i class="fas fa-code"></i></span>
+                                <span class="feature-text"><strong>대화형 실행:</strong> 셀 단위로 코드를 실행하고 결과를 즉시 확인</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon"><i class="fas fa-edit"></i></span>
+                                <span class="feature-text"><strong>마크다운 지원:</strong> 텍스트, 수식, 이미지 등 문서화 가능</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon"><i class="fas fa-file-export"></i></span>
+                                <span class="feature-text"><strong>다양한 출력 형식:</strong> HTML, PDF, 슬라이드 쇼 등으로 변환</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon"><i class="fas fa-chart-bar"></i></span>
+                                <span class="feature-text"><strong>인라인 시각화:</strong> 그래프, 차트 등을 노트북 내에서 직접 표시</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon"><i class="fas fa-share-alt"></i></span>
+                                <span class="feature-text"><strong>공유 및 협업:</strong> 노트북 파일(.ipynb)을 통한 작업 공유</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon"><i class="fas fa-language"></i></span>
+                                <span class="feature-text"><strong>다양한 언어 지원:</strong> Python 외에도 R, Julia 등 다양한 언어 실행</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="use-cases">
+                        <h3 class="section-title">
+                            <i class="fas fa-lightbulb"></i>활용 분야
+                        </h3>
+                        <div class="use-case-grid">
+                            <div class="use-case-card">
+                                <div class="use-case-icon">
+                                    <i class="fas fa-robot"></i>
+                                </div>
+                                <div class="use-case-content">
+                                    <div class="use-case-title">업무 자동화 개발</div>
+                                    <div class="use-case-description">자동화 코드를 단계별로 개발하고 테스트하며 문서화</div>
+                                </div>
+                            </div>
+                            
+                            <div class="use-case-card">
+                                <div class="use-case-icon">
+                                    <i class="fas fa-database"></i>
+                                </div>
+                                <div class="use-case-content">
+                                    <div class="use-case-title">데이터 분석</div>
+                                    <div class="use-case-description">데이터 탐색, 시각화, 통계 분석 및 결과 공유</div>
+                                </div>
+                            </div>
+                            
+                            <div class="use-case-card">
+                                <div class="use-case-icon">
+                                    <i class="fas fa-brain"></i>
+                                </div>
+                                <div class="use-case-content">
+                                    <div class="use-case-title">머신러닝 연구</div>
+                                    <div class="use-case-description">모델 개발, 학습 과정 시각화, 결과 분석</div>
+                                </div>
+                            </div>
+                            
+                            <div class="use-case-card">
+                                <div class="use-case-icon">
+                                    <i class="fas fa-chalkboard-teacher"></i>
+                                </div>
+                                <div class="use-case-content">
+                                    <div class="use-case-title">교육 및 학습</div>
+                                    <div class="use-case-description">프로그래밍 과정을 단계별로 설명하고 시연</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="right-column">
+                    <div class="notebook-ui">
+                        <div class="notebook-header">
+                            <i class="fab fa-python" style="color: #FFD43B;"></i>
+                            <div class="notebook-title">업무자동화_예제.ipynb</div>
+                        </div>
+                        <div class="notebook-toolbar">
+                            <button class="toolbar-btn">실행</button>
+                            <button class="toolbar-btn">중지</button>
+                            <button class="toolbar-btn">저장</button>
+                            <button class="toolbar-btn">셀 삽입</button>
+                            <button class="toolbar-btn">셀 삭제</button>
+                        </div>
+                        <div class="notebook-content">
+                            <div class="cell markdown-cell">
+                                <div class="markdown-content">
+                                    <h3>파일 자동 정리 스크립트</h3>
+                                    <p>이 노트북은 다운로드 폴더의 파일을 확장자별로 분류하는 자동화 스크립트입니다.</p>
+                                </div>
+                            </div>
+                            <div class="cell code-cell">
+                                <div class="input-area">
+                                    import os
+                                    import shutil
+                                    from datetime import datetime
+                                    
+                                    # 다운로드 폴더 경로
+                                    download_dir = os.path.expanduser("~/Downloads")
+                                    print(f"정리할 폴더: {download_dir}")
+                                </div>
+                                <div class="output-area">
+                                    정리할 폴더: C:/Users/사용자/Downloads
+                                </div>
+                            </div>
+                            <div class="cell code-cell">
+                                <div class="input-area">
+                                    # 파일 확장자별 폴더 매핑
+                                    extensions_dirs = {
+                                        "pdf": "PDF_Files",
+                                        "jpg": "Images",
+                                        "png": "Images",
+                                        "xlsx": "Excel_Files",
+                                        "docx": "Word_Files"
+                                    }
+                                    
+                                    # 결과 확인용 카운터
+                                    moved_files = 0
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="advantages-list">
+                        <h3 class="section-title">
+                            <i class="fas fa-thumbs-up"></i>주피터 노트북의 장점
+                        </h3>
+                        <div class="advantage-item">
+                            <span class="advantage-icon"><i class="fas fa-bolt"></i></span>
+                            <span class="advantage-text">반복적인 실행-수정 과정에서 빠른 개발 속도 제공</span>
+                        </div>
+                        <div class="advantage-item">
+                            <span class="advantage-icon"><i class="fas fa-check-circle"></i></span>
+                            <span class="advantage-text">단계별로 코드 결과를 즉시 확인하여 오류 파악 용이</span>
+                        </div>
+                        <div class="advantage-item">
+                            <span class="advantage-icon"><i class="fas fa-project-diagram"></i></span>
+                            <span class="advantage-text">코드, 설명, 시각화가 한 문서에 통합되어 이해하기 쉬움</span>
+                        </div>
+                        <div class="advantage-item">
+                            <span class="advantage-icon"><i class="fas fa-users"></i></span>
+                            <span class="advantage-text">다른 팀원과 결과를 쉽게 공유하고 협업 가능</span>
+                        </div>
+                    </div>
+                    
+                    <div class="quote">
+                        "Jupyter Notebook은 코드를 작성하고, 실행하고, 테스트하고, 문서화하는 과정을 하나의 환경에서 제공하여 업무 자동화 개발 과정을 크게 효율화합니다. 특히 초보자에게는 코드의 동작을 즉시 확인할 수 있어 학습에 매우 효과적입니다."
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+    

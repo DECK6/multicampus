@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 4</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 44px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .subtitle {
+            font-size: 20px;
+            color: #e2e8f0;
+            margin-top: -5px;
+            margin-bottom: 20px;
+        }
+        .main-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        .example-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            height: 100%;
+        }
+        .example-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .example-title i {
+            color: #FFD43B;
+            margin-right: 10px;
+        }
+        .prompt-box {
+            background-color: rgba(75, 139, 190, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .prompt-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 8px;
+        }
+        .prompt-content {
+            font-size: 14px;
+            color: #e2e8f0;
+            line-height: 1.5;
+            font-family: 'Consolas', 'Monaco', monospace;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .response-box {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+        }
+        .response-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 8px;
+        }
+        .response-content {
+            font-size: 13px;
+            color: #e2e8f0;
+            line-height: 1.5;
+            font-family: 'Consolas', 'Monaco', monospace;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .highlight {
+            color: #FFD43B;
+            font-weight: bold;
+        }
+        .process-section {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .process-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .process-title i {
+            margin-right: 10px;
+        }
+        .process-steps {
+            display: flex;
+            justify-content: space-between;
+        }
+        .step {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            width: 24%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .step:not(:last-child):after {
+            content: "→";
+            position: absolute;
+            right: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            color: #FFD43B;
+        }
+        .step-icon {
+            font-size: 28px;
+            color: #4B8BBE;
+            margin-bottom: 10px;
+        }
+        .step-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 8px;
+        }
+        .step-text {
+            font-size: 14px;
+            color: #e2e8f0;
+            line-height: 1.4;
+        }
+        .tips-section {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+        .tip-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+        }
+        .tip-icon {
+            font-size: 24px;
+            color: #FFD43B;
+            margin-bottom: 10px;
+        }
+        .tip-text {
+            font-size: 14px;
+            color: #e2e8f0;
+            line-height: 1.4;
+        }
+        .footer {
+            font-size: 16px;
+            color: #a0aec0;
+            text-align: center;
+            margin-top: 25px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">10</div>
+                <div class="title">ChatGPT를 활용한 코드 디버깅</div>
+            </div>
+            <div class="subtitle">AI 기반 코드 문제 해결 및 오류 수정 방법</div>
+            
+            <div class="process-section">
+                <div class="process-title">
+                    <i class="fas fa-wrench"></i>
+                    ChatGPT로 문제 해결하기 - 프로세스
+                </div>
+                <div class="process-steps">
+                    <div class="step">
+                        <div class="step-icon"><i class="fas fa-bug"></i></div>
+                        <div class="step-title">오류 식별</div>
+                        <div class="step-text">정확한 오류 메시지와 발생 상황을 파악합니다.</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon"><i class="fas fa-clipboard-list"></i></div>
+                        <div class="step-title">정보 준비</div>
+                        <div class="step-text">오류 메시지, 코드, 기대 결과를 정리합니다.</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon"><i class="fas fa-comment-dots"></i></div>
+                        <div class="step-title">프롬프트 작성</div>
+                        <div class="step-text">명확하고 구체적인 질문을 작성합니다.</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon"><i class="fas fa-check-double"></i></div>
+                        <div class="step-title">해결책 검증</div>
+                        <div class="step-text">제안된 해결책을 테스트하고 이해합니다.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="main-section">
+                <div class="example-card">
+                    <div class="example-title">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        예외 처리 오류 해결
+                    </div>
+                    <div class="prompt-box">
+                        <div class="prompt-label">ChatGPT 프롬프트</div>
+                        <div class="prompt-content">
+다음 파이썬 코드에서 여러 개의 엑셀 파일을 처리하는 중에 오류가 발생했습니다. 오류 메시지는 "AttributeError: 'float' object has no attribute 'strip'"인데, 어떤 문제가 있는지 알려주고 수정해주세요.
+
+```python
+def process_excel_files(folder_path):
+    import pandas as pd
+    import os
+    
+    for filename in os.listdir(folder_path):
+        if filename.endswith('.xlsx'):
+            try:
+                df = pd.read_excel(os.path.join(folder_path, filename))
+                # 고객 이름 열에서 공백 제거
+                df['고객명'] = df['고객명'].strip()
+                df.to_excel(os.path.join('processed', filename), index=False)
+                print(f"{filename} 처리 완료")
+            except Exception as e:
+                print(f"{filename} 처리 중 오류: {e}")
+```
+                        </div>
+                    </div>
+                    <div class="response-box">
+                        <div class="response-label">ChatGPT 응답</div>
+                        <div class="response-content">
+오류 메시지 "AttributeError: 'float' object has no attribute 'strip'"는 'strip()' 메서드를 float 타입 객체에 적용하려고 해서 발생했습니다. strip() 메서드는 문자열에만 사용할 수 있습니다.<br>
+<br>
+문제는 'df['고객명']' 열에 NaN(Not a Number) 값이나 숫자 값이 포함되어 있어서 발생합니다. pandas에서는 누락된 값을 float 타입의 NaN으로 표현하므로, 이 값에 strip()을 적용하면 오류가 발생합니다.<br>
+<br>
+해결 방법은 다음과 같습니다:<br>
+<br>
+```python
+def process_excel_files(folder_path):
+    import pandas as pd
+    import os
+    
+    # processed 폴더가 없으면 생성
+    if not os.path.exists('processed'):
+        os.makedirs('processed')
+    
+    for filename in os.listdir(folder_path):
+        if filename.endswith('.xlsx'):
+            try:
+                df = pd.read_excel(os.path.join(folder_path, filename))
+                
+                # 고객명 열에서 공백 제거 (문자열인 경우에만)
+                df['고객명'] = df['고객명'].apply(
+                    lambda x: x.strip() if isinstance(x, str) else x
+                )
+                
+                df.to_excel(os.path.join('processed', filename), index=False)
+                print(f"{filename} 처리 완료")
+            except Exception as e:
+                print(f"{filename} 처리 중 오류: {e}")
+```
+<br>
+주요 변경 사항:<br>
+1. `apply()` 함수와 람다 함수를 사용하여 각 값이 문자열인 경우에만 `strip()`을 적용합니다.<br>
+2. 'processed' 폴더가 없으면 자동으로 생성하는 코드를 추가했습니다.<br>
+<br>
+이 수정으로 NaN 값이나 숫자 값이 있어도 오류 없이 처리할 수 있습니다.<br>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-title">
+                        <i class="fas fa-sync-alt"></i>
+                        성능 개선 문제 해결
+                    </div>
+                    <div class="prompt-box">
+                        <div class="prompt-label">ChatGPT 프롬프트</div>
+                        <div class="prompt-content">
+다음 파이썬 코드는 대용량 CSV 파일에서 데이터를 처리하는 함수인데, 너무 느리게 실행됩니다. 파일 크기는 약 500MB이고 약 100만 개의 행이 있습니다. 어떻게 하면 이 코드의 성능을 향상시킬 수 있을까요? 메모리 사용량도 최적화해주세요.
+
+```python
+def process_large_csv(filepath):
+    import csv
+    
+    result = []
+    with open(filepath, 'r', encoding='utf-8') as f:
+        reader = csv.reader(f)
+        headers = next(reader)  # 헤더 행 건너뛰기
+        
+        for row in reader:
+            # 특정 조건에 맞는 행만 처리
+            if row[3] == 'COMPLETED' and float(row[5]) > 10000:
+                processed_row = {
+                    'ID': row[0],
+                    'Name': row[1],
+                    'Date': row[2],
+                    'Amount': float(row[5]) * 1.1  # 10% 추가
+                }
+                result.append(processed_row)
+    
+    # 결과를 새 CSV 파일로 저장
+    with open('processed_data.csv', 'w', newline='', encoding='utf-8') as f:
+        writer = csv.DictWriter(f, fieldnames=['ID', 'Name', 'Date', 'Amount'])
+        writer.writeheader()
+        writer.writerows(result)
+    
+    return len(result)
+```
+                        </div>
+                    </div>
+                    <div class="response-box">
+                        <div class="response-label">ChatGPT 응답</div>
+                        <div class="response-content">
+대용량 CSV 파일을 처리할 때 성능과 메모리 사용량을 최적화하기 위한 여러 개선 사항을 적용해 보겠습니다:<br>
+<br>
+```python
+def process_large_csv(filepath):
+    import csv
+    import pandas as pd
+    import numpy as np
+    from tqdm import tqdm  # 진행 상태 표시용 (선택적)
+    
+    # 1. 청크(chunk) 단위로 처리하여 메모리 사용량 줄이기
+    chunk_size = 100000  # 한 번에 처리할 행 수
+    output_file = 'processed_data.csv'
+    
+    # 결과 파일을 미리 생성하고 헤더 작성
+    with open(output_file, 'w', newline='', encoding='utf-8') as f:
+        writer = csv.writer(f)
+        writer.writerow(['ID', 'Name', 'Date', 'Amount'])
+    
+    # 파일 크기 확인 (진행률 표시용)
+    total_rows = sum(1 for _ in open(filepath, 'r', encoding='utf-8')) - 1  # 헤더 제외
+    
+    processed_count = 0
+    
+    # 2. csv.DictReader 사용으로 코드 가독성 향상
+    with open(filepath, 'r', encoding='utf-8') as infile:
+        reader = csv.DictReader(infile)
+        
+        # 3. 열 인덱스 대신 열 이름 사용 (가정: 'Status', 'Amount' 등의 열 이름)
+        # 실제 열 이름에 맞게 조정 필요
+        status_field = 'Status'  # 예상 필드명으로 변경
+        amount_field = 'Amount'  # 예상 필드명으로 변경
+        
+        # 진행 상태 표시
+        chunks = []
+        rows_processed = 0
+        
+        for row in tqdm(reader, total=total_rows, desc="처리 중"):
+            rows_processed += 1
+            
+            # 4. 조건 확인 최적화
+            try:
+                # 데이터 타입 변환 최소화
+                if row[status_field] == 'COMPLETED' and float(row[amount_field]) > 10000:
+                    processed_row = [
+                        row['ID'],
+                        row['Name'],
+                        row['Date'],
+                        float(row[amount_field]) * 1.1  # 10% 추가
+                    ]
+                    chunks.append(processed_row)
+                    processed_count += 1
+            except (ValueError, KeyError) as e:
+                # 오류가 있는 행은 로그에 기록하고 건너뛰기
+                print(f"행 {rows_processed}에서 오류 발생: {e}")
+                continue
+            
+            # 청크 크기에 도달하면 파일에 쓰기
+            if len(chunks) >= chunk_size:
+                # 5. 파일에 한 번에 쓰기 (I/O 작업 최소화)
+                with open(output_file, 'a', newline='', encoding='utf-8') as outfile:
+                    writer = csv.writer(outfile)
+                    writer.writerows(chunks)
+                chunks = []  # 메모리 비우기
+        
+        # 남은 데이터 처리
+        if chunks:
+            with open(output_file, 'a', newline='', encoding='utf-8') as outfile:
+                writer = csv.writer(outfile)
+                writer.writerows(chunks)
+    
+    print(f"처리 완료: {processed_count}개 행이 처리되었습니다.")
+    return processed_count
+```
+<br>
+주요 최적화 내용:<br>
+<br>
+1. **청크 처리**: 전체 데이터를 메모리에 한 번에 로드하지 않고 청크 단위로 처리합니다.<br>
+2. **I/O 작업 최소화**: 모든 결과를 메모리에 저장했다가 한 번에 쓰는 대신, 일정 크기의 청크를 모아서 주기적으로 파일에 씁니다.<br>
+3. **효율적인 데이터 구조**: 딕셔너리 대신 리스트를 사용하여 메모리 사용량을 줄입니다.<br>
+4. **오류 처리 개선**: 특정 행에서 오류가 발생해도 전체 처리가 중단되지 않습니다.<br>
+5. **tqdm 라이브러리** 사용: 진행 상태를 시각적으로 확인할 수 있습니다 (선택적).<br>
+<br>
+더 나아가 성능을 향상시키려면:<br>
+<br>
+- **pandas와 dask 라이브러리** 사용을 고려: 대용량 데이터 처리에 최적화되어 있습니다.<br>
+- **멀티프로세싱** 적용: CPU 코어를 모두 활용하여 병렬 처리할 수 있습니다.<br>
+- **사전 컬럼 선택**: 필요한 컬럼만 미리 선택하여 메모리 사용량을 줄입니다.<br>
+<br>
+참고: 실제 CSV 파일의 헤더 이름에 맞게 코드를 조정해야 합니다.<br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tips-section">
+                <div class="tip-card">
+                    <div class="tip-icon"><i class="fas fa-file-code"></i></div>
+                    <div class="tip-text">코드와 오류 메시지를 <span class="highlight">완전하게</span> 제공하여 ChatGPT가 정확한 맥락을 이해할 수 있게 하세요.</div>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-icon"><i class="fas fa-microscope"></i></div>
+                    <div class="tip-text">특정 코드 부분에 대해 <span class="highlight">라인별 설명</span>을 요청하면 코드의 동작 원리를 이해하는 데 도움이 됩니다.</div>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-icon"><i class="fas fa-code-branch"></i></div>
+                    <div class="tip-text">여러 <span class="highlight">해결 방법</span>을 비교해달라고 요청하면 상황에 맞는 최적의 접근법을 선택할 수 있습니다.</div>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-icon"><i class="fas fa-graduation-cap"></i></div>
+                    <div class="tip-text">디버깅 과정에서 <span class="highlight">원리와 개념</span>에 대한 설명을 요청하여 학습 효과를 극대화하세요.</div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                "ChatGPT를 통한 코드 디버깅은 단순히 오류를 수정하는 것을 넘어 파이썬 프로그래밍 기술을 향상시키는 학습 기회입니다."
+            </div>
+        </div>
+    </div>
+</body>
+    

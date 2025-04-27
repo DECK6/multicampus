@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 3</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 40px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 38px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .subtitle {
+            font-size: 20px;
+            font-weight: 400;
+            color: #e2e8f0;
+            margin-bottom: 25px;
+        }
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        .section {
+            background: rgba(75, 139, 190, 0.15);
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        .section:hover {
+            background: rgba(75, 139, 190, 0.25);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #FFD43B;
+            display: flex;
+            align-items: center;
+        }
+        .section-icon {
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        .section-content {
+            font-size: 15px;
+            line-height: 1.5;
+            color: #e2e8f0;
+        }
+        .code-block {
+            margin-top: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 13px;
+            color: #e2e8f0;
+            position: relative;
+        }
+        .code-prompt {
+            background: #4B8BBE;
+            border-radius: 4px;
+            padding: 6px 10px;
+            margin-bottom: 8px;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 12px;
+            color: white;
+        }
+        .code-prompt i {
+            margin-right: 6px;
+            color: #FFD43B;
+        }
+        .code-line {
+            margin-bottom: 4px;
+        }
+        .highlight {
+            color: #FFD43B;
+        }
+        .string {
+            color: #9cdcfe;
+        }
+        .comment {
+            color: #a0aec0;
+            font-style: italic;
+        }
+        .indent {
+            margin-left: 20px;
+        }
+        .output-preview {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin-top: 8px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 12px;
+            color: #cbd5e0;
+        }
+        .output-title {
+            color: #a0aec0;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+        .footer {
+            margin-top: 25px;
+            font-size: 16px;
+            color: #a0aec0;
+            text-align: center;
+            font-style: italic;
+        }
+        .note {
+            background: rgba(255, 212, 59, 0.1);
+            border-left: 3px solid #FFD43B;
+            padding: 10px 15px;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #e2e8f0;
+        }
+        .note-title {
+            color: #FFD43B;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        .badge-yellow {
+            background-color: rgba(255, 212, 59, 0.2);
+            color: #FFD43B;
+            border: 1px solid #FFD43B;
+        }
+        .process-flow {
+            display: flex;
+            flex-direction: column;
+            margin-top: 15px;
+        }
+        .process-step {
+            display: flex;
+            margin-bottom: 12px;
+            position: relative;
+        }
+        .process-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 28px;
+            left: 15px;
+            width: 2px;
+            height: 20px;
+            background: rgba(75, 139, 190, 0.5);
+        }
+        .step-number {
+            width: 30px;
+            height: 30px;
+            background: #4B8BBE;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        .step-content {
+            background: rgba(75, 139, 190, 0.2);
+            padding: 8px 12px;
+            border-radius: 8px;
+            flex-grow: 1;
+        }
+        .step-title {
+            font-weight: 600;
+            color: #FFD43B;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+        .step-desc {
+            font-size: 13px;
+            color: #e2e8f0;
+        }
+        .use-cases {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 15px;
+            gap: 12px;
+        }
+        .use-case {
+            background: rgba(75, 139, 190, 0.2);
+            border-radius: 8px;
+            padding: 10px;
+            width: calc(50% - 6px);
+            transition: all 0.3s ease;
+        }
+        .use-case:hover {
+            background: rgba(75, 139, 190, 0.3);
+            transform: translateY(-2px);
+        }
+        .use-case-title {
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+            color: #FFD43B;
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+        .use-case-title i {
+            margin-right: 8px;
+            font-size: 16px;
+        }
+        .use-case-desc {
+            font-size: 13px;
+            color: #e2e8f0;
+        }
+        .integration-diagram {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0 15px;
+            position: relative;
+        }
+        .integration-diagram::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 60px;
+            right: 60px;
+            height: 3px;
+            background: rgba(75, 139, 190, 0.5);
+            z-index: 0;
+        }
+        .integration-node {
+            width: 120px;
+            height: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(75, 139, 190, 0.4);
+            border-radius: 8px;
+            z-index: 1;
+            font-size: 13px;
+            position: relative;
+        }
+        .integration-node i {
+            font-size: 18px;
+            margin-bottom: 6px;
+            color: #FFD43B;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">14</div>
+                <div class="title">실전 업무 자동화 사례 연구</div>
+            </div>
+            
+            <p class="subtitle">지금까지 배운 데이터 구조, 조건문, 반복문, 파일 처리, 웹 자동화 등의 기술을 종합적으로 활용하여 실제 업무 환경에서 적용할 수 있는 완성된 자동화 사례를 살펴봅니다.</p>
+            
+            <div class="main-content">
+                <div class="left-column">
+                    <div class="section">
+                        <div class="section-title">
+                            <i class="fas fa-chart-line section-icon"></i>
+                            정기 보고서 자동화 시스템
+                            <span class="badge badge-yellow">시간 절약</span>
+                        </div>
+                        <div class="section-content">
+                            <p>여러 소스에서 데이터를 수집하고 가공하여 정기적으로 보고서를 생성하는 자동화 시스템입니다.</p>
+                            
+                            <div class="process-flow">
+                                <div class="process-step">
+                                    <div class="step-number">1</div>
+                                    <div class="step-content">
+                                        <div class="step-title">데이터 수집</div>
+                                        <div class="step-desc">각종 엑셀 파일, 데이터베이스, 웹 API에서 데이터 자동 수집</div>
+                                    </div>
+                                </div>
+                                <div class="process-step">
+                                    <div class="step-number">2</div>
+                                    <div class="step-content">
+                                        <div class="step-title">데이터 전처리 및 통합</div>
+                                        <div class="step-desc">pandas를 활용한 데이터 정제, 변환, 병합 작업 수행</div>
+                                    </div>
+                                </div>
+                                <div class="process-step">
+                                    <div class="step-number">3</div>
+                                    <div class="step-content">
+                                        <div class="step-title">데이터 분석 및 시각화</div>
+                                        <div class="step-desc">KPI 계산, 분석 및 matplotlib/seaborn을 활용한 차트 생성</div>
+                                    </div>
+                                </div>
+                                <div class="process-step">
+                                    <div class="step-number">4</div>
+                                    <div class="step-content">
+                                        <div class="step-title">보고서 생성 및 배포</div>
+                                        <div class="step-desc">Excel, PDF 보고서 자동 생성 및 이메일 발송</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="code-block">
+                                <div class="code-prompt">
+                                    <i class="fas fa-robot"></i>매주 판매 실적 데이터를 분석하고 보고서를 자동 생성하는 스크립트를 작성해줘
+                                </div>
+                                <div class="code-line"><span class="highlight">import</span> pandas <span class="highlight">as</span> pd</div>
+                                <div class="code-line"><span class="highlight">import</span> matplotlib.pyplot <span class="highlight">as</span> plt</div>
+                                <div class="code-line"><span class="highlight">import</span> smtplib</div>
+                                <div class="code-line"><span class="highlight">from</span> email.mime.multipart <span class="highlight">import</span> MIMEMultipart</div>
+                                <div class="code-line"><span class="highlight">from</span> email.mime.text <span class="highlight">import</span> MIMEText</div>
+                                <div class="code-line"><span class="highlight">from</span> email.mime.application <span class="highlight">import</span> MIMEApplication</div>
+                                <div class="code-line"><span class="highlight">import</span> datetime <span class="highlight">as</span> dt</div>
+                                <div class="code-line"><span class="highlight">import</span> glob</div>
+                                <div class="code-line"><span class="highlight">import</span> os</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 1. 데이터 수집</span></div>
+                                <div class="code-line">today = dt.datetime.now()</div>
+                                <div class="code-line">보고서_날짜 = today.strftime(<span class="string">"%Y-%m-%d"</span>)</div>
+                                <div class="code-line">매출_파일목록 = glob.glob(<span class="string">"./지점별_판매/*.xlsx"</span>)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line">통합_데이터 = pd.DataFrame()</div>
+                                <div class="code-line"><span class="highlight">for</span> 파일경로 <span class="highlight">in</span> 매출_파일목록:</div>
+                                <div class="code-line indent">지점명 = os.path.basename(파일경로).split(<span class="string">'_'</span>)[0]</div>
+                                <div class="code-line indent">df = pd.read_excel(파일경로)</div>
+                                <div class="code-line indent">df[<span class="string">'지점'</span>] = 지점명</div>
+                                <div class="code-line indent">통합_데이터 = pd.concat([통합_데이터, df])</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 2. 데이터 분석</span></div>
+                                <div class="code-line">지점별_매출 = 통합_데이터.groupby(<span class="string">'지점'</span>)[<span class="string">'매출액'</span>].sum()</div>
+                                <div class="code-line">제품별_매출 = 통합_데이터.groupby(<span class="string">'제품명'</span>)[<span class="string">'매출액'</span>].sum().sort_values(ascending=False)</div>
+                                <div class="code-line">요일별_매출 = 통합_데이터.groupby(통합_데이터[<span class="string">'날짜'</span>].dt.day_name())[<span class="string">'매출액'</span>].sum()</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 3. 시각화</span></div>
+                                <div class="code-line">plt.figure(figsize=(12, 8))</div>
+                                <div class="code-line">plt.subplot(2, 1, 1)</div>
+                                <div class="code-line">지점별_매출.plot(kind=<span class="string">'bar'</span>, color=<span class="string">'#4B8BBE'</span>)</div>
+                                <div class="code-line">plt.title(<span class="string">'지점별 매출 실적'</span>)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line">plt.subplot(2, 1, 2)</div>
+                                <div class="code-line">제품별_매출.head(5).plot(kind=<span class="string">'bar'</span>, color=<span class="string">'#FFD43B'</span>)</div>
+                                <div class="code-line">plt.title(<span class="string">'상위 5개 제품 매출'</span>)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line">plt.tight_layout()</div>
+                                <div class="code-line">plt.savefig(<span class="string">'주간_매출_보고서.png'</span>)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 4. 엑셀 보고서 생성</span></div>
+                                <div class="code-line"><span class="highlight">with</span> pd.ExcelWriter(<span class="string">'주간_매출_보고서.xlsx'</span>) <span class="highlight">as</span> writer:</div>
+                                <div class="code-line indent">통합_데이터.to_excel(writer, sheet_name=<span class="string">'원본데이터'</span>, index=False)</div>
+                                <div class="code-line indent">지점별_매출.to_excel(writer, sheet_name=<span class="string">'지점별_요약'</span>)</div>
+                                <div class="code-line indent">제품별_매출.to_excel(writer, sheet_name=<span class="string">'제품별_요약'</span>)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 5. 이메일 발송</span></div>
+                                <div class="code-line"><span class="highlight">def</span> send_report_email():</div>
+                                <div class="code-line indent"><span class="comment"># 이메일 발송 코드 구현...</span></div>
+                            </div>
+                            
+                            <div class="note">
+                                <div class="note-title">자동화 효과</div>
+                                <p>이 시스템을 도입한 후 보고서 작성 시간이 평균 4시간에서 몇 분으로 단축되었으며, 인적 오류도 크게 감소했습니다. 자동화된 데이터 분석으로 인사이트 발견 속도도 향상되었습니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="right-column">
+                    <div class="section">
+                        <div class="section-title">
+                            <i class="fas fa-cogs section-icon"></i>
+                            통합 업무 자동화 솔루션
+                            <span class="badge badge-yellow">효율성 향상</span>
+                        </div>
+                        <div class="section-content">
+                            <p>데이터 수집, 처리, 분석, 보고서 생성 등 업무 전반을 자동화하는 통합 솔루션입니다.</p>
+                            
+                            <div class="integration-diagram">
+                                <div class="integration-node">
+                                    <i class="fas fa-database"></i>
+                                    데이터 소스
+                                </div>
+                                <div class="integration-node">
+                                    <i class="fas fa-exchange-alt"></i>
+                                    ETL 처리
+                                </div>
+                                <div class="integration-node">
+                                    <i class="fas fa-chart-pie"></i>
+                                    분석 및 시각화
+                                </div>
+                                <div class="integration-node">
+                                    <i class="fas fa-paper-plane"></i>
+                                    배포 시스템
+                                </div>
+                            </div>
+                            
+                            <div class="code-block">
+                                <div class="code-prompt">
+                                    <i class="fas fa-robot"></i>다양한 파이썬 모듈을 통합하여 완성된 자동화 시스템 코드를 작성해줘
+                                </div>
+                                <div class="code-line"><span class="highlight">import</span> pandas <span class="highlight">as</span> pd</div>
+                                <div class="code-line"><span class="highlight">import</span> numpy <span class="highlight">as</span> np</div>
+                                <div class="code-line"><span class="highlight">import</span> matplotlib.pyplot <span class="highlight">as</span> plt</div>
+                                <div class="code-line"><span class="highlight">import</span> seaborn <span class="highlight">as</span> sns</div>
+                                <div class="code-line"><span class="highlight">import</span> requests</div>
+                                <div class="code-line"><span class="highlight">import</span> schedule</div>
+                                <div class="code-line"><span class="highlight">import</span> time</div>
+                                <div class="code-line"><span class="highlight">import</span> smtplib</div>
+                                <div class="code-line"><span class="highlight">import</span> logging</div>
+                                <div class="code-line"><span class="highlight">import</span> os</div>
+                                <div class="code-line"><span class="highlight">import</span> glob</div>
+                                <div class="code-line"><span class="highlight">from</span> datetime <span class="highlight">import</span> datetime, timedelta</div>
+                                <div class="code-line"><span class="highlight">from</span> email.mime.multipart <span class="highlight">import</span> MIMEMultipart</div>
+                                <div class="code-line"><span class="highlight">from</span> email.mime.text <span class="highlight">import</span> MIMEText</div>
+                                <div class="code-line"><span class="highlight">from</span> email.mime.application <span class="highlight">import</span> MIMEApplication</div>
+                                <div class="code-line"><span class="highlight">from</span> sqlalchemy <span class="highlight">import</span> create_engine</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 로깅 설정</span></div>
+                                <div class="code-line">logging.basicConfig(</div>
+                                <div class="code-line indent">level=logging.INFO,</div>
+                                <div class="code-line indent">format=<span class="string">'%(asctime)s - %(name)s - %(levelname)s - %(message)s'</span>,</div>
+                                <div class="code-line indent">handlers=[</div>
+                                <div class="code-line indent indent">logging.FileHandler(<span class="string">"자동화_시스템.log"</span>),</div>
+                                <div class="code-line indent indent">logging.StreamHandler()</div>
+                                <div class="code-line indent">]</div>
+                                <div class="code-line">)</div>
+                                <div class="code-line">logger = logging.getLogger(<span class="string">'업무자동화'</span>)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 설정 및 상수</span></div>
+                                <div class="code-line">CONFIG = {</div>
+                                <div class="code-line indent"><span class="string">'데이터_폴더'</span>: <span class="string">'./data/'</span>,</div>
+                                <div class="code-line indent"><span class="string">'보고서_폴더'</span>: <span class="string">'./reports/'</span>,</div>
+                                <div class="code-line indent"><span class="string">'이메일_수신자'</span>: [<span class="string">'<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="325f535c5355574072574a535f425e571c515d5f">[email&#160;protected]</a>'</span>, <span class="string">'<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6e1a0b0f032e0b160f031e020b400d0103">[email&#160;protected]</a>'</span>],</div>
+                                <div class="code-line indent"><span class="string">'DB_연결정보'</span>: <span class="string">'sqlite:///업무데이터.db'</span></div>
+                                <div class="code-line">}</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 메인 자동화 클래스</span></div>
+                                <div class="code-line"><span class="highlight">class</span> 업무자동화시스템:</div>
+                                <div class="code-line indent"><span class="highlight">def</span> __init__(self):</div>
+                                <div class="code-line indent indent">self.engine = create_engine(CONFIG[<span class="string">'DB_연결정보'</span>])</div>
+                                <div class="code-line indent indent">self._준비()</div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent"><span class="highlight">def</span> _준비(self):</div>
+                                <div class="code-line indent indent">os.makedirs(CONFIG[<span class="string">'데이터_폴더'</span>], exist_ok=True)</div>
+                                <div class="code-line indent indent">os.makedirs(CONFIG[<span class="string">'보고서_폴더'</span>], exist_ok=True)</div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent"><span class="highlight">def</span> 데이터_수집(self):</div>
+                                <div class="code-line indent indent">logger.info(<span class="string">"데이터 수집 시작..."</span>)</div>
+                                <div class="code-line indent indent"><span class="comment"># API 데이터 수집</span></div>
+                                <div class="code-line indent indent"><span class="comment"># 데이터베이스 쿼리</span></div>
+                                <div class="code-line indent indent"><span class="comment"># 파일 데이터 수집</span></div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent"><span class="highlight">def</span> 데이터_처리(self):</div>
+                                <div class="code-line indent indent">logger.info(<span class="string">"데이터 처리 중..."</span>)</div>
+                                <div class="code-line indent indent"><span class="comment"># 데이터 정제 및 변환</span></div>
+                                <div class="code-line indent indent"><span class="comment"># 통계 분석</span></div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent"><span class="highlight">def</span> 보고서_생성(self):</div>
+                                <div class="code-line indent indent">logger.info(<span class="string">"보고서 생성 중..."</span>)</div>
+                                <div class="code-line indent indent"><span class="comment"># 시각화</span></div>
+                                <div class="code-line indent indent"><span class="comment"># 엑셀/PDF 보고서 생성</span></div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent"><span class="highlight">def</span> 보고서_발송(self):</div>
+                                <div class="code-line indent indent">logger.info(<span class="string">"보고서 발송 중..."</span>)</div>
+                                <div class="code-line indent indent"><span class="comment"># 이메일 전송</span></div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent"><span class="highlight">def</span> 전체_프로세스_실행(self):</div>
+                                <div class="code-line indent indent"><span class="highlight">try</span>:</div>
+                                <div class="code-line indent indent indent">self.데이터_수집()</div>
+                                <div class="code-line indent indent indent">self.데이터_처리()</div>
+                                <div class="code-line indent indent indent">self.보고서_생성()</div>
+                                <div class="code-line indent indent indent">self.보고서_발송()</div>
+                                <div class="code-line indent indent indent">logger.info(<span class="string">"전체 자동화 프로세스 완료!"</span>)</div>
+                                <div class="code-line indent indent"><span class="highlight">except</span> Exception <span class="highlight">as</span> e:</div>
+                                <div class="code-line indent indent indent">logger.error(f<span class="string">"오류 발생: {str(e)}"</span>)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 스케줄러 설정 - 매일 아침 8시 실행</span></div>
+                                <div class="code-line"><span class="highlight">def</span> 스케줄러_실행():</div>
+                                <div class="code-line indent">자동화 = 업무자동화시스템()</div>
+                                <div class="code-line indent">schedule.every().day.at(<span class="string">"08:00"</span>).do(자동화.전체_프로세스_실행)</div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent"><span class="highlight">while</span> True:</div>
+                                <div class="code-line indent indent">schedule.run_pending()</div>
+                                <div class="code-line indent indent">time.sleep(60)</div>
+                            </div>
+                            
+                            <div class="use-cases">
+                                <div class="use-case">
+                                    <div class="use-case-title">
+                                        <i class="fas fa-money-bill-wave"></i>
+                                        재무/회계 자동화
+                                    </div>
+                                    <div class="use-case-desc">
+                                        판매 데이터 집계, 수익 분석, 예산 대비 실적 모니터링 및 재무 보고서 자동 생성
+                                    </div>
+                                </div>
+                                <div class="use-case">
+                                    <div class="use-case-title">
+                                        <i class="fas fa-shopping-cart"></i>
+                                        재고 관리 자동화
+                                    </div>
+                                    <div class="use-case-desc">
+                                        재고 수준 모니터링, 적정 재고 계산, 재주문 포인트 경고 및 자동 발주 시스템
+                                    </div>
+                                </div>
+                                <div class="use-case">
+                                    <div class="use-case-title">
+                                        <i class="fas fa-chart-bar"></i>
+                                        마케팅 데이터 분석
+                                    </div>
+                                    <div class="use-case-desc">
+                                        여러 채널의 마케팅 성과 자동 수집, 캠페인 ROI 분석 및 마케팅 대시보드 생성
+                                    </div>
+                                </div>
+                                <div class="use-case">
+                                    <div class="use-case-title">
+                                        <i class="fas fa-users"></i>
+                                        HR 프로세스 자동화
+                                    </div>
+                                    <div class="use-case-desc">
+                                        직원 출퇴근 데이터 분석, 성과 지표 계산, 급여 보고서 생성 및 인력 계획 지원
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                "업무 자동화의 궁극적 목표는 단순 반복 작업에서 벗어나 보다 창의적이고 가치 있는 일에 집중할 수 있게 하는 것입니다"
+            </div>
+        </div>
+    </div>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body>
+    

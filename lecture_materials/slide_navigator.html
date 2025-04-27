@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>파이썬 자동화 강의 슬라이드</title>
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden; /* Body 스크롤 방지 */
+            background-color: #153656;
+            font-family: 'Noto Sans KR', Arial, sans-serif;
+        }
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: #153656;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 100;
+        }
+        .controls {
+            position: fixed;
+            /* top set by JS */
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            background-color: #153656;
+            color: white;
+            border-bottom: 1px solid #0c2239;
+            z-index: 99;
+        }
+        .controls button {
+            margin: 0 10px;
+            padding: 8px 15px;
+            background-color: #2d5986;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .controls button:hover {
+            background-color: #3a7dbd;
+        }
+        .slide-info {
+            margin: 0 20px;
+            font-size: 16px;
+            color: white;
+        }
+        .select-container {
+            margin: 0 20px;
+            min-width: 200px;
+        }
+        .chapter-select {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #0c2239;
+            width: 100%;
+            background-color: #2d5986;
+            color: white;
+        }
+        .chapter-select option {
+            background-color: #153656;
+            color: white;
+        }
+
+        /* --- Content Area (Scroll Container) --- */
+        .content {
+            position: fixed;
+            /* top set by JS */
+            bottom: 0;
+            left: 0;
+            right: 0;
+            overflow: auto !important; /* 스크롤 강제! */
+            -webkit-overflow-scrolling: touch;
+            background-color: #153656;
+        }
+        /* --- Iframe --- */
+        iframe {
+            display: block; /* Prevent bottom space */
+            width: 100%;
+            height: 100%; /* Fill the container */
+            border: none;
+            background-color: transparent; /* Allow container bg to show */
+        }
+        
+        /* Scrollbar Styling */
+        .content::-webkit-scrollbar {
+            width: 14px;
+            height: 14px;
+        }
+        .content::-webkit-scrollbar-track {
+            background: #0c2239;
+        }
+        .content::-webkit-scrollbar-thumb {
+            background-color: #2d5986;
+            border-radius: 7px;
+            border: 3px solid #0c2239;
+        }
+        .content::-webkit-scrollbar-thumb:hover {
+            background-color: #3a7dbd;
+        }
+        .error {
+            color: #e74c3c;
+            text-align: center;
+            padding: 40px;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2em;
+        }
+        
+        /* Fullscreen Styles */
+        body.fullscreen-active .header,
+        body.fullscreen-active .controls {
+            display: none;
+        }
+        body.fullscreen-active .content {
+            top: 0 !important;
+            height: 100%;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                padding: 10px;
+            }
+            .header h1 {
+                font-size: 18px;
+                margin: 5px 0;
+            }
+            .controls {
+                flex-wrap: wrap;
+                padding: 5px;
+            }
+            .controls button {
+                margin: 5px;
+                padding: 6px 10px;
+                font-size: 14px;
+            }
+            .select-container {
+                width: 100%;
+                margin: 5px 10px;
+                order: -1;
+            }
+            .slide-info {
+                margin: 5px 0;
+                width: 100%;
+                text-align: center;
+                order: -2;
+            }
+        }
+    </style>
+</head>
+<body id="pageBody">
+    <div class="header" id="mainHeader">
+        <h1>파이썬 자동화 강의 슬라이드</h1>
+    </div>
+    <div class="controls" id="mainControls">
+        <button id="prevBtn">이전</button>
+        <span class="slide-info" id="slideInfo">0/0</span>
+        <button id="nextBtn">다음</button>
+        <div class="select-container">
+            <select id="chapterSelect" class="chapter-select">
+                <option value="">챕터 선택</option>
+            </select>
+        </div>
+        <button id="fullscreenBtn">전체화면</button>
+    </div>
+    <div class="content" id="content" tabindex="0">
+        <iframe id="slideFrame" src="" title="Slide Content"></iframe>
+    </div>
+
+    <script>
+        const slideFiles = [];
+        let chapters = {};
+        let currentSlideIndex = 0;
+        const pageBody = document.getElementById('pageBody');
+        const header = document.getElementById('mainHeader');
+        const controls = document.getElementById('mainControls');
+        const contentArea = document.getElementById('content');
+        const slideFrame = document.getElementById('slideFrame');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+
+        function adjustLayout() {
+            if (!document.fullscreenElement) {
+                const headerHeight = header.offsetHeight;
+                const controlsHeight = controls.offsetHeight;
+                controls.style.top = `${headerHeight}px`;
+                contentArea.style.top = `${headerHeight + controlsHeight}px`;
+            } else {
+                contentArea.style.top = '0px'; // Ensure fullscreen has no top gap
+            }
+        }
+
+        function loadSlideFiles() {
+            fetch('slide_files.json')
+                .then(response => response.ok ? response.json() : Promise.reject(`JSON 로드 실패 (${response.status})`))
+                .then(files => {
+                    if (!files || files.length === 0) throw new Error('파일 목록 비어 있음');
+                    slideFiles.push(...files); // Use spread syntax
+                    processSlideFiles();
+                })
+                .catch(error => {
+                    console.warn('JSON 로드 실패, 하드코딩 목록 사용:', error);
+                    slideFiles.push(...findPythonAutomationFiles());
+                    processSlideFiles();
+                });
+        }
+
+        function findPythonAutomationFiles() {
+            // Ensure this list is complete and correct
+            return [
+                'slides/python_automation_chapter1_0.html', 'slides/python_automation_chapter1_1.html', 'slides/python_automation_chapter1_2.html', 'slides/python_automation_chapter1_3.html', 'slides/python_automation_chapter1_4.html', 'slides/python_automation_chapter1_5.html', 'slides/python_automation_chapter1_6.html', 'slides/python_automation_chapter1_7.html', 'slides/python_automation_chapter1_8.html', 'slides/python_automation_chapter1_9.html', 'slides/python_automation_chapter1_10.html', 'slides/python_automation_chapter1_11.html', 'slides/python_automation_chapter1_12.html', 'slides/python_automation_chapter1_13.html', 'slides/python_automation_chapter1_14.html', 'slides/python_automation_chapter1_15.html', 'slides/python_automation_chapter1_16.html', 'slides/python_automation_chapter2_0.html', 'slides/python_automation_chapter2_2.html', 'slides/python_automation_chapter2_3.html', 'slides/python_automation_chapter2_4.html', 'slides/python_automation_chapter2_5.html', 'slides/python_automation_chapter2_6.html', 'slides/python_automation_chapter2_7.html', 'slides/python_automation_chapter2_8.html', 'slides/python_automation_chapter2_9.html', 'slides/python_automation_chapter2_10.html', 'slides/python_automation_chapter2_11.html', 'slides/python_automation_chapter2_12.html', 'slides/python_automation_chapter3_0.html', 'slides/python_automation_chapter3_1.html', 'slides/python_automation_chapter3_2.html', 'slides/python_automation_chapter3_3.html', 'slides/python_automation_chapter3_4.html', 'slides/python_automation_chapter3_5.html', 'slides/python_automation_chapter3_6.html', 'slides/python_automation_chapter3_7.html', 'slides/python_automation_chapter3_8.html', 'slides/python_automation_chapter3_9.html', 'slides/python_automation_chapter3_10.html', 'slides/python_automation_chapter3_11.html', 'slides/python_automation_chapter3_12.html', 'slides/python_automation_chapter3_13.html', 'slides/python_automation_chapter4_0.html', 'slides/python_automation_chapter4_1.html', 'slides/python_automation_chapter4_2.html', 'slides/python_automation_chapter4_3.html', 'slides/python_automation_chapter4_4.html', 'slides/python_automation_chapter4_5.html', 'slides/python_automation_chapter4_6.html', 'slides/python_automation_chapter4_7.html', 'slides/python_automation_chapter4_8.html', 'slides/python_automation_chapter4_9.html', 'slides/python_automation_chapter4_10.html', 'slides/python_automation_chapter5_0.html', 'slides/python_automation_chapter5_1.html', 'slides/python_automation_chapter5_2.html', 'slides/python_automation_chapter5_3.html', 'slides/python_automation_chapter5_4.html', 'slides/python_automation_chapter5_5.html', 'slides/python_automation_chapter5_6.html', 'slides/python_automation_chapter5_7.html', 'slides/python_automation_chapter5_8.html', 'slides/python_automation_chapter5_9.html', 'slides/python_automation_chapter5_10.html', 'slides/python_automation_chapter6_0.html', 'slides/python_automation_chapter6_1.html', 'slides/python_automation_chapter6_2.html', 'slides/python_automation_chapter6_3.html', 'slides/python_automation_chapter6_4.html', 'slides/python_automation_chapter6_5.html', 'slides/python_automation_chapter6_6.html', 'slides/python_automation_chapter6_7.html', 'slides/python_automation_chapter6_8.html', 'slides/python_automation_chapter7_0.html', 'slides/python_automation_chapter7_1.html', 'slides/python_automation_chapter7_2.html', 'slides/python_automation_chapter7_3.html', 'slides/python_automation_chapter7_4.html', 'slides/python_automation_chapter7_5.html', 'slides/python_automation_chapter7_6.html', 'slides/python_automation_chapter7_7.html', 'slides/python_automation_chapter7_8.html', 'slides/python_automation_chapter7_9.html', 'slides/python_automation_chapter7_10.html', 'slides/python_automation_chapter8_0.html', 'slides/python_automation_chapter8_1.html', 'slides/python_automation_chapter8_2.html', 'slides/python_automation_chapter8_3.html', 'slides/python_automation_chapter8_4.html', 'slides/python_automation_chapter8_5.html', 'slides/python_automation_chapter8_6.html', 'slides/python_automation_chapter8_7.html', 'slides/python_automation_chapter8_8.html', 'slides/python_automation_chapter8_9.html', 'slides/python_automation_chapter8_10.html', 'slides/python_automation_chapter8_11.html', 'slides/python_automation_chapter8_12.html', 'slides/python_automation_chapter8_13.html', 'slides/python_automation_chapter9_0.html', 'slides/python_automation_chapter9_1.html', 'slides/python_automation_chapter9_2.html', 'slides/python_automation_chapter9_3.html', 'slides/python_automation_chapter9_4.html', 'slides/python_automation_chapter9_5.html', 'slides/python_automation_chapter9_6.html', 'slides/python_automation_chapter9_7.html', 'slides/python_automation_chapter9_8.html', 'slides/python_automation_chapter10_0.html', 'slides/python_automation_chapter10_1.html', 'slides/python_automation_chapter10_2.html', 'slides/python_automation_chapter10_3.html', 'slides/python_automation_chapter10_4.html', 'slides/python_automation_chapter10_5.html', 'slides/python_automation_chapter10_6.html', 'slides/python_automation_chapter10_7.html', 'slides/python_automation_chapter10_8.html', 'slides/python_automation_chapter11_0.html', 'slides/python_automation_chapter11_1.html', 'slides/python_automation_chapter11_2.html', 'slides/python_automation_chapter11_3.html', 'slides/python_automation_chapter11_4.html', 'slides/python_automation_chapter11_5.html', 'slides/python_automation_chapter11_6.html', 'slides/python_automation_chapter12_0.html', 'slides/python_automation_chapter12_1.html', 'slides/python_automation_chapter12_2.html', 'slides/python_automation_chapter12_3.html', 'slides/python_automation_chapter12_4.html', 'slides/python_automation_chapter12_5.html', 'slides/python_automation_chapter12_6.html', 'slides/python_automation_chapter12_7.html', 'slides/python_automation_chapter12_8.html', 'slides/python_automation_chapter13_0.html', 'slides/python_automation_chapter13_1.html', 'slides/python_automation_chapter13_2.html', 'slides/python_automation_chapter13_3.html', 'slides/python_automation_chapter13_4.html', 'slides/python_automation_chapter13_5.html', 'slides/python_automation_chapter13_6.html', 'slides/python_automation_chapter13_7.html', 'slides/python_automation_chapter13_8.html', 'slides/python_automation_chapter13_9.html', 'slides/python_automation_chapter13_10.html', 'slides/python_automation_chapter13_11.html', 'slides/python_automation_chapter13_12.html', 'slides/python_automation_chapter13_13.html', 'slides/python_automation_chapter14_15_0.html', 'slides/python_automation_chapter14_15_1.html', 'slides/python_automation_chapter14_15_2.html', 'slides/python_automation_chapter14_15_3.html', 'slides/python_automation_chapter14_15_4.html', 'slides/python_automation_chapter14_15_5.html', 'slides/python_automation_chapter14_15_6.html', 'slides/python_automation_chapter14_15_7.html', 'slides/python_automation_chapter14_15_8.html', 'slides/python_automation_chapter14_15_9.html', 'slides/python_automation_chapter14_15_10.html', 'slides/python_automation_chapter14_15_11.html', 'slides/python_automation_chapter14_15_12.html', 'slides/python_automation_chapter14_15_13.html', 'slides/python_automation_chapter14_15_14.html', 'slides/python_automation_chapter14_15_15.html', 'slides/python_automation_chapter14_15_16.html', 'slides/python_automation_chapter16_0.html', 'slides/python_automation_chapter16_1.html', 'slides/python_automation_chapter16_2.html', 'slides/python_automation_chapter16_3.html', 'slides/python_automation_chapter16_4.html', 'slides/python_automation_chapter16_5.html', 'slides/python_automation_chapter16_6.html', 'slides/python_automation_chapter16_7.html', 'slides/python_automation_chapter16_8.html', 'slides/python_automation_chapter16_9.html', 'slides/python_automation_chapter16_10.html', 'slides/python_automation_chapter16_11.html', 'slides/python_automation_chapter16_12.html', 'slides/python_automation_chapter16_13.html', 'slides/python_automation_chapter16_14.html'
+            ];
+        }
+
+        function processSlideFiles() {
+            if (slideFiles.length === 0) return showError('슬라이드 파일을 찾을 수 없습니다.');
+            organizeByChapter();
+            updateChapterSelect();
+            loadSlide(0);
+        }
+
+        function organizeByChapter() {
+            chapters = {};
+            slideFiles.forEach(file => {
+                const match = file.match(/python_automation_(chapter\d+)/); // Simpler regex for chapter grouping
+                if (match) {
+                    const chapterKey = match[1];
+                    if (!chapters[chapterKey]) chapters[chapterKey] = [];
+                    chapters[chapterKey].push(file);
+                }
+            });
+        }
+
+        function updateChapterSelect() {
+            const select = document.getElementById('chapterSelect');
+            select.innerHTML = '<option value="">전체 슬라이드</option>';
+            Object.keys(chapters).sort((a, b) => parseInt(a.replace('chapter', '') - parseInt(b.replace('chapter', ''))))
+                  .forEach(chapterKey => {
+                      const option = document.createElement('option');
+                      option.value = chapterKey;
+                      option.textContent = '챕터 ' + chapterKey.replace('chapter', '');
+                      select.appendChild(option);
+                  });
+            select.addEventListener('change', function() {
+                const firstFileOfChapter = this.value ? chapters[this.value]?.[0] : null;
+                const index = firstFileOfChapter ? slideFiles.indexOf(firstFileOfChapter) : 0;
+                loadSlide(index >= 0 ? index : 0);
+            });
+        }
+
+        function loadSlide(index) {
+            if (index < 0 || index >= slideFiles.length) return;
+            currentSlideIndex = index;
+            slideFrame.src = slideFiles[index];
+            console.log('로딩 시작:', slideFiles[index]);
+            // Onload/onerror handlers are inside this function scope now
+            slideFrame.onload = handleIframeLoad;
+            slideFrame.onerror = handleIframeError;
+            updateSlideInfo();
+            updateChapterSelection();
+        }
+
+        function handleIframeLoad() {
+            console.log(slideFiles[currentSlideIndex], '로드 완료');
+            // Try to prevent iframe from stealing focus / ensure parent can scroll
+            try {
+                slideFrame.blur(); // Attempt to remove focus from iframe itself
+            } catch (e) {
+                console.warn('Could not blur iframe:', e);
+            }
+            contentArea.focus(); // Explicitly set focus on the scrollable container
+            contentArea.scrollTop = 0; // Reset scroll
+            adjustLayout(); // Adjust layout potentially needed after load
+        }
+
+        function handleIframeError() {
+            showError(`슬라이드 로드 실패: ${slideFiles[currentSlideIndex]}`);
+        }
+
+        function updateChapterSelection() {
+             const currentFile = slideFiles[currentSlideIndex];
+             const match = currentFile.match(/python_automation_(chapter\d+)/);
+             if (match) {
+                const currentChapterKey = match[1];
+                const select = document.getElementById('chapterSelect');
+                if (select.value !== currentChapterKey) {
+                    select.value = currentChapterKey; // Update dropdown selection
+                }
+             }
+        }
+
+        function updateSlideInfo() {
+            document.getElementById('slideInfo').textContent = `${currentSlideIndex + 1} / ${slideFiles.length}`;
+        }
+
+        function previousSlide() { if (currentSlideIndex > 0) loadSlide(currentSlideIndex - 1); }
+        function nextSlide() { if (currentSlideIndex < slideFiles.length - 1) loadSlide(currentSlideIndex + 1); }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                pageBody.requestFullscreen?.().catch(err => console.error(`Fullscreen error: ${err.message}`));
+            } else {
+                document.exitFullscreen?.();
+            }
+        }
+
+        function updateFullscreenState() {
+            const isFullscreen = !!document.fullscreenElement;
+            pageBody.classList.toggle('fullscreen-active', isFullscreen);
+            fullscreenBtn.textContent = isFullscreen ? '전체화면 종료' : '전체화면';
+            adjustLayout(); // Adjust layout on exiting fullscreen
+        }
+
+        function showError(message) {
+            contentArea.innerHTML = `<div class="error">${message}<br><br>(슬라이드 파일 경로 또는 내부 CSS를 확인하세요)</div>`;
+            document.getElementById('slideInfo').textContent = '오류';
+            console.error('오류:', message);
+        }
+
+        // Event Listeners
+        document.getElementById('prevBtn').addEventListener('click', previousSlide);
+        document.getElementById('nextBtn').addEventListener('click', nextSlide);
+        fullscreenBtn.addEventListener('click', toggleFullscreen);
+        document.addEventListener('fullscreenchange', updateFullscreenState);
+
+        // Enhanced Keydown Listener for consistent navigation and scrolling
+        document.addEventListener('keydown', (event) => {
+            const activeElement = document.activeElement;
+            const isFormElementFocused = activeElement && 
+                                         ['INPUT', 'SELECT', 'TEXTAREA'].includes(activeElement.tagName);
+            const isIframeFocused = activeElement && activeElement.tagName === 'IFRAME';
+
+            // Allow normal typing/navigation within form elements
+            if (isFormElementFocused) {
+                return; 
+            }
+
+            let prevented = false; // Flag to prevent default action
+
+            switch (event.key) {
+                case 'ArrowLeft':
+                    previousSlide();
+                    prevented = true;
+                    break;
+                case 'ArrowRight':
+                    nextSlide();
+                    prevented = true;
+                    break;
+                case 'ArrowUp':
+                    // Always scroll the content area, regardless of focus (unless in form)
+                    if (contentArea) { 
+                        contentArea.scrollTop -= 60; // Slightly increased scroll speed
+                        prevented = true;
+                    }
+                    break;
+                case 'ArrowDown':
+                    // Always scroll the content area, regardless of focus (unless in form)
+                    if (contentArea) { 
+                        contentArea.scrollTop += 60; // Slightly increased scroll speed
+                        prevented = true;
+                    }
+                    break;
+                case 'f':
+                case 'F':
+                    toggleFullscreen();
+                    prevented = true;
+                    break;
+            }
+
+            if (prevented) {
+                event.preventDefault(); // Prevent default browser actions (like page scroll)
+            }
+        });
+
+        window.addEventListener('load', () => {
+            adjustLayout();
+            loadSlideFiles();
+            contentArea.focus();
+        });
+        window.addEventListener('resize', adjustLayout);
+    </script>
+</body>
+</html> 

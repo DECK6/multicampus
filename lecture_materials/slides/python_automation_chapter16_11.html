@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 16</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 40px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .guide-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .guide-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+        .guide-section:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        .section-title {
+            font-size: 24px;
+            color: #4B8BBE;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .section-title i {
+            margin-right: 12px;
+            color: #FFD43B;
+        }
+        .guide-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .guide-item {
+            margin-bottom: 15px;
+            padding-left: 24px;
+            position: relative;
+            line-height: 1.6;
+            color: #e2e8f0;
+        }
+        .guide-item::before {
+            content: "•";
+            color: #FFD43B;
+            position: absolute;
+            left: 8px;
+        }
+        .tip-box {
+            background: rgba(75, 139, 190, 0.1);
+            border-left: 4px solid #FFD43B;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 0 8px 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">12</div>
+                <div class="title">프로그램 배포 가이드</div>
+            </div>
+
+            <div class="guide-container">
+                <div class="guide-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-box"></i>
+                        패키징 준비
+                    </h3>
+                    <ul class="guide-list">
+                        <li class="guide-item">requirements.txt 파일 생성: pip freeze > requirements.txt</li>
+                        <li class="guide-item">실행에 필요한 리소스 파일 정리 (폰트, 이미지 등)</li>
+                        <li class="guide-item">설정 파일을 config.ini 또는 .env 파일로 분리</li>
+                        <li class="guide-item">프로젝트 구조 정리 및 불필요한 파일 제거</li>
+                    </ul>
+                </div>
+
+                <div class="guide-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-cog"></i>
+                        실행 파일 생성
+                    </h3>
+                    <ul class="guide-list">
+                        <li class="guide-item">PyInstaller 설치: pip install pyinstaller</li>
+                        <li class="guide-item">실행 파일 생성: pyinstaller --onefile main.py</li>
+                        <li class="guide-item">숨겨진 임포트 처리: --hidden-import 옵션 사용</li>
+                        <li class="guide-item">아이콘 추가: --icon=app.ico 옵션 사용</li>
+                    </ul>
+                </div>
+
+                <div class="guide-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-check-circle"></i>
+                        테스트 및 검증
+                    </h3>
+                    <ul class="guide-list">
+                        <li class="guide-item">다양한 환경에서의 실행 테스트</li>
+                        <li class="guide-item">에러 로깅 및 예외 처리 검증</li>
+                        <li class="guide-item">메모리 사용량 및 성능 확인</li>
+                        <li class="guide-item">사용자 피드백 수집 및 반영</li>
+                    </ul>
+                </div>
+
+                <div class="guide-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-book"></i>
+                        문서화
+                    </h3>
+                    <ul class="guide-list">
+                        <li class="guide-item">설치 및 실행 가이드 작성</li>
+                        <li class="guide-item">주요 기능 및 사용법 설명</li>
+                        <li class="guide-item">환경 설정 방법 상세 기술</li>
+                        <li class="guide-item">문제 해결 가이드 제공</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="tip-box">
+                <p class="font-bold text-[#FFD43B] mb-2">💡 배포 시 주의사항</p>
+                <p>- 실행 파일 생성 전 가상환경에서 테스트를 진행하세요.</p>
+                <p>- 중요한 인증 정보는 별도 설정 파일로 관리하세요.</p>
+                <p>- 사용자 피드백을 수집할 수 있는 채널을 마련하세요.</p>
+            </div>
+        </div>
+    </div>
+</body>
+    

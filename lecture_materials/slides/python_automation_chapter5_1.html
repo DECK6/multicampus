@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 자동화 교육 교안 - 챕터 5: 물리자동화의 이해</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 30px;
+        }
+        .info-box {
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .info-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #FFD43B;
+            display: flex;
+            align-items: center;
+        }
+        .info-title i {
+            margin-right: 10px;
+        }
+        .info-content {
+            font-size: 16px;
+            line-height: 1.7;
+            color: #e2e8f0;
+        }
+        .code-block {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            margin: 15px 0;
+            color: #e2e8f0;
+            position: relative;
+            border-left: 4px solid #4B8BBE;
+        }
+        .code-block pre {
+            margin: 0;
+            white-space: pre-wrap;
+        }
+        .code-title {
+            position: absolute;
+            top: -12px;
+            left: 15px;
+            background-color: #4B8BBE;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .install-steps {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .install-steps li {
+            padding: 10px 0;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+        }
+        .install-steps li:last-child {
+            border-bottom: none;
+        }
+        .install-steps i {
+            color: #4B8BBE;
+            margin-right: 10px;
+        }
+        .capabilities {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .capability-item {
+            background-color: rgba(75, 139, 190, 0.1);
+            border-radius: 8px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+        }
+        .capability-item i {
+            color: #FFD43B;
+            margin-right: 10px;
+            font-size: 20px;
+        }
+        .prompt-tip {
+            margin-top: 30px;
+            background: linear-gradient(45deg, rgba(75, 139, 190, 0.2), rgba(48, 105, 152, 0.2));
+            border-radius: 12px;
+            padding: 15px 20px;
+            border: 1px solid rgba(75, 139, 190, 0.3);
+        }
+        .prompt-tip h3 {
+            color: #FFD43B;
+            font-size: 18px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .prompt-tip h3 i {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">2</div>
+                <div class="title">PyAutoGUI 소개</div>
+            </div>
+            
+            <div class="two-column">
+                <div>
+                    <div class="info-box">
+                        <h3 class="info-title"><i class="fas fa-info-circle"></i>PyAutoGUI란?</h3>
+                        <div class="info-content">
+                            <p>PyAutoGUI는 파이썬으로 GUI를 자동화하는 크로스-플랫폼 라이브러리입니다. Windows, macOS, Linux에서 모두 작동하며 마우스와 키보드를 프로그래밍 방식으로 제어할 수 있게 해줍니다.</p>
+                            <p class="mt-2">이 라이브러리를 사용하면 반복적인 작업을 자동화하고, 스크린샷을 찍어 이미지를 인식하며, 다른 응용 프로그램과 상호작용할 수 있습니다.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-box">
+                        <h3 class="info-title"><i class="fas fa-download"></i>설치 방법</h3>
+                        <div class="info-content">
+                            <ul class="install-steps">
+                                <li><i class="fas fa-terminal"></i>Windows: <code>pip install pyautogui</code></li>
+                                <li><i class="fas fa-terminal"></i>macOS/Linux: <code>pip3 install pyautogui</code></li>
+                                <li><i class="fas fa-info-circle"></i>Linux에서는 추가로 <code>sudo apt-get install scrot python3-tk python3-dev</code> 설치 필요</li>
+                            </ul>
+                            <div class="code-block">
+                                <div class="code-title">설치 확인</div>
+                                <pre>import pyautogui
+print(pyautogui.__version__)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="info-box">
+                        <h3 class="info-title"><i class="fas fa-cogs"></i>주요 기능</h3>
+                        <div class="info-content">
+                            <div class="capabilities">
+                                <div class="capability-item">
+                                    <i class="fas fa-mouse-pointer"></i>
+                                    <span>마우스 이동 및 제어</span>
+                                </div>
+                                <div class="capability-item">
+                                    <i class="fas fa-keyboard"></i>
+                                    <span>키보드 입력 자동화</span>
+                                </div>
+                                <div class="capability-item">
+                                    <i class="fas fa-camera"></i>
+                                    <span>스크린샷 캡처</span>
+                                </div>
+                                <div class="capability-item">
+                                    <i class="fas fa-image"></i>
+                                    <span>화면 이미지 인식</span>
+                                </div>
+                                <div class="capability-item">
+                                    <i class="fas fa-window-restore"></i>
+                                    <span>윈도우 프로그램 제어</span>
+                                </div>
+                                <div class="capability-item">
+                                    <i class="fas fa-arrows-alt"></i>
+                                    <span>드래그 앤 드롭 동작</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="info-box">
+                        <h3 class="info-title"><i class="fas fa-exclamation-triangle"></i>안전 기능</h3>
+                        <div class="info-content">
+                            <p>PyAutoGUI는 두 가지 중요한 안전 기능을 제공합니다:</p>
+                            <ul class="mt-2 ml-5 list-disc">
+                                <li>FAILSAFE: 화면 좌상단 구석으로 마우스를 이동하면 프로그램이 중단됩니다.</li>
+                                <li>PAUSE: 각 함수 호출 사이에 일정 시간 지연을 설정할 수 있습니다.</li>
+                            </ul>
+                            <div class="code-block mt-3">
+                                <pre>import pyautogui
+pyautogui.FAILSAFE = True  # 기본값
+pyautogui.PAUSE = 1.0      # 1초 지연 설정</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="prompt-tip">
+                <h3><i class="fas fa-lightbulb"></i>ChatGPT 활용 팁</h3>
+                <p>"PyAutoGUI로 마우스를 현재 위치에서 100픽셀 오른쪽으로 움직이는 코드를 작성해줘"와 같이 질문하면 ChatGPT가 상세한 코드를 제공해 줍니다.</p>
+            </div>
+        </div>
+    </div>
+</body>
+    

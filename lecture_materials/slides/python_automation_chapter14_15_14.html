@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 14 & 15</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 40px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .feature-card {
+            background: rgba(75, 139, 190, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            background: rgba(75, 139, 190, 0.2);
+        }
+        .code-block {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Consolas', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">15</div>
+                <h2 class="text-2xl font-bold text-yellow-400">ChatGPT 활용 함수 개발</h2>
+            </div>
+
+            <div class="grid grid-cols-2 gap-6">
+                <div class="feature-card">
+                    <h3 class="text-yellow-400 text-lg font-semibold mb-3">
+                        <i class="fas fa-robot mr-2"></i>데이터 처리 함수 생성
+                    </h3>
+                    <div class="code-block text-sm">
+                        <p class="text-blue-300 mb-2">ChatGPT Prompt:</p>
+                        <p class="text-gray-300">"Create a Python function that processes customer data from CSV, validates email addresses, and segments customers based on their purchase history"</p>
+                    </div>
+                    <ul class="mt-3 space-y-2 text-sm">
+                        <li><i class="fas fa-check-circle text-green-400 mr-2"></i>데이터 검증</li>
+                        <li><i class="fas fa-check-circle text-green-400 mr-2"></i>고객 세그멘테이션</li>
+                        <li><i class="fas fa-check-circle text-green-400 mr-2"></i>이메일 형식 확인</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <h3 class="text-yellow-400 text-lg font-semibold mb-3">
+                        <i class="fas fa-envelope mr-2"></i>이메일 템플릿 최적화
+                    </h3>
+                    <div class="code-block text-sm">
+                        <p class="text-blue-300 mb-2">ChatGPT Prompt:</p>
+                        <p class="text-gray-300">"Generate a Python function that converts CSS styles to inline styles for better email client compatibility"</p>
+                    </div>
+                    <ul class="mt-3 space-y-2 text-sm">
+                        <li><i class="fas fa-check-circle text-green-400 mr-2"></i>스타일 인라인화</li>
+                        <li><i class="fas fa-check-circle text-green-400 mr-2"></i>호환성 개선</li>
+                        <li><i class="fas fa-check-circle text-green-400 mr-2"></i>템플릿 최적화</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-6">
+                <div class="feature-card">
+                    <h3 class="text-yellow-400 text-lg font-semibold mb-3">
+                        <i class="fas fa-code mr-2"></i>코드 생성 전략
+                    </h3>
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="p-3 bg-blue-900 bg-opacity-20 rounded">
+                            <h4 class="font-semibold text-blue-300 mb-2">명확한 요구사항</h4>
+                            <ul class="text-sm space-y-1">
+                                <li>• 기능 상세 명시</li>
+                                <li>• 입출력 형식 정의</li>
+                                <li>• 제약조건 설명</li>
+                            </ul>
+                        </div>
+                        <div class="p-3 bg-blue-900 bg-opacity-20 rounded">
+                            <h4 class="font-semibold text-blue-300 mb-2">최적화 요청</h4>
+                            <ul class="text-sm space-y-1">
+                                <li>• 성능 고려사항</li>
+                                <li>• 메모리 효율성</li>
+                                <li>• 확장성 고려</li>
+                            </ul>
+                        </div>
+                        <div class="p-3 bg-blue-900 bg-opacity-20 rounded">
+                            <h4 class="font-semibold text-blue-300 mb-2">오류 처리</h4>
+                            <ul class="text-sm space-y-1">
+                                <li>• 예외 처리 요청</li>
+                                <li>• 유효성 검사</li>
+                                <li>• 로깅 구현</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-6 bg-yellow-900 bg-opacity-20 p-4 rounded-lg">
+                <h3 class="text-yellow-400 font-semibold mb-3">
+                    <i class="fas fa-lightbulb mr-2"></i>ChatGPT 활용 팁
+                </h3>
+                <div class="grid grid-cols-2 gap-4 text-sm">
+                    <ul class="space-y-2">
+                        <li><i class="fas fa-arrow-right text-yellow-400 mr-2"></i>단계별로 나누어 요청</li>
+                        <li><i class="fas fa-arrow-right text-yellow-400 mr-2"></i>구체적인 예시 제시</li>
+                        <li><i class="fas fa-arrow-right text-yellow-400 mr-2"></i>코드 리뷰 요청</li>
+                    </ul>
+                    <ul class="space-y-2">
+                        <li><i class="fas fa-arrow-right text-yellow-400 mr-2"></i>최신 라이브러리 활용</li>
+                        <li><i class="fas fa-arrow-right text-yellow-400 mr-2"></i>성능 최적화 방안 문의</li>
+                        <li><i class="fas fa-arrow-right text-yellow-400 mr-2"></i>테스트 케이스 생성</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+    

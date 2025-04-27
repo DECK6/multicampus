@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 2</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 44px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .intro-section {
+            display: flex;
+            margin-top: 20px;
+            margin-bottom: 40px;
+        }
+        .intro-image {
+            flex: 0 0 320px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .chatgpt-icon {
+            width: 260px;
+            height: 260px;
+            background: rgba(16, 163, 127, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(16, 163, 127, 0.3);
+        }
+        .chatgpt-icon i {
+            font-size: 110px;
+            color: #10a37f;
+        }
+        .intro-text {
+            flex: 1;
+            padding-left: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .intro-text p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: #e2e8f0;
+        }
+        .benefits-section {
+            margin-top: 30px;
+        }
+        .benefits-title {
+            font-size: 26px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 20px;
+        }
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        .benefit-item {
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            align-items: flex-start;
+            transition: all 0.3s ease;
+        }
+        .benefit-item:hover {
+            background-color: rgba(75, 139, 190, 0.2);
+            transform: translateY(-5px);
+        }
+        .benefit-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #4B8BBE, #306998);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        .benefit-icon i {
+            font-size: 18px;
+            color: #FFD43B;
+        }
+        .benefit-text h4 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #e2e8f0;
+        }
+        .benefit-text p {
+            font-size: 15px;
+            color: #cbd5e0;
+            line-height: 1.5;
+        }
+        .footer-note {
+            margin-top: 40px;
+            padding: 15px;
+            background-color: rgba(16, 163, 127, 0.15);
+            border-radius: 8px;
+            border-left: 4px solid #10a37f;
+        }
+        .footer-note p {
+            font-size: 16px;
+            color: #e2e8f0;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">3</div>
+                <div class="title">ChatGPT를 활용한 파이썬 코드 학습 방법</div>
+            </div>
+            
+            <div class="intro-section">
+                <div class="intro-image">
+                    <div class="chatgpt-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                </div>
+                
+                <div class="intro-text">
+                    <p><span class="font-bold">ChatGPT</span>는 OpenAI에서 개발한 대화형 인공지능 언어 모델로, 자연어를 이해하고 생성하는 능력을 가지고 있습니다. 이 도구는 <span class="text-yellow-300">파이썬 코드 학습</span>과 <span class="text-yellow-300">업무 자동화</span>에 효과적으로 활용할 수 있습니다.</p>
+                    
+                    <p>ChatGPT는 질문에 대한 응답을 생성할 뿐만 아니라, 파이썬 코드를 작성하고, 기존 코드를 분석하며, 코드를 최적화하고, 다른 프로그래밍 언어로 변환하는 등의 기능을 제공합니다.</p>
+                    
+                    <p>특히 <span class="text-yellow-300">파이썬 초보자</span>에게 ChatGPT는 코드 작성 지원, 오류 디버깅, 개념 설명을 통해 학습 과정을 효율적으로 도와줍니다.</p>
+                </div>
+            </div>
+            
+            <div class="benefits-section">
+                <h3 class="benefits-title">ChatGPT를 활용한 파이썬 학습의 장점</h3>
+                
+                <div class="benefits-grid">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="benefit-text">
+                            <h4>코드 생성 및 자동화</h4>
+                            <p>자연어로 원하는 기능을 설명하면 ChatGPT가 파이썬 코드를 자동으로 생성해 줍니다. 이를 통해 파이썬 코드 구조와 패턴을 빠르게 학습할 수 있습니다.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-bug"></i>
+                        </div>
+                        <div class="benefit-text">
+                            <h4>코드 디버깅 및 개선</h4>
+                            <p>작성한 코드에 오류가 있을 때 ChatGPT에 문의하면 문제점을 찾고 수정 방법을 제안해 줍니다. 코드 최적화 방법도 배울 수 있습니다.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <div class="benefit-text">
+                            <h4>타 언어와의 변환</h4>
+                            <p>다른 프로그래밍 언어로 작성된 코드를 파이썬으로 변환하거나, 파이썬 코드를 다른 언어로 변환하는 방법을 배울 수 있습니다.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <div class="benefit-text">
+                            <h4>개념 설명 및 학습</h4>
+                            <p>파이썬의 문법, 라이브러리, 함수 등 개념적인 부분에 대해 질문하면 상세한 설명과 예제 코드를 제공받을 수 있습니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-note">
+                <p><i class="fas fa-info-circle mr-2"></i> <span class="font-bold">TIP:</span> ChatGPT에 질문할 때는 구체적인 요구사항과 목적을 명확히 설명하면 더 정확하고 유용한 코드와 설명을 받을 수 있습니다. 다음 페이지에서 효과적인 ChatGPT 프롬프트 작성법을 알아보겠습니다.</p>
+            </div>
+        </div>
+    </div>
+</body>
+    

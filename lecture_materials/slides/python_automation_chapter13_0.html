@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MS Office 자동화 교육 - 챕터 13</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+            overflow: visible;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 60px;
+        }
+        .title-section {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .main-title {
+            font-size: 48px;
+            font-weight: 700;
+            color: #FFD43B;
+            margin-bottom: 20px;
+        }
+        .subtitle {
+            font-size: 24px;
+            color: #E2E8F0;
+            margin-bottom: 40px;
+        }
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .tool-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+        .tool-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        .tool-icon {
+            font-size: 36px;
+            color: #FFD43B;
+            margin-bottom: 15px;
+        }
+        .tool-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #E2E8F0;
+            margin-bottom: 10px;
+        }
+        .tool-description {
+            font-size: 16px;
+            color: #CBD5E0;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="title-section">
+                <h1 class="main-title">파이썬으로 하는 MS Office 자동화</h1>
+                <p class="subtitle">Excel, PowerPoint, Word, Outlook 자동화의 시작</p>
+            </div>
+            
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-file-excel"></i>
+                    </div>
+                    <h3 class="tool-title">Excel 자동화 (openpyxl)</h3>
+                    <p class="tool-description">
+                        엑셀 파일의 생성, 수정, 데이터 분석을 자동화하여 반복 작업을 줄이고 업무 효율을 높입니다.
+                    </p>
+                </div>
+                
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-file-powerpoint"></i>
+                    </div>
+                    <h3 class="tool-title">PowerPoint 자동화 (python-pptx)</h3>
+                    <p class="tool-description">
+                        프레젠테이션 제작을 자동화하여 템플릿 기반의 대량 문서 생성이 가능합니다.
+                    </p>
+                </div>
+                
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-file-word"></i>
+                    </div>
+                    <h3 class="tool-title">Word 자동화 (python-docx)</h3>
+                    <p class="tool-description">
+                        워드 문서 생성 및 편집을 자동화하여 보고서, 계약서 등 문서 작업을 효율화합니다.
+                    </p>
+                </div>
+                
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <h3 class="tool-title">이미지 자동화 (Pillow)</h3>
+                    <p class="tool-description">
+                        이미지 처리와 수정을 자동화하여 명함, 수료증 등 개인화된 문서를 대량 생성합니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+    

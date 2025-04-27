@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 3</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 40px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 40px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .subtitle {
+            font-size: 20px;
+            font-weight: 400;
+            color: #e2e8f0;
+            margin-bottom: 25px;
+        }
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        .section {
+            background: rgba(75, 139, 190, 0.15);
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        .section:hover {
+            background: rgba(75, 139, 190, 0.25);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #FFD43B;
+            display: flex;
+            align-items: center;
+        }
+        .section-icon {
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        .section-content {
+            font-size: 15px;
+            line-height: 1.5;
+            color: #e2e8f0;
+        }
+        .code-block {
+            margin-top: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 13px;
+            color: #e2e8f0;
+            position: relative;
+        }
+        .code-prompt {
+            background: #4B8BBE;
+            border-radius: 4px;
+            padding: 6px 10px;
+            margin-bottom: 8px;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 12px;
+            color: white;
+        }
+        .code-prompt i {
+            margin-right: 6px;
+            color: #FFD43B;
+        }
+        .code-line {
+            margin-bottom: 4px;
+        }
+        .highlight {
+            color: #FFD43B;
+        }
+        .string {
+            color: #9cdcfe;
+        }
+        .comment {
+            color: #a0aec0;
+            font-style: italic;
+        }
+        .indent {
+            margin-left: 20px;
+        }
+        .output-preview {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin-top: 8px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 12px;
+            color: #cbd5e0;
+        }
+        .output-title {
+            color: #a0aec0;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+        .footer {
+            margin-top: 25px;
+            font-size: 16px;
+            color: #a0aec0;
+            text-align: center;
+            font-style: italic;
+        }
+        .note {
+            background: rgba(255, 212, 59, 0.1);
+            border-left: 3px solid #FFD43B;
+            padding: 10px 15px;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #e2e8f0;
+        }
+        .note-title {
+            color: #FFD43B;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .loop-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 15px 0;
+        }
+        .diagram-box {
+            background: rgba(75, 139, 190, 0.3);
+            border-radius: 10px;
+            padding: 8px 15px;
+            margin: 5px 0;
+            min-width: 150px;
+            text-align: center;
+            position: relative;
+        }
+        .diagram-box.highlight {
+            background: rgba(255, 212, 59, 0.2);
+            border: 1px solid #FFD43B;
+            color: #FFD43B;
+        }
+        .arrow-down {
+            color: #4B8BBE;
+            font-size: 18px;
+            margin: 2px 0;
+        }
+        .arrow-return {
+            position: absolute;
+            right: -25px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #4B8BBE;
+            font-size: 18px;
+        }
+        .arrow-path {
+            position: absolute;
+            width: 40px;
+            height: 80px;
+            border: 2px solid #4B8BBE;
+            border-left: none;
+            border-bottom: none;
+            right: -40px;
+            top: 25px;
+            border-top-right-radius: 10px;
+        }
+        .arrow-no {
+            position: absolute;
+            right: 100%;
+            margin-right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #e53e3e;
+            font-size: 18px;
+        }
+        .arrow-yes {
+            position: absolute;
+            top: 100%;
+            margin-top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #38a169;
+            font-size: 18px;
+        }
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        .badge-yellow {
+            background-color: rgba(255, 212, 59, 0.2);
+            color: #FFD43B;
+            border: 1px solid #FFD43B;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">8</div>
+                <div class="title">반복문 - while 루프와 제어문</div>
+            </div>
+            
+            <p class="subtitle">특정 조건이 만족하는 동안 반복해서 실행되는 while 루프와 반복문의 흐름을 제어하는 명령어들을 알아봅니다.</p>
+            
+            <div class="main-content">
+                <div class="left-column">
+                    <div class="section">
+                        <div class="section-title">
+                            <i class="fas fa-sync section-icon"></i>
+                            while 루프 기본
+                            <span class="badge badge-yellow">조건 기반</span>
+                        </div>
+                        <div class="section-content">
+                            <p>while 루프는 특정 조건이 참인 동안 코드 블록을 계속 실행합니다. 조건이 거짓이 되면 반복 실행을 멈춥니다.</p>
+                            
+                            <div class="loop-diagram">
+                                <div class="diagram-box">시작</div>
+                                <div class="arrow-down"><i class="fas fa-arrow-down"></i></div>
+                                <div class="diagram-box highlight" style="position: relative;">
+                                    조건 검사
+                                    <div class="arrow-yes"><i class="fas fa-check"></i> True</div>
+                                    <div class="arrow-no"><i class="fas fa-times"></i> False</div>
+                                </div>
+                                <div class="diagram-box" style="position: relative;">
+                                    코드 블록 실행
+                                    <div class="arrow-return"><i class="fas fa-arrow-left"></i></div>
+                                </div>
+                                <div class="arrow-down"><i class="fas fa-arrow-down"></i></div>
+                                <div class="diagram-box">종료</div>
+                            </div>
+                            
+                            <div class="code-block">
+                                <div class="code-prompt">
+                                    <i class="fas fa-robot"></i>파이썬에서 while 루프 기본 사용법 예시를 보여줘
+                                </div>
+                                <div class="code-line"><span class="comment"># 카운트다운 예제</span></div>
+                                <div class="code-line">카운트 = 5</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="highlight">while</span> 카운트 > 0:</div>
+                                <div class="code-line indent">print(f<span class="string">"{카운트}..."</span>)</div>
+                                <div class="code-line indent">카운트 -= 1</div>
+                                <div class="code-line"></div>
+                                <div class="code-line">print(<span class="string">"발사!"</span>)</div>
+                            </div>
+                            
+                            <div class="output-preview">
+                                <div class="output-title">출력 결과:</div>
+                                5...<br>
+                                4...<br>
+                                3...<br>
+                                2...<br>
+                                1...<br>
+                                발사!
+                            </div>
+                            
+                            <div class="note">
+                                <div class="note-title">무한 루프 주의!</div>
+                                <p>while 루프에서는 반드시 조건이 언젠가 False가 되도록 설계해야 합니다. 그렇지 않으면 프로그램이 영원히 실행되는 <strong>무한 루프</strong>에 빠질 수 있습니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">
+                            <i class="fas fa-door-open section-icon"></i>
+                            break와 continue 문
+                        </div>
+                        <div class="section-content">
+                            <p><code class="highlight">break</code>와 <code class="highlight">continue</code>를 사용하여 반복문 실행을 제어할 수 있습니다.</p>
+                            
+                            <div class="code-block">
+                                <div class="code-prompt">
+                                    <i class="fas fa-robot"></i>파이썬에서 break와 continue 사용 예시 코드를 보여줘
+                                </div>
+                                <div class="code-line"><span class="comment"># break 예제 - 특정 조건에서 반복 종료</span></div>
+                                <div class="code-line">숫자_목록 = [1, 3, 5, 7, 9, 11, 13, 15]</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="highlight">for</span> 숫자 <span class="highlight">in</span> 숫자_목록:</div>
+                                <div class="code-line indent">print(f<span class="string">"현재 숫자: {숫자}"</span>)</div>
+                                <div class="code-line indent"><span class="highlight">if</span> 숫자 > 10:</div>
+                                <div class="code-line indent indent">print(<span class="string">"10보다 큰 숫자를 찾았습니다. 반복을 종료합니다."</span>)</div>
+                                <div class="code-line indent indent"><span class="highlight">break</span></div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># continue 예제 - 특정 조건에서 다음 반복으로 건너뛰기</span></div>
+                                <div class="code-line"><span class="highlight">for</span> i <span class="highlight">in</span> range(1, 11):</div>
+                                <div class="code-line indent"><span class="highlight">if</span> i % 2 == 0:  <span class="comment"># 짝수면 건너뛰기</span></div>
+                                <div class="code-line indent indent"><span class="highlight">continue</span></div>
+                                <div class="code-line indent">print(f<span class="string">"홀수: {i}"</span>)</div>
+                            </div>
+                            
+                            <div class="output-preview">
+                                <div class="output-title">break 출력 결과:</div>
+                                현재 숫자: 1<br>
+                                현재 숫자: 3<br>
+                                현재 숫자: 5<br>
+                                현재 숫자: 7<br>
+                                현재 숫자: 9<br>
+                                현재 숫자: 11<br>
+                                10보다 큰 숫자를 찾았습니다. 반복을 종료합니다.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="right-column">
+                    <div class="section">
+                        <div class="section-title">
+                            <i class="fas fa-layer-group section-icon"></i>
+                            중첩 반복문
+                        </div>
+                        <div class="section-content">
+                            <p>반복문 안에 또 다른 반복문을 중첩하여 사용할 수 있습니다. 다차원 데이터 처리나 복잡한 패턴 생성에 유용합니다.</p>
+                            
+                            <div class="code-block">
+                                <div class="code-prompt">
+                                    <i class="fas fa-robot"></i>중첩 for 루프를 사용한 간단한 예제 코드를 보여줘
+                                </div>
+                                <div class="code-line"><span class="comment"># 구구단 출력 (2단부터 5단까지)</span></div>
+                                <div class="code-line"><span class="highlight">for</span> i <span class="highlight">in</span> range(2, 6):  <span class="comment"># 외부 루프: 단수</span></div>
+                                <div class="code-line indent">print(f<span class="string">"--- {i}단 ---"</span>)</div>
+                                <div class="code-line indent"><span class="highlight">for</span> j <span class="highlight">in</span> range(1, 10):  <span class="comment"># 내부 루프: 곱하는 수</span></div>
+                                <div class="code-line indent indent">print(f<span class="string">"{i} x {j} = {i*j}"</span>)</div>
+                                <div class="code-line indent">print(<span class="string">""</span>)  <span class="comment"># 단 사이 빈 줄</span></div>
+                            </div>
+                            
+                            <div class="code-block">
+                                <div class="code-prompt">
+                                    <i class="fas fa-robot"></i>2차원 리스트를 처리하는 중첩 반복문 예시를 보여줘
+                                </div>
+                                <div class="code-line"><span class="comment"># 2차원 리스트 처리</span></div>
+                                <div class="code-line">성적_데이터 = [</div>
+                                <div class="code-line indent">[85, 90, 78],  <span class="comment"># 국어, 영어, 수학</span></div>
+                                <div class="code-line indent">[92, 88, 95],</div>
+                                <div class="code-line indent">[78, 85, 83]</div>
+                                <div class="code-line">]</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="highlight">for</span> i, 학생_성적 <span class="highlight">in</span> enumerate(성적_데이터):</div>
+                                <div class="code-line indent">총점 = 0</div>
+                                <div class="code-line indent">print(f<span class="string">"학생 {i+1}의 성적:"</span>)</div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent"><span class="highlight">for</span> j, 점수 <span class="highlight">in</span> enumerate([<span class="string">'국어'</span>, <span class="string">'영어'</span>, <span class="string">'수학'</span>]):</div>
+                                <div class="code-line indent indent">print(f<span class="string">"{점수}: {학생_성적[j]}점"</span>)</div>
+                                <div class="code-line indent indent">총점 += 학생_성적[j]</div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent">평균 = 총점 / len(학생_성적)</div>
+                                <div class="code-line indent">print(f<span class="string">"평균: {평균:.1f}점\n"</span>)</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">
+                            <i class="fas fa-cogs section-icon"></i>
+                            업무 자동화에서의 응용
+                        </div>
+                        <div class="section-content">
+                            <p>반복문은 업무 자동화의 핵심 요소로, 다양한 실무 상황에서 활용할 수 있습니다.</p>
+                            
+                            <div class="code-block">
+                                <div class="code-prompt">
+                                    <i class="fas fa-robot"></i>파일 처리 자동화에 while 루프와 조건문을 활용하는 예시 코드를 보여줘
+                                </div>
+                                <div class="code-line"><span class="highlight">import</span> os</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 폴더 내 모든 CSV 파일 처리 자동화</span></div>
+                                <div class="code-line">폴더_경로 = <span class="string">"./데이터파일"</span></div>
+                                <div class="code-line">파일_목록 = os.listdir(폴더_경로)</div>
+                                <div class="code-line">처리_카운트 = 0</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="highlight">for</span> 파일명 <span class="highlight">in</span> 파일_목록:</div>
+                                <div class="code-line indent"><span class="highlight">if</span> 파일명.endswith(<span class="string">".csv"</span>):</div>
+                                <div class="code-line indent indent">파일_경로 = os.path.join(폴더_경로, 파일명)</div>
+                                <div class="code-line indent indent">print(f<span class="string">"처리 중: {파일명}"</span>)</div>
+                                <div class="code-line indent indent"></div>
+                                <div class="code-line indent indent"><span class="comment"># 파일 처리 로직...</span></div>
+                                <div class="code-line indent indent">처리_카운트 += 1</div>
+                                <div class="code-line indent"></div>
+                                <div class="code-line indent"><span class="highlight">if</span> 처리_카운트 >= 10:</div>
+                                <div class="code-line indent indent">print(<span class="string">"최대 처리 개수에 도달했습니다."</span>)</div>
+                                <div class="code-line indent indent"><span class="highlight">break</span></div>
+                                <div class="code-line"></div>
+                                <div class="code-line">print(f<span class="string">"총 {처리_카운트}개의 CSV 파일을 처리했습니다."</span>)</div>
+                            </div>
+                            
+                            <div class="note">
+                                <div class="note-title">실무 활용 사례</div>
+                                <p>반복문은 다음과 같은 자동화 작업에 활용할 수 있습니다:</p>
+                                <ul class="list-disc pl-5">
+                                    <li>다수의 파일 일괄 처리 (이름 변경, 내용 수정)</li>
+                                    <li>대량 이메일 발송 자동화</li>
+                                    <li>주기적인 데이터 수집 및 모니터링</li>
+                                    <li>보고서 자동 생성 및 배포</li>
+                                    <li>대용량 데이터 분석 작업 분할 처리</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                "효율적인 반복문 작성은 자동화 프로그램의 성능과 안정성을 결정짓는 핵심 요소입니다"
+            </div>
+        </div>
+    </div>
+</body>
+    

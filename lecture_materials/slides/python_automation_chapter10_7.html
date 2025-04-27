@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메모리 최적화와 성능 개선</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .optimization-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .optimization-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+        }
+        .card-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .card-title i {
+            margin-right: 10px;
+        }
+        .code-block {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Consolas', monospace;
+            font-size: 14px;
+            color: #e2e8f0;
+            line-height: 1.6;
+            white-space: pre;
+            margin: 10px 0;
+        }
+        .description {
+            color: #cbd5e0;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .tip {
+            background: rgba(75, 139, 190, 0.2);
+            border-left: 4px solid #4B8BBE;
+            padding: 15px;
+            margin-top: 15px;
+            color: #e2e8f0;
+            font-size: 14px;
+            border-radius: 0 8px 8px 0;
+        }
+        .improvement {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+        .improvement i {
+            color: #4B8BBE;
+            margin-right: 10px;
+        }
+        .improvement-text {
+            color: #a0aec0;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">8</div>
+                <div class="title">메모리 최적화와 성능 개선</div>
+            </div>
+
+            <div class="optimization-grid">
+                <div class="optimization-card">
+                    <div class="card-title">
+                        <i class="fas fa-memory"></i>
+                        데이터 타입 최적화
+                    </div>
+                    <div class="description">
+                        메모리 사용량을 줄이기 위한 데이터 타입 조정
+                    </div>
+                    <div class="code-block">
+# 정수형 데이터 타입 최적화
+df['id'] = df['id'].astype('int32')
+df['small_numbers'] = df['small_numbers'].astype('int8')
+
+# 범주형 데이터를 category 타입으로 변환
+df['category'] = df['category'].astype('category')</div>
+                    <div class="improvement">
+                        <i class="fas fa-chart-line"></i>
+                        <span class="improvement-text">메모리 사용량 최대 50% 감소</span>
+                    </div>
+                </div>
+
+                <div class="optimization-card">
+                    <div class="card-title">
+                        <i class="fas fa-columns"></i>
+                        불필요한 컬럼 제거
+                    </div>
+                    <div class="description">
+                        필요한 데이터만 선택적으로 로드하고 처리
+                    </div>
+                    <div class="code-block">
+# 필요한 컬럼만 선택하여 읽기
+cols_to_use = ['id', 'name', 'value']
+df = pd.read_csv('data.csv', 
+                 usecols=cols_to_use)
+
+# 불필요한 컬럼 삭제
+df.drop(['temp_col', 'unused_col'], 
+        axis=1, 
+        inplace=True)</div>
+                </div>
+
+                <div class="optimization-card">
+                    <div class="card-title">
+                        <i class="fas fa-tasks"></i>
+                        청크 단위 처리
+                    </div>
+                    <div class="description">
+                        대용량 데이터를 청크 단위로 나누어 처리
+                    </div>
+                    <div class="code-block">
+# 청크 단위로 CSV 파일 읽기
+chunks = []
+for chunk in pd.read_csv('large_file.csv', 
+                        chunksize=10000):
+    # 청크별 처리
+    processed = chunk.process_data()
+    chunks.append(processed)
+    
+# 결과 병합
+result = pd.concat(chunks)</div>
+                </div>
+
+                <div class="optimization-card">
+                    <div class="card-title">
+                        <i class="fas fa-bolt"></i>
+                        연산 최적화
+                    </div>
+                    <div class="description">
+                        효율적인 연산 방법 사용
+                    </div>
+                    <div class="code-block">
+# apply 대신 vectorized 연산 사용
+df['squared'] = df['value'] ** 2
+
+# 조건부 처리 최적화
+df['category'] = np.where(
+    df['value'] > 0, 'positive', 'negative'
+)</div>
+                    <div class="improvement">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span class="improvement-text">처리 속도 최대 10배 향상</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tip">
+                <i class="fas fa-lightbulb"></i>
+                <strong>최적화 팁:</strong> 
+                데이터 처리 전에 메모리 사용량을 확인하고, 가능한 한 vectorized 연산을 사용하세요.
+                대용량 데이터는 필요한 부분만 선택적으로 로드하여 처리하는 것이 효율적입니다.
+            </div>
+        </div>
+    </div>
+</body>
+    

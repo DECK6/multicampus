@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 7</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 44px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .intro {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: #e2e8f0;
+            max-width: 90%;
+        }
+        .two-column {
+            display: flex;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .column {
+            flex: 1;
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            background-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+        }
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .card-title i {
+            margin-right: 10px;
+        }
+        .card-content {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #e2e8f0;
+        }
+        .code-block {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: #e2e8f0;
+            overflow: auto;
+        }
+        .highlight {
+            color: #FFD43B;
+        }
+        .comment {
+            color: #718096;
+            font-style: italic;
+        }
+        .click-methods {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .method-box {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+        .method-name {
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 8px;
+            font-family: 'Courier New', monospace;
+        }
+        .method-desc {
+            font-size: 14px;
+            color: #e2e8f0;
+            line-height: 1.5;
+        }
+        .click-diagram {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 20px 0;
+        }
+        .click-type {
+            text-align: center;
+            padding: 10px;
+            width: 130px;
+        }
+        .click-icon {
+            background: linear-gradient(45deg, #4B8BBE, #306998);
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+        }
+        .click-icon i {
+            font-size: 30px;
+            color: #FFD43B;
+        }
+        .click-label {
+            font-size: 16px;
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+        .warning-box {
+            background-color: rgba(220, 38, 38, 0.2);
+            border-left: 4px solid #DC2626;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .warning-title {
+            font-weight: 600;
+            color: #DC2626;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+        .warning-title i {
+            margin-right: 8px;
+        }
+        .warning-content {
+            font-size: 15px;
+            color: #e2e8f0;
+        }
+        .tip-box {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-left: 4px solid #FFD43B;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .tip-title {
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+        .tip-title i {
+            margin-right: 8px;
+        }
+        .tip-content {
+            font-size: 15px;
+            color: #e2e8f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">7</div>
+                <div class="title">행동 4: 클릭하기</div>
+            </div>
+            
+            <p class="intro">
+                웹 요소를 찾은 후, 가장 기본적인 상호작용은 클릭하는 것입니다. 셀레니움은 다양한 클릭 방식을 지원하여 실제 사용자의 행동을 시뮬레이션할 수 있습니다.
+            </p>
+            
+            <div class="two-column">
+                <div class="column">
+                    <div class="card">
+                        <h3 class="card-title"><i class="fas fa-mouse-pointer"></i>기본 클릭 방법</h3>
+                        <div class="card-content">
+                            <p>요소를 찾은 후 가장 간단하게 클릭하는 방법은 <span class="highlight">click()</span> 메서드를 사용하는 것입니다.</p>
+                            
+                            <div class="code-block">
+                                <span class="comment"># ChatGPT: "셀레니움으로 버튼 클릭하기"</span><br>
+                                <span class="highlight">from</span> selenium <span class="highlight">import</span> webdriver<br>
+                                <span class="highlight">from</span> selenium.webdriver.common.by <span class="highlight">import</span> By<br>
+                                <br>
+                                <span class="comment"># 브라우저 드라이버 설정 (생략)</span><br>
+                                <br>
+                                <span class="comment"># 요소 찾기</span><br>
+                                login_button = driver.find_element(By.ID, <span class="highlight">"login-btn"</span>)<br>
+                                <br>
+                                <span class="comment"># 요소 클릭하기</span><br>
+                                login_button.click()<br>
+                                <br>
+                                <span class="comment"># 한 줄로 요소 찾고 바로 클릭하기</span><br>
+                                driver.find_element(By.CSS_SELECTOR, <span class="highlight">".submit-button"</span>).click()
+                            </div>
+                            
+                            <div class="click-diagram">
+                                <div class="click-type">
+                                    <div class="click-icon">
+                                        <i class="fas fa-mouse-pointer"></i>
+                                    </div>
+                                    <div class="click-label">일반 클릭</div>
+                                </div>
+                                <div class="click-type">
+                                    <div class="click-icon">
+                                        <i class="fas fa-hand-pointer"></i>
+                                    </div>
+                                    <div class="click-label">우클릭</div>
+                                </div>
+                                <div class="click-type">
+                                    <div class="click-icon">
+                                        <i class="fas fa-angle-double-down"></i>
+                                    </div>
+                                    <div class="click-label">더블 클릭</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <h3 class="card-title"><i class="fas fa-hand-point-right"></i>다양한 클릭 액션</h3>
+                        <div class="card-content">
+                            <p>ActionChains를 사용하여 더 복잡한 클릭 동작을 구현할 수 있습니다:</p>
+                            
+                            <div class="code-block">
+                                <span class="comment"># ChatGPT: "셀레니움 ActionChains로 다양한 클릭 구현하기"</span><br>
+                                <span class="highlight">from</span> selenium.webdriver.common.action_chains <span class="highlight">import</span> ActionChains<br>
+                                <br>
+                                <span class="comment"># 요소 찾기</span><br>
+                                element = driver.find_element(By.ID, <span class="highlight">"context-menu-element"</span>)<br>
+                                <br>
+                                <span class="comment"># ActionChains 객체 생성</span><br>
+                                actions = ActionChains(driver)<br>
+                                <br>
+                                <span class="comment"># 우클릭(컨텍스트 클릭) 수행</span><br>
+                                actions.context_click(element).perform()<br>
+                                <br>
+                                <span class="comment"># 더블 클릭 수행</span><br>
+                                double_click_element = driver.find_element(By.ID, <span class="highlight">"double-click-element"</span>)<br>
+                                actions.double_click(double_click_element).perform()
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="column">
+                    <div class="card">
+                        <h3 class="card-title"><i class="fas fa-exclamation-circle"></i>클릭 문제 해결하기</h3>
+                        <div class="card-content">
+                            <div class="warning-box">
+                                <div class="warning-title"><i class="fas fa-exclamation-triangle"></i>일반적인 클릭 문제</div>
+                                <div class="warning-content">
+                                    <ul class="list-disc ml-5 space-y-2">
+                                        <li>요소가 화면에 보이지 않아 클릭할 수 없음</li>
+                                        <li>다른 요소가 클릭하려는 요소를 가리고 있음</li>
+                                        <li>요소가 비활성화되어 클릭할 수 없음</li>
+                                        <li>요소가 아직 로드되지 않아 클릭할 수 없음</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="code-block">
+                                <span class="comment"># ChatGPT: "셀레니움에서 요소를 보이게 스크롤한 후 클릭하기"</span><br>
+                                <span class="comment"># 요소가 보이지 않는 경우 스크롤하여 보이게 하기</span><br>
+                                element = driver.find_element(By.ID, <span class="highlight">"element-at-bottom"</span>)<br>
+                                <br>
+                                <span class="comment"># 자바스크립트로 요소가 보이도록 스크롤</span><br>
+                                driver.execute_script(<span class="highlight">"arguments[0].scrollIntoView();"</span>, element)<br>
+                                <br>
+                                <span class="comment"># 스크롤 후 잠시 대기</span><br>
+                                <span class="highlight">import</span> time<br>
+                                time.sleep(0.5)<br>
+                                <br>
+                                <span class="comment"># 이제 클릭 수행</span><br>
+                                element.click()
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <h3 class="card-title"><i class="fas fa-code"></i>다양한 클릭 방법</h3>
+                        <div class="card-content">
+                            <div class="click-methods">
+                                <div class="method-box">
+                                    <div class="method-name">element.click()</div>
+                                    <div class="method-desc">기본 클릭 메서드</div>
+                                </div>
+                                <div class="method-box">
+                                    <div class="method-name">actions.click(element)</div>
+                                    <div class="method-desc">ActionChains를 사용한 클릭</div>
+                                </div>
+                                <div class="method-box">
+                                    <div class="method-name">actions.context_click()</div>
+                                    <div class="method-desc">우클릭(컨텍스트 메뉴) 실행</div>
+                                </div>
+                                <div class="method-box">
+                                    <div class="method-name">actions.double_click()</div>
+                                    <div class="method-desc">더블 클릭 실행</div>
+                                </div>
+                                <div class="method-box">
+                                    <div class="method-name">actions.click_and_hold()</div>
+                                    <div class="method-desc">마우스 버튼을 누른 상태 유지</div>
+                                </div>
+                                <div class="method-box">
+                                    <div class="method-name">actions.release()</div>
+                                    <div class="method-desc">눌렀던 마우스 버튼 놓기</div>
+                                </div>
+                            </div>
+                            
+                            <div class="code-block">
+                                <span class="comment"># ChatGPT: "셀레니움에서 자바스크립트로 클릭하기"</span><br>
+                                <span class="comment"># 기본 클릭이 작동하지 않을 때 자바스크립트로 클릭</span><br>
+                                element = driver.find_element(By.ID, <span class="highlight">"difficult-button"</span>)<br>
+                                driver.execute_script(<span class="highlight">"arguments[0].click();"</span>, element)
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tip-box">
+                        <div class="tip-title"><i class="fas fa-lightbulb"></i>클릭 전 대기하기</div>
+                        <div class="tip-content">
+                            <p>클릭하기 전에 항상 요소가 클릭 가능한 상태인지 확인하는 것이 좋습니다. 명시적 대기(Explicit Wait)를 사용하여 요소가 클릭 가능할 때까지 기다립니다.</p>
+                            <div class="code-block" style="margin: 10px 0; padding: 10px;">
+                                <span class="highlight">from</span> selenium.webdriver.support.ui <span class="highlight">import</span> WebDriverWait<br>
+                                <span class="highlight">from</span> selenium.webdriver.support <span class="highlight">import</span> expected_conditions as EC<br>
+                                <br>
+                                <span class="comment"># 요소가 클릭 가능할 때까지 최대 10초 대기</span><br>
+                                element = WebDriverWait(driver, 10).until(<br>
+                                &nbsp;&nbsp;EC.element_to_be_clickable((By.ID, <span class="highlight">"clickable-button"</span>))<br>
+                                )<br>
+                                <span class="comment"># 이제 안전하게 클릭</span><br>
+                                element.click()
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+    

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 14 & 15</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 40px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .code-block {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Consolas', monospace;
+        }
+        .code-title {
+            color: #FFD43B;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .explanation {
+            background: rgba(75, 139, 190, 0.1);
+            border-left: 4px solid #4B8BBE;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">4</div>
+                <h2 class="text-2xl font-bold text-yellow-400">Gmail을 활용한 기본 이메일 전송</h2>
+            </div>
+
+            <div class="explanation">
+                <p class="text-sm">아래 코드는 Gmail SMTP를 사용하여 기본적인 텍스트 이메일을 전송하는 예제입니다.</p>
+            </div>
+
+            <div class="code-block">
+                <div class="code-title">
+                    <i class="fas fa-code mr-2"></i>ChatGPT Prompt: "Create a simple Python script to send email using Gmail SMTP"
+                </div>
+                <pre class="text-gray-300 text-sm">
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
+def send_email(sender_email, app_password, receiver_email, subject, body):
+    # 이메일 메시지 설정
+    message = MIMEMultipart()
+    message["From"] = sender_email
+    message["To"] = receiver_email
+    message["Subject"] = subject
+
+    # 본문 추가
+    message.attach(MIMEText(body, "plain"))
+
+    try:
+        # SMTP 서버 연결
+        with smtplib.SMTP("smtp.gmail.com", 587) as server:
+            server.starttls()  # TLS 보안 시작
+            server.login(sender_email, app_password)
+            
+            # 이메일 전송
+            server.send_message(message)
+        return True, "이메일이 성공적으로 전송되었습니다."
+    
+    except Exception as e:
+        return False, f"이메일 전송 실패: {str(e)}"</pre>
+            </div>
+
+            <div class="grid grid-cols-2 gap-6 mt-6">
+                <div class="bg-blue-900 bg-opacity-20 p-4 rounded-lg">
+                    <h3 class="text-yellow-400 text-lg font-semibold mb-3">
+                        <i class="fas fa-check-circle mr-2"></i>주요 함수 설명
+                    </h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><span class="text-blue-300">MIMEMultipart()</span>: 복합 형식의 메일 생성</li>
+                        <li><span class="text-blue-300">starttls()</span>: TLS 보안 연결 시작</li>
+                        <li><span class="text-blue-300">login()</span>: SMTP 서버 인증</li>
+                        <li><span class="text-blue-300">send_message()</span>: 이메일 전송 실행</li>
+                    </ul>
+                </div>
+
+                <div class="bg-blue-900 bg-opacity-20 p-4 rounded-lg">
+                    <h3 class="text-yellow-400 text-lg font-semibold mb-3">
+                        <i class="fas fa-exclamation-triangle mr-2"></i>주의사항
+                    </h3>
+                    <ul class="space-y-2 text-sm">
+                        <li>app_password는 반드시 앱 비밀번호를 사용</li>
+                        <li>TLS 보안 연결 필수 (포트 587 사용)</li>
+                        <li>이메일 형식 검증 권장</li>
+                        <li>예외 처리 구현 필수</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-6 bg-yellow-900 bg-opacity-20 p-4 rounded-lg">
+                <h3 class="text-yellow-400 font-semibold mb-2">
+                    <i class="fas fa-lightbulb mr-2"></i>실용적인 팁
+                </h3>
+                <p class="text-sm">실제 업무 환경에서는 이메일 주소와 비밀번호를 환경 변수나 설정 파일로 관리하는 것이 좋습니다. 또한, 대량 메일 발송 시에는 시간 간격을 두어 서버 제한에 걸리지 않도록 주의해야 합니다.</p>
+            </div>
+        </div>
+    </div>
+</body>
+    

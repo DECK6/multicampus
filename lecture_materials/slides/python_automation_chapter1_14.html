@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 1</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 40px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 42px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .intro-text {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #e2e8f0;
+            margin-bottom: 25px;
+        }
+        .two-column {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        .left-column {
+            flex: 1;
+        }
+        .right-column {
+            flex: 1;
+        }
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section-title i {
+            color: #FFD43B;
+            margin-right: 10px;
+            font-size: 20px;
+        }
+        .case-study-container {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .workflow-diagram {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+            position: relative;
+        }
+        .workflow-step {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            width: 18%;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        .workflow-step-number {
+            background-color: #4B8BBE;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            margin: 0 auto 10px;
+        }
+        .workflow-step-icon {
+            font-size: 24px;
+            color: #FFD43B;
+            margin-bottom: 10px;
+        }
+        .workflow-step-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 5px;
+        }
+        .workflow-step-desc {
+            font-size: 13px;
+            color: #cbd5e0;
+            line-height: 1.3;
+        }
+        .workflow-arrow {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: rgba(255, 212, 59, 0.3);
+            z-index: 0;
+            transform: translateY(-50%);
+        }
+        .module-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .module-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            width: calc(50% - 8px);
+            transition: all 0.3s ease;
+        }
+        .module-card:hover {
+            transform: translateY(-3px);
+            background-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+        .module-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .module-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: linear-gradient(45deg, #4B8BBE, #306998);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+        }
+        .module-icon i {
+            font-size: 18px;
+            color: #FFD43B;
+        }
+        .module-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+        .module-desc {
+            font-size: 14px;
+            color: #cbd5e0;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+        .code-snippet {
+            background-color: rgba(40, 44, 52, 0.7);
+            border-radius: 6px;
+            padding: 10px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 13px;
+            color: #e2e8f0;
+            overflow-x: auto;
+        }
+        .keyword { color: #c678dd; }
+        .string { color: #98c379; }
+        .comment { color: #7f848e; font-style: italic; }
+        .function { color: #61afef; }
+        .variable { color: #e06c75; }
+        .library { color: #e5c07b; }
+        .code-section {
+            background-color: rgba(40, 44, 52, 0.8);
+            border-radius: 12px;
+            padding: 20px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            margin-bottom: 20px;
+        }
+        .code-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .code-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(45deg, #4B8BBE, #306998);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+        }
+        .code-icon i {
+            font-size: 16px;
+            color: #FFD43B;
+        }
+        .code-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+        .code-prompt {
+            background-color: rgba(75, 139, 190, 0.2);
+            border-radius: 8px;
+            padding: 10px 15px;
+            margin-bottom: 15px;
+            color: #cbd5e0;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 14px;
+        }
+        .code-prompt i {
+            color: #FFD43B;
+            margin-right: 8px;
+        }
+        .prompt-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #FFD43B;
+            margin-bottom: 5px;
+        }
+        .prompt-text {
+            font-size: 14px;
+            color: #e2e8f0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .code-block {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #e2e8f0;
+            white-space: pre;
+            overflow-x: auto;
+        }
+        .benefits-box {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .benefits-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .benefits-title i {
+            color: #FFD43B;
+            margin-right: 10px;
+        }
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        .benefit-item {
+            display: flex;
+            align-items: flex-start;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 10px;
+        }
+        .benefit-icon {
+            color: #FFD43B;
+            margin-right: 10px;
+            font-size: 16px;
+            min-width: 20px;
+        }
+        .benefit-text {
+            font-size: 14px;
+            color: #e2e8f0;
+            line-height: 1.4;
+        }
+        .tips {
+            font-size: 14px;
+            color: #a0aec0;
+            margin-top: 15px;
+            font-style: italic;
+            padding: 15px;
+            border-left: 3px solid #FFD43B;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 0 8px 8px 0;
+        }
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">15</div>
+                <div class="title">통합 자동화 사례: 업무 보고서 자동화</div>
+            </div>
+            
+            <div class="intro-text">
+                지금까지 배운 다양한 파이썬 자동화 기술을 통합하여 실제 업무에 적용할 수 있는 종합 사례를 살펴보겠습니다. 이 예제는 웹 크롤링, 데이터 처리, 보고서 생성, 이메일 전송까지 전체 워크플로우를 자동화하는 방법을 보여줍니다. 이러한 통합 자동화를 통해 반복적인 작업에 소요되는 시간을 대폭 줄이고 업무 효율성을 높일 수 있습니다.
+            </div>
+            
+            <div class="case-study-container">
+                <h3 class="section-title">
+                    <i class="fas fa-briefcase"></i>사례: 주간 매출 보고서 자동화
+                </h3>
+                
+                <div class="workflow-diagram">
+                    <div class="workflow-arrow"></div>
+                    <div class="workflow-step">
+                        <div class="workflow-step-number">1</div>
+                        <div class="workflow-step-icon"><i class="fas fa-globe"></i></div>
+                        <div class="workflow-step-title">데이터 수집</div>
+                        <div class="workflow-step-desc">웹사이트에서 매출 데이터 크롤링</div>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="workflow-step-number">2</div>
+                        <div class="workflow-step-icon"><i class="fas fa-table"></i></div>
+                        <div class="workflow-step-title">데이터 처리</div>
+                        <div class="workflow-step-desc">Pandas로 데이터 분석</div>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="workflow-step-number">3</div>
+                        <div class="workflow-step-icon"><i class="fas fa-chart-bar"></i></div>
+                        <div class="workflow-step-title">보고서 생성</div>
+                        <div class="workflow-step-desc">시각화 및 PDF 생성</div>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="workflow-step-number">4</div>
+                        <div class="workflow-step-icon"><i class="fas fa-envelope"></i></div>
+                        <div class="workflow-step-title">보고서 배포</div>
+                        <div class="workflow-step-desc">이메일로 보고서 전송</div>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="workflow-step-number">5</div>
+                        <div class="workflow-step-icon"><i class="fas fa-clock"></i></div>
+                        <div class="workflow-step-title">자동 예약</div>
+                        <div class="workflow-step-desc">매주 자동 실행 설정</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="two-column">
+                <div class="left-column">
+                    <div class="module-cards">
+                        <div class="module-card">
+                            <div class="module-header">
+                                <div class="module-icon">
+                                    <i class="fas fa-globe"></i>
+                                </div>
+                                <div class="module-title">데이터 수집 모듈</div>
+                            </div>
+                            <div class="module-desc">
+                                BeautifulSoup과 Requests를 활용하여 온라인 매출 데이터를 수집합니다.
+                            </div>
+                            <div class="code-snippet">
+<span class="keyword">import</span> <span class="library">requests</span><br>
+<span class="keyword">from</span> <span class="library">bs4</span> <span class="keyword">import</span> BeautifulSoup<br>
+<br>
+<span class="keyword">def</span> <span class="function">collect_sales_data</span>():<br>
+    <span class="variable">url</span> = <span class="string">'https://company.intranet/sales'</span><br>
+    <span class="variable">response</span> = <span class="function">requests</span>.get(<span class="variable">url</span>)<br>
+    <span class="variable">soup</span> = BeautifulSoup(<span class="variable">response</span>.text, <span class="string">'html.parser'</span>)<br>
+    <span class="variable">sales_table</span> = <span class="variable">soup</span>.find(<span class="string">'table'</span>, {<span class="string">'id'</span>: <span class="string">'weekly-sales'</span>})<br>
+    <span class="keyword">return</span> <span class="variable">sales_table</span><br>
+</div>
+                        </div>
+                        
+                        <div class="module-card">
+                            <div class="module-header">
+                                <div class="module-icon">
+                                    <i class="fas fa-table"></i>
+                                </div>
+                                <div class="module-title">데이터 처리 모듈</div>
+                            </div>
+                            <div class="module-desc">
+                                Pandas를 사용하여 수집된 데이터를 가공하고 분석합니다.
+                            </div>
+                            <div class="code-snippet">
+<span class="keyword">import</span> <span class="library">pandas</span> <span class="keyword">as</span> <span class="library">pd</span><br>
+<br>
+<span class="keyword">def</span> <span class="function">process_sales_data</span>(<span class="variable">sales_table</span>):<br>
+    <span class="comment"># HTML 테이블을 DataFrame으로 변환</span><br>
+    <span class="variable">df</span> = <span class="library">pd</span>.read_html(<span class="function">str</span>(<span class="variable">sales_table</span>))[0]<br>
+    <br>
+    <span class="comment"># 데이터 정제 및 가공</span><br>
+    <span class="variable">df</span>[<span class="string">'날짜'</span>] = <span class="library">pd</span>.to_datetime(<span class="variable">df</span>[<span class="string">'날짜'</span>])<br>
+    <span class="variable">df</span>[<span class="string">'매출액'</span>] = <span class="variable">df</span>[<span class="string">'매출액'</span>].astype(int)<br>
+    <br>
+    <span class="comment"># 주간 요약 계산</span><br>
+    <span class="variable">weekly_sum</span> = <span class="variable">df</span>.groupby(<span class="library">pd</span>.Grouper(key=<span class="string">'날짜'</span>, freq=<span class="string">'W'</span>))[<span class="string">'매출액'</span>].sum()<br>
+    <span class="keyword">return</span> <span class="variable">df</span>, <span class="variable">weekly_sum</span><br>
+</div>
+                        </div>
+                        
+                        <div class="module-card">
+                            <div class="module-header">
+                                <div class="module-icon">
+                                    <i class="fas fa-chart-bar"></i>
+                                </div>
+                                <div class="module-title">보고서 생성 모듈</div>
+                            </div>
+                            <div class="module-desc">
+                                Matplotlib과 ReportLab을 사용하여 그래프와 PDF 보고서를 생성합니다.
+                            </div>
+                            <div class="code-snippet">
+<span class="keyword">import</span> <span class="library">matplotlib.pyplot</span> <span class="keyword">as</span> <span class="library">plt</span><br>
+<span class="keyword">from</span> <span class="library">reportlab.pdfgen</span> <span class="keyword">import</span> canvas<br>
+<br>
+<span class="keyword">def</span> <span class="function">generate_report</span>(<span class="variable">df</span>, <span class="variable">weekly_sum</span>):<br>
+    <span class="comment"># 그래프 생성</span><br>
+    <span class="library">plt</span>.figure(figsize=(10, 6))<br>
+    <span class="variable">weekly_sum</span>.plot(kind=<span class="string">'bar'</span>, color=<span class="string">'#4B8BBE'</span>)<br>
+    <span class="library">plt</span>.title(<span class="string">'주간 매출 추이'</span>)<br>
+    <span class="library">plt</span>.savefig(<span class="string">'weekly_sales_chart.png'</span>)<br>
+    <br>
+    <span class="comment"># PDF 보고서 생성</span><br>
+    <span class="variable">c</span> = canvas.Canvas(<span class="string">'weekly_sales_report.pdf'</span>)<br>
+    <span class="comment"># PDF 내용 추가 코드</span><br>
+    <span class="variable">c</span>.save()<br>
+    <span class="keyword">return</span> <span class="string">'weekly_sales_report.pdf'</span><br>
+</div>
+                        </div>
+                        
+                        <div class="module-card">
+                            <div class="module-header">
+                                <div class="module-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="module-title">이메일 전송 모듈</div>
+                            </div>
+                            <div class="module-desc">
+                                SMTP 라이브러리를 사용하여 보고서를 이메일로 자동 발송합니다.
+                            </div>
+                            <div class="code-snippet">
+<span class="keyword">import</span> <span class="library">smtplib</span><br>
+<span class="keyword">from</span> <span class="library">email.mime.multipart</span> <span class="keyword">import</span> MIMEMultipart<br>
+<span class="keyword">from</span> <span class="library">email.mime.text</span> <span class="keyword">import</span> MIMEText<br>
+<span class="keyword">from</span> <span class="library">email.mime.application</span> <span class="keyword">import</span> MIMEApplication<br>
+<br>
+<span class="keyword">def</span> <span class="function">send_report_email</span>(<span class="variable">report_path</span>, <span class="variable">recipients</span>):<br>
+    <span class="variable">msg</span> = <span class="function">MIMEMultipart</span>()<br>
+    <span class="variable">msg</span>[<span class="string">'Subject'</span>] = <span class="string">'주간 매출 보고서'</span><br>
+    <span class="variable">msg</span>.attach(<span class="function">MIMEText</span>(<span class="string">'주간 매출 보고서를 첨부합니다.'</span>))<br>
+    <br>
+    <span class="comment"># 보고서 첨부</span><br>
+    <span class="keyword">with</span> <span class="function">open</span>(<span class="variable">report_path</span>, <span class="string">'rb'</span>) <span class="keyword">as</span> <span class="variable">file</span>:<br>
+        <span class="variable">attachment</span> = <span class="function">MIMEApplication</span>(<span class="variable">file</span>.read())<br>
+        <span class="variable">attachment</span>.add_header(<span class="string">'Content-Disposition'</span>, <br>
+                            <span class="string">'attachment'</span>, <br>
+                            <span class="variable">filename</span>=<span class="string">'weekly_report.pdf'</span>)<br>
+        <span class="variable">msg</span>.attach(<span class="variable">attachment</span>)<br>
+    <br>
+    <span class="comment"># 이메일 발송</span><br>
+    <span class="variable">server</span> = <span class="library">smtplib</span>.<span class="function">SMTP</span>(<span class="string">'smtp.company.com'</span>)<br>
+    <span class="variable">server</span>.<span class="function">send_message</span>(<span class="variable">msg</span>)<br>
+    <span class="variable">server</span>.<span class="function">quit</span>()<br>
+</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="right-column">
+                    <div class="code-section">
+                        <div class="code-header">
+                            <div class="code-icon"><i class="fas fa-cogs"></i></div>
+                            <div class="code-title">전체 워크플로우 통합</div>
+                        </div>
+                        <div class="code-prompt">
+                            <div class="prompt-title">ChatGPT 프롬프트:</div>
+                            <div class="prompt-text">"웹에서 데이터를 수집하고, 분석하여 보고서를 생성하고, 이메일로 전송하는 통합 파이썬 스크립트를 작성해주세요."</div>
+                        </div>
+                        
+                        <div class="code-block"><span class="keyword">import</span> <span class="library">requests</span>
+<span class="keyword">from</span> <span class="library">bs4</span> <span class="keyword">import</span> BeautifulSoup
+<span class="keyword">import</span> <span class="library">pandas</span> <span class="keyword">as</span> <span class="library">pd</span>
+<span class="keyword">import</span> <span class="library">matplotlib.pyplot</span> <span class="keyword">as</span> <span class="library">plt</span>
+<span class="keyword">from</span> <span class="library">reportlab.pdfgen</span> <span class="keyword">import</span> canvas
+<span class="keyword">from</span> <span class="library">reportlab.lib.pagesizes</span> <span class="keyword">import</span> letter
+<span class="keyword">from</span> <span class="library">reportlab.platypus</span> <span class="keyword">import</span> SimpleDocTemplate, Paragraph, Spacer, Image
+<span class="keyword">from</span> <span class="library">reportlab.lib.styles</span> <span class="keyword">import</span> getSampleStyleSheet
+<span class="keyword">import</span> <span class="library">smtplib</span>
+<span class="keyword">from</span> <span class="library">email.mime.multipart</span> <span class="keyword">import</span> MIMEMultipart
+<span class="keyword">from</span> <span class="library">email.mime.text</span> <span class="keyword">import</span> MIMEText
+<span class="keyword">from</span> <span class="library">email.mime.application</span> <span class="keyword">import</span> MIMEApplication
+<span class="keyword">import</span> <span class="library">os</span>
+<span class="keyword">import</span> <span class="library">logging</span>
+<span class="keyword">from</span> <span class="library">datetime</span> <span class="keyword">import</span> datetime
+<span class="keyword">import</span> <span class="library">schedule</span>
+<span class="keyword">import</span> <span class="library">time</span>
+
+<span class="comment"># 로깅 설정</span>
+<span class="library">logging</span>.<span class="function">basicConfig</span>(
+    level=<span class="library">logging</span>.INFO,
+    format=<span class="string">'%(asctime)s - %(levelname)s - %(message)s'</span>,
+    handlers=[
+        <span class="library">logging</span>.FileHandler(<span class="string">'sales_report_automation.log'</span>),
+        <span class="library">logging</span>.StreamHandler()
+    ]
+)
+<span class="variable">logger</span> = <span class="library">logging</span>.<span class="function">getLogger</span>(<span class="string">'sales_report'</span>)
+
+<span class="comment"># 1. 데이터 수집 함수</span>
+<span class="keyword">def</span> <span class="function">collect_sales_data</span>():
+    <span class="keyword">try</span>:
+        <span class="variable">logger</span>.info(<span class="string">"데이터 수집 시작..."</span>)
+        <span class="variable">url</span> = <span class="string">'https://company.intranet/sales'</span>  <span class="comment"># 실제 URL로 변경 필요</span>
+        <span class="variable">response</span> = <span class="function">requests</span>.get(<span class="variable">url</span>)
+        <span class="variable">soup</span> = BeautifulSoup(<span class="variable">response</span>.text, <span class="string">'html.parser'</span>)
+        <span class="variable">sales_table</span> = <span class="variable">soup</span>.find(<span class="string">'table'</span>, {<span class="string">'id'</span>: <span class="string">'weekly-sales'</span>})
+        
+        <span class="comment"># 테스트를 위한 샘플 데이터 (실제로는 웹에서 수집)</span>
+        <span class="variable">sample_data</span> = {
+            <span class="string">'날짜'</span>: [<span class="string">'2024-06-01'</span>, <span class="string">'2024-06-02'</span>, <span class="string">'2024-06-03'</span>, <span class="string">'2024-06-04'</span>, <span class="string">'2024-06-05'</span>, <span class="string">'2024-06-06'</span>, <span class="string">'2024-06-07'</span>],
+            <span class="string">'매출액'</span>: [1250000, 980000, 1450000, 1320000, 1680000, 1540000, 2100000],
+            <span class="string">'제품'</span>: [<span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'A'</span>, <span class="string">'C'</span>, <span class="string">'B'</span>, <span class="string">'A'</span>, <span class="string">'B'</span>]
+        }
+        <span class="variable">logger</span>.info(<span class="string">"데이터 수집 완료"</span>)
+        <span class="keyword">return</span> <span class="variable">sample_data</span>  <span class="comment"># 실제로는 sales_table 반환</span>
+    <span class="keyword">except</span> <span class="function">Exception</span> <span class="keyword">as</span> <span class="variable">e</span>:
+        <span class="variable">logger</span>.error(<span class="string">f"데이터 수집 실패: {</span><span class="variable">e</span><span class="string">}"</span>)
+        <span class="keyword">return</span> <span class="keyword">None</span>
+
+<span class="comment"># 2. 데이터 처리 함수</span>
+<span class="keyword">def</span> <span class="function">process_sales_data</span>(<span class="variable">sales_data</span>):
+    <span class="keyword">try</span>:
+        <span class="variable">logger</span>.info(<span class="string">"데이터 처리 시작..."</span>)
+        <span class="variable">df</span> = <span class="library">pd</span>.<span class="function">DataFrame</span>(<span class="variable">sales_data</span>)
+        
+        <span class="comment"># 데이터 가공</span>
+        <span class="variable">df</span>[<span class="string">'날짜'</span>] = <span class="library">pd</span>.to_datetime(<span class="variable">df</span>[<span class="string">'날짜'</span>])
+        
+        <span class="comment"># 일별 매출 합계</span>
+        <span class="variable">daily_sales</span> = <span class="variable">df</span>.groupby(<span class="string">'날짜'</span>)[<span class="string">'매출액'</span>].sum().reset_index()
+        
+        <span class="comment"># 제품별 매출 분석</span>
+        <span class="variable">product_sales</span> = <span class="variable">df</span>.groupby(<span class="string">'제품'</span>)[<span class="string">'매출액'</span>].sum().reset_index()
+        
+        <span class="variable">logger</span>.info(<span class="string">"데이터 처리 완료"</span>)
+        <span class="keyword">return</span> <span class="variable">df</span>, <span class="variable">daily_sales</span>, <span class="variable">product_sales</span>
+    <span class="keyword">except</span> <span class="function">Exception</span> <span class="keyword">as</span> <span class="variable">e</span>:
+        <span class="variable">logger</span>.error(<span class="string">f"데이터 처리 실패: {</span><span class="variable">e</span><span class="string">}"</span>)
+        <span class="keyword">return</span> <span class="keyword">None</span>, <span class="keyword">None</span>, <span class="keyword">None</span>
+
+<span class="comment"># 3. 보고서 생성 함수</span>
+<span class="keyword">def</span> <span class="function">generate_report</span>(<span class="variable">df</span>, <span class="variable">daily_sales</span>, <span class="variable">product_sales</span>):
+    <span class="keyword">try</span>:
+        <span class="variable">logger</span>.info(<span class="string">"보고서 생성 시작..."</span>)
+        <span class="variable">today</span> = <span class="library">datetime</span>.<span class="function">now</span>().strftime(<span class="string">"%Y-%m-%d"</span>)
+        <span class="variable">report_filename</span> = <span class="string">f"sales_report_{</span><span class="variable">today</span><span class="string">}.pdf"</span>
+        
+        <span class="comment"># 그래프 생성</span>
+        <span class="library">plt</span>.figure(figsize=(10, 6))
+        <span class="library">plt</span>.bar(<span class="variable">daily_sales</span>[<span class="string">'날짜'</span>].dt.strftime(<span class="string">'%m/%d'</span>), <span class="variable">daily_sales</span>[<span class="string">'매출액'</span>], color=<span class="string">'#4B8BBE'</span>)
+        <span class="library">plt</span>.title(<span class="string">'일별 매출 추이'</span>)
+        <span class="library">plt</span>.ylabel(<span class="string">'매출액(원)'</span>)
+        <span class="library">plt</span>.tight_layout()
+        <span class="variable">chart_path</span> = <span class="string">'daily_sales_chart.png'</span>
+        <span class="library">plt</span>.savefig(<span class="variable">chart_path</span>)
+        
+        <span class="comment"># 제품별 매출 파이 차트</span>
+        <span class="library">plt</span>.figure(figsize=(8, 8))
+        <span class="library">plt</span>.pie(<span class="variable">product_sales</span>[<span class="string">'매출액'</span>], labels=<span class="variable">product_sales</span>[<span class="string">'제품'</span>], autopct=<span class="string">'%1.1f%%'</span>, 
+               colors=[<span class="string">'#4B8BBE'</span>, <span class="string">'#FFD43B'</span>, <span class="string">'#646464'</span>])
+        <span class="library">plt</span>.title(<span class="string">'제품별 매출 비중'</span>)
+        <span class="variable">pie_chart_path</span> = <span class="string">'product_sales_chart.png'</span>
+        <span class="library">plt</span>.savefig(<span class="variable">pie_chart_path</span>)
+        
+        <span class="comment"># PDF 생성 (간소화된 버전)</span>
+        <span class="variable">styles</span> = <span class="function">getSampleStyleSheet</span>()
+        <span class="variable">doc</span> = SimpleDocTemplate(<span class="variable">report_filename</span>, pagesize=letter)
+        <span class="variable">elements</span> = []
+        
+        <span class="variable">elements</span>.append(Paragraph(<span class="string">f"주간 매출 보고서 ({</span><span class="variable">today</span><span class="string">})"</span>, <span class="variable">styles</span>[<span class="string">'Title'</span>]))
+        <span class="variable">elements</span>.append(Spacer(1, 12))
+        <span class="variable">elements</span>.append(Paragraph(<span class="string">"일별 매출 추이"</span>, <span class="variable">styles</span>[<span class="string">'Heading2'</span>]))
+        <span class="variable">elements</span>.append(Image(<span class="variable">chart_path</span>, width=450, height=270))
+        <span class="variable">elements</span>.append(Spacer(1, 12))
+        <span class="variable">elements</span>.append(Paragraph(<span class="string">"제품별 매출 비중"</span>, <span class="variable">styles</span>[<span class="string">'Heading2'</span>]))
+        <span class="variable">elements</span>.append(Image(<span class="variable">pie_chart_path</span>, width=350, height=350))
+        
+        <span class="variable">doc</span>.build(<span class="variable">elements</span>)
+        <span class="variable">logger</span>.info(<span class="string">f"보고서 생성 완료: {</span><span class="variable">report_filename</span><span class="string">}"</span>)
+        <span class="keyword">return</span> <span class="variable">report_filename</span>
+    <span class="keyword">except</span> <span class="function">Exception</span> <span class="keyword">as</span> <span class="variable">e</span>:
+        <span class="variable">logger</span>.error(<span class="string">f"보고서 생성 실패: {</span><span class="variable">e</span><span class="string">}"</span>)
+        <span class="keyword">return</span> <span class="keyword">None</span>
+
+<span class="comment"># 4. 이메일 전송 함수</span>
+<span class="keyword">def</span> <span class="function">send_report_email</span>(<span class="variable">report_path</span>):
+    <span class="keyword">try</span>:
+        <span class="variable">logger</span>.info(<span class="string">"이메일 전송 시작..."</span>)
+        <span class="variable">recipients</span> = [<span class="string">'<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="463223272b0625292b3627283f6825292b">[email&#160;protected]</a>'</span>, <span class="string">'<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="fc919d929d9b998ebc9f93918c9d9285d29f9391">[email&#160;protected]</a>'</span>]
+        
+        <span class="variable">msg</span> = <span class="function">MIMEMultipart</span>()
+        <span class="variable">msg</span>[<span class="string">'Subject'</span>] = <span class="string">'주간 매출 보고서'</span>
+        <span class="variable">msg</span>[<span class="string">'From'</span>] = <span class="string">'<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b2c0d7c2ddc0c6c1f2d1dddfc2d3dccb9cd1dddf">[email&#160;protected]</a>'</span>
+        <span class="variable">msg</span>[<span class="string">'To'</span>] = <span class="string">", "</span>.join(<span class="variable">recipients</span>)
+        
+        <span class="variable">body</span> = <span class="string">'''
+안녕하세요,
+
+이번 주 매출 보고서를 첨부합니다.
+주요 내용:
+- 주간 총 매출: 10,320,000원
+- 전주 대비 성장률: 15.6%
+- 최고 매출 상품: 제품 B
+
+자세한 내용은 첨부된 보고서를 참고해주세요.
+
+감사합니다.
+'''</span>
+        <span class="variable">msg</span>.attach(<span class="function">MIMEText</span>(<span class="variable">body</span>, <span class="string">'plain'</span>))
+        
+        <span class="comment"># 보고서 첨부</span>
+        <span class="keyword">with</span> <span class="function">open</span>(<span class="variable">report_path</span>, <span class="string">'rb'</span>) <span class="keyword">as</span> <span class="variable">file</span>:
+            <span class="variable">attachment</span> = <span class="function">MIMEApplication</span>(<span class="variable">file</span>.read())
+            <span class="variable">attachment</span>.add_header(<span class="string">'Content-Disposition'</span>, 
+                              <span class="string">'attachment'</span>, 
+                              <span class="variable">filename</span>=<span class="library">os</span>.path.<span class="function">basename</span>(<span class="variable">report_path</span>))
+            <span class="variable">msg</span>.attach(<span class="variable">attachment</span>)
+        
+        <span class="comment"># 이메일 서버 설정 (실제 환경에 맞게 조정 필요)</span>
+        <span class="variable">logger</span>.info(<span class="string">"이메일 전송 완료"</span>)
+        <span class="keyword">return</span> <span class="keyword">True</span>
+    <span class="keyword">except</span> <span class="function">Exception</span> <span class="keyword">as</span> <span class="variable">e</span>:
+        <span class="variable">logger</span>.error(<span class="string">f"이메일 전송 실패: {</span><span class="variable">e</span><span class="string">}"</span>)
+        <span class="keyword">return</span> <span class="keyword">False</span>
+
+<span class="comment"># 5. 통합 실행 함수</span>
+<span class="keyword">def</span> <span class="function">run_weekly_report_automation</span>():
+    <span class="variable">logger</span>.info(<span class="string">"===== 주간 보고서 자동화 프로세스 시작 ====="</span>)
+    
+    <span class="comment"># 1. 데이터 수집</span>
+    <span class="variable">sales_data</span> = <span class="function">collect_sales_data</span>()
+    <span class="keyword">if not</span> <span class="variable">sales_data</span>:
+        <span class="variable">logger</span>.error(<span class="string">"데이터 수집 실패로 프로세스 중단"</span>)
+        <span class="keyword">return</span> <span class="keyword">False</span>
+    
+    <span class="comment"># 2. 데이터 처리</span>
+    <span class="variable">df</span>, <span class="variable">daily_sales</span>, <span class="variable">product_sales</span> = <span class="function">process_sales_data</span>(<span class="variable">sales_data</span>)
+    <span class="keyword">if not</span> <span class="variable">df</span> <span class="keyword">is not None</span>:
+        <span class="variable">logger</span>.error(<span class="string">"데이터 처리 실패로 프로세스 중단"</span>)
+        <span class="keyword">return</span> <span class="keyword">False</span>
+    
+    <span class="comment"># 3. 보고서 생성</span>
+    <span class="variable">report_path</span> = <span class="function">generate_report</span>(<span class="variable">df</span>, <span class="variable">daily_sales</span>, <span class="variable">product_sales</span>)
+    <span class="keyword">if not</span> <span class="variable">report_path</span>:
+        <span class="variable">logger</span>.error(<span class="string">"보고서 생성 실패로 프로세스 중단"</span>)
+        <span class="keyword">return</span> <span class="keyword">False</span>
+    
+    <span class="comment"># 4. 이메일 전송</span>
+    <span class="variable">email_sent</span> = <span class="function">send_report_email</span>(<span class="variable">report_path</span>)
+    <span class="keyword">if not</span> <span class="variable">email_sent</span>:
+        <span class="variable">logger</span>.error(<span class="string">"이메일 전송 실패"</span>)
+        <span class="keyword">return</span> <span class="keyword">False</span>
+    
+    <span class="variable">logger</span>.info(<span class="string">"===== 주간 보고서 자동화 프로세스 완료 ====="</span>)
+    <span class="keyword">return</span> <span class="keyword">True</span>
+
+<span class="comment"># 6. 메인 함수: 스케줄러 설정</span>
+<span class="keyword">def</span> <span class="function">main</span>():
+    <span class="variable">logger</span>.info(<span class="string">"보고서 자동화 시스템 시작"</span>)
+    
+    <span class="comment"># 매주 금요일 오후 5시에 실행</span>
+    <span class="library">schedule</span>.every().friday.at(<span class="string">"17:00"</span>).<span class="function">do</span>(<span class="function">run_weekly_report_automation</span>)
+    
+    <span class="comment"># 테스트를 위해 즉시 한 번 실행</span>
+    <span class="function">run_weekly_report_automation</span>()
+    
+    <span class="comment"># 스케줄러 무한 루프</span>
+    <span class="keyword">while</span> <span class="keyword">True</span>:
+        <span class="library">schedule</span>.<span class="function">run_pending</span>()
+        <span class="library">time</span>.<span class="function">sleep</span>(60)
+
+<span class="keyword">if</span> <span class="variable">__name__</span> == <span class="string">"__main__"</span>:
+    <span class="function">main</span>()</div>
+                    </div>
+                    
+                    <div class="benefits-box">
+                        <div class="benefits-title"><i class="fas fa-star"></i>자동화의 이점</div>
+                        <div class="benefits-grid">
+                            <div class="benefit-item">
+                                <span class="benefit-icon"><i class="fas fa-clock"></i></span>
+                                <span class="benefit-text">수작업 대비 약 95% 시간 절약 (주당 4-5시간)</span>
+                            </div>
+                            <div class="benefit-item">
+                                <span class="benefit-icon"><i class="fas fa-check-circle"></i></span>
+                                <span class="benefit-text">인적 오류 감소로 데이터 정확도 향상</span>
+                            </div>
+                            <div class="benefit-item">
+                                <span class="benefit-icon"><i class="fas fa-calendar-check"></i></span>
+                                <span class="benefit-text">일정한 시간에 자동 전송으로 업무 효율성 향상</span>
+                            </div>
+                            <div class="benefit-item">
+                                <span class="benefit-icon"><i class="fas fa-chart-pie"></i></span>
+                                <span class="benefit-text">일관된 형식의 시각화로 데이터 이해도 증가</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tips">
+                        <strong>Tip:</strong> 업무 자동화를 개발할 때는 처음부터 완벽한 시스템을 만들려고 하기보다, 각 모듈을 하나씩 개발하고 테스트한 후 통합하는 방식이 효과적입니다. 또한, 예외 처리와 로깅을 철저히 하여 문제가 발생했을 때 빠르게 파악하고 수정할 수 있도록 합니다.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body>
+    

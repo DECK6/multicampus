@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 12</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .code-section {
+            margin-top: 30px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 25px;
+        }
+        .code-title {
+            font-size: 20px;
+            color: #4B8BBE;
+            margin-bottom: 15px;
+        }
+        .code-block {
+            font-family: 'Consolas', monospace;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #A0AEC0;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .prompt {
+            color: #FFD43B;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+        .explanation {
+            color: #E2E8F0;
+            font-size: 16px;
+            line-height: 1.6;
+            margin: 15px 0;
+        }
+        .note {
+            background: rgba(75, 139, 190, 0.1);
+            border-left: 4px solid #4B8BBE;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 0 8px 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">3</div>
+                <div class="title">gspread 기본 사용법</div>
+            </div>
+
+            <div class="code-section">
+                <div class="code-title">스프레드시트 접근 및 데이터 읽기</div>
+                <div class="prompt">ChatGPT: "Show me how to read data from Google Spreadsheet using gspread"</div>
+                <div class="code-block">
+                    import gspread<br>
+                    from oauth2client.service_account import ServiceAccountCredentials<br><br>
+                    # 스프레드시트 열기<br>
+                    gc = gspread.authorize(credentials)<br>
+                    worksheet = gc.open('스프레드시트_이름').sheet1<br><br>
+                    # 데이터 읽기<br>
+                    all_values = worksheet.get_all_values()  # 전체 데이터<br>
+                    cell_value = worksheet.acell('A1').value  # 특정 셀<br>
+                    row_values = worksheet.row_values(1)  # 특정 행
+                </div>
+                <div class="explanation">
+                    gspread는 다양한 방식으로 스프레드시트 데이터에 접근할 수 있습니다:
+                    <ul class="list-disc list-inside mt-2 space-y-2">
+                        <li>get_all_values(): 전체 시트의 데이터를 2차원 리스트로 반환</li>
+                        <li>acell(): 특정 셀의 값을 반환 (예: 'A1', 'B2')</li>
+                        <li>row_values(): 특정 행의 모든 값을 리스트로 반환</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="note">
+                <i class="fas fa-lightbulb mr-2"></i>
+                스프레드시트 이름은 구글 드라이브에서 확인할 수 있는 문서의 실제 이름을 사용해야 합니다.
+                공유된 스프레드시트의 경우 이메일 주소로도 접근이 가능합니다.
+            </div>
+        </div>
+    </div>
+</body>
+    

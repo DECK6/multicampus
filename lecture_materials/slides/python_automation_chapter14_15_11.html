@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 14 & 15</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 40px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .prompt-block {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .response-block {
+            background: rgba(75, 139, 190, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">12</div>
+                <h2 class="text-2xl font-bold text-yellow-400">ChatGPT를 활용한 이메일 템플릿 생성</h2>
+            </div>
+
+            <div class="grid grid-cols-2 gap-6">
+                <div class="bg-blue-900 bg-opacity-20 p-4 rounded-lg">
+                    <h3 class="text-yellow-400 text-lg font-semibold mb-3">
+                        <i class="fas fa-robot mr-2"></i>프롬프트 작성 가이드
+                    </h3>
+                    <div class="prompt-block">
+                        <p class="text-sm text-gray-300 mb-2">Example Prompt:</p>
+                        <p class="text-white">"Create a professional HTML email template for a [business purpose] with responsive design. Include sections for [specific sections]. Use modern design principles and ensure compatibility across email clients."</p>
+                    </div>
+                    <div class="response-block mt-4">
+                        <p class="text-sm text-blue-300 mb-2">Key Elements to Include:</p>
+                        <ul class="text-sm space-y-2">
+                            <li>• 비즈니스 목적 명시</li>
+                            <li>• 필요한 섹션 상세 설명</li>
+                            <li>• 디자인 스타일 가이드</li>
+                            <li>• 호환성 요구사항</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-blue-900 bg-opacity-20 p-4 rounded-lg">
+                    <h3 class="text-yellow-400 text-lg font-semibold mb-3">
+                        <i class="fas fa-code mr-2"></i>코드 생성 최적화
+                    </h3>
+                    <div class="prompt-block">
+                        <p class="text-sm text-gray-300 mb-2">Follow-up Prompt:</p>
+                        <p class="text-white">"Optimize the template for better email client compatibility. Convert CSS to inline styles and provide table-based layout alternatives where necessary."</p>
+                    </div>
+                    <div class="response-block mt-4">
+                        <p class="text-sm text-blue-300 mb-2">최적화 포인트:</p>
+                        <ul class="text-sm space-y-2">
+                            <li>• 인라인 스타일 변환</li>
+                            <li>• 테이블 기반 레이아웃</li>
+                            <li>• 이미지 대체 텍스트</li>
+                            <li>• 반응형 디자인 적용</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-6">
+                <div class="bg-yellow-900 bg-opacity-20 p-4 rounded-lg">
+                    <h3 class="text-yellow-400 font-semibold mb-4">
+                        <i class="fas fa-lightbulb mr-2"></i>실제 활용 시나리오
+                    </h3>
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="p-3 bg-blue-900 bg-opacity-20 rounded">
+                            <h4 class="font-semibold mb-2 text-blue-300">뉴스레터</h4>
+                            <div class="text-sm space-y-2">
+                                <p>• 섹션별 콘텐츠 구성</p>
+                                <p>• 이미지 갤러리 레이아웃</p>
+                                <p>• CTA 버튼 배치</p>
+                            </div>
+                        </div>
+                        <div class="p-3 bg-blue-900 bg-opacity-20 rounded">
+                            <h4 class="font-semibold mb-2 text-blue-300">제품 소개</h4>
+                            <div class="text-sm space-y-2">
+                                <p>• 제품 특징 강조</p>
+                                <p>• 가격 테이블 구성</p>
+                                <p>• 구매 링크 통합</p>
+                            </div>
+                        </div>
+                        <div class="p-3 bg-blue-900 bg-opacity-20 rounded">
+                            <h4 class="font-semibold mb-2 text-blue-300">이벤트 초대</h4>
+                            <div class="text-sm space-y-2">
+                                <p>• 일정 정보 표시</p>
+                                <p>• 위치 맵 삽입</p>
+                                <p>• RSVP 버튼 추가</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-6 bg-blue-900 bg-opacity-20 p-4 rounded-lg">
+                <h3 class="text-yellow-400 font-semibold mb-2">
+                    <i class="fas fa-check-circle mr-2"></i>템플릿 검증 체크리스트
+                </h3>
+                <div class="grid grid-cols-2 gap-4 text-sm">
+                    <ul class="space-y-2">
+                        <li><i class="fas fa-check text-green-400 mr-2"></i>모바일 반응형 테스트</li>
+                        <li><i class="fas fa-check text-green-400 mr-2"></i>다양한 이메일 클라이언트 호환성</li>
+                        <li><i class="fas fa-check text-green-400 mr-2"></i>로딩 속도 최적화</li>
+                    </ul>
+                    <ul class="space-y-2">
+                        <li><i class="fas fa-check text-green-400 mr-2"></i>접근성 가이드라인 준수</li>
+                        <li><i class="fas fa-check text-green-400 mr-2"></i>스팸 필터 통과 확인</li>
+                        <li><i class="fas fa-check text-green-400 mr-2"></i>링크 작동 테스트</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+    

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 3</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 40px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 40px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .subtitle {
+            font-size: 20px;
+            font-weight: 400;
+            color: #e2e8f0;
+            margin-bottom: 25px;
+        }
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        .section {
+            background: rgba(75, 139, 190, 0.15);
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        .section:hover {
+            background: rgba(75, 139, 190, 0.25);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #FFD43B;
+            display: flex;
+            align-items: center;
+        }
+        .section-icon {
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        .section-content {
+            font-size: 15px;
+            line-height: 1.5;
+            color: #e2e8f0;
+        }
+        .code-block {
+            margin-top: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 13px;
+            color: #e2e8f0;
+            position: relative;
+        }
+        .code-prompt {
+            background: #4B8BBE;
+            border-radius: 4px;
+            padding: 6px 10px;
+            margin-bottom: 8px;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 12px;
+            color: white;
+        }
+        .code-prompt i {
+            margin-right: 6px;
+            color: #FFD43B;
+        }
+        .code-line {
+            margin-bottom: 4px;
+        }
+        .highlight {
+            color: #FFD43B;
+        }
+        .string {
+            color: #9cdcfe;
+        }
+        .comment {
+            color: #a0aec0;
+            font-style: italic;
+        }
+        .indent {
+            margin-left: 20px;
+        }
+        .output-preview {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin-top: 8px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 12px;
+            color: #cbd5e0;
+        }
+        .output-title {
+            color: #a0aec0;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+        .footer {
+            margin-top: 25px;
+            font-size: 16px;
+            color: #a0aec0;
+            text-align: center;
+            font-style: italic;
+        }
+        .note {
+            background: rgba(255, 212, 59, 0.1);
+            border-left: 3px solid #FFD43B;
+            padding: 10px 15px;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #e2e8f0;
+        }
+        .note-title {
+            color: #FFD43B;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .flowchart {
+            margin: 15px 0;
+            text-align: center;
+        }
+        .flow-box {
+            display: inline-block;
+            background: rgba(75, 139, 190, 0.3);
+            padding: 10px;
+            border-radius: 8px;
+            margin: 0 5px;
+            font-size: 14px;
+            font-weight: 500;
+            color: white;
+            min-width: 100px;
+        }
+        .flow-arrow {
+            display: inline-block;
+            color: #FFD43B;
+            font-size: 20px;
+            margin: 0 5px;
+            vertical-align: middle;
+        }
+        .condition-box {
+            background: rgba(255, 212, 59, 0.2);
+            border: 1px solid #FFD43B;
+            color: #FFD43B;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">6</div>
+                <div class="title">조건문 (Conditional Statements)</div>
+            </div>
+            
+            <p class="subtitle">조건문은 프로그램의 흐름을 제어하는 핵심 구문으로, 업무 자동화에서 의사결정 로직을 구현하는 데 필수적입니다.</p>
+            
+            <div class="main-content">
+                <div class="left-column">
+                    <div class="section">
+                        <div class="section-title">
+                            <i class="fas fa-code-branch section-icon"></i>
+                            기본 조건문 구조
+                        </div>
+                        <div class="section-content">
+                            <p>파이썬의 조건문은 <code class="highlight">if</code>, <code class="highlight">elif</code>, <code class="highlight">else</code> 키워드를 사용하여 특정 조건이 참일 때 코드 블록을 실행합니다.</p>
+                            
+                            <div class="flowchart">
+                                <div class="flow-box condition-box">조건 검사</div>
+                                <div class="flow-arrow">→</div>
+                                <div class="flow-box">True: 코드 실행</div>
+                                <div class="flow-arrow">→</div>
+                                <div class="flow-box">다음 코드</div>
+                            </div>
+                            
+                            <div class="code-block">
+                                <div class="code-prompt">
+                                    <i class="fas fa-robot"></i>기본 if-else 조건문 예제 코드를 작성해줘
+                                </div>
+                                <div class="code-line"><span class="comment"># 기본 if 구문</span></div>
+                                <div class="code-line">점수 = 85</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="highlight">if</span> 점수 >= 90:</div>
+                                <div class="code-line indent">print(<span class="string">"A 학점입니다."</span>)</div>
+                                <div class="code-line"><span class="highlight">elif</span> 점수 >= 80:</div>
+                                <div class="code-line indent">print(<span class="string">"B 학점입니다."</span>)</div>
+                                <div class="code-line"><span class="highlight">elif</span> 점수 >= 70:</div>
+                                <div class="code-line indent">print(<span class="string">"C 학점입니다."</span>)</div>
+                                <div class="code-line"><span class="highlight">else</span>:</div>
+                                <div class="code-line indent">print(<span class="string">"F 학점입니다."</span>)</div>
+                            </div>
+                            
+                            <div class="output-preview">
+                                <div class="output-title">출력 결과:</div>
+                                B 학점입니다.
+                            </div>
+                            
+                            <div class="note">
+                                <div class="note-title">들여쓰기(Indentation) 주의!</div>
+                                <p>파이썬에서는 들여쓰기가 코드 블록을 구분하는 문법적 요소입니다. 일관된 들여쓰기를 유지해야 합니다 (보통 4칸 공백 사용).</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">
+                            <i class="fas fa-sitemap section-icon"></i>
+                            중첩 조건문
+                        </div>
+                        <div class="section-content">
+                            <p>조건문 안에 또 다른 조건문을 중첩해서 사용할 수 있습니다. 복잡한 의사결정 로직을 구현할 때 유용합니다.</p>
+                            
+                            <div class="code-block">
+                                <div class="code-prompt">
+                                    <i class="fas fa-robot"></i>중첩된 if문 예제를 보여줘
+                                </div>
+                                <div class="code-line">나이 = 25</div>
+                                <div class="code-line">회원_등급 = <span class="string">"골드"</span></div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="highlight">if</span> 나이 >= 20:</div>
+                                <div class="code-line indent">print(<span class="string">"성인입니다."</span>)</div>
+                                <div class="code-line indent"><span class="highlight">if</span> 회원_등급 == <span class="string">"골드"</span>:</div>
+                                <div class="code-line indent indent">print(<span class="string">"골드 회원 할인이 적용됩니다."</span>)</div>
+                                <div class="code-line indent"><span class="highlight">elif</span> 회원_등급 == <span class="string">"실버"</span>:</div>
+                                <div class="code-line indent indent">print(<span class="string">"실버 회원 할인이 적용됩니다."</span>)</div>
+                                <div class="code-line indent"><span class="highlight">else</span>:</div>
+                                <div class="code-line indent indent">print(<span class="string">"할인이 적용되지 않습니다."</span>)</div>
+                                <div class="code-line"><span class="highlight">else</span>:</div>
+                                <div class="code-line indent">print(<span class="string">"미성년자입니다."</span>)</div>
+                            </div>
+                            
+                            <div class="output-preview">
+                                <div class="output-title">출력 결과:</div>
+                                성인입니다.<br>
+                                골드 회원 할인이 적용됩니다.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="right-column">
+                    <div class="section">
+                        <div class="section-title">
+                            <i class="fas fa-not-equal section-icon"></i>
+                            논리 연산자
+                        </div>
+                        <div class="section-content">
+                            <p>여러 조건을 조합하기 위해 <code class="highlight">and</code>, <code class="highlight">or</code>, <code class="highlight">not</code> 논리 연산자를 사용합니다.</p>
+                            
+                            <div class="code-block">
+                                <div class="code-prompt">
+                                    <i class="fas fa-robot"></i>논리 연산자를 사용한 조건문 예제 코드를 보여줘
+                                </div>
+                                <div class="code-line">나이 = 30</div>
+                                <div class="code-line">소득 = 3500000</div>
+                                <div class="code-line">신용점수 = 750</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># AND 연산자 - 모든 조건이 참이어야 함</span></div>
+                                <div class="code-line"><span class="highlight">if</span> 나이 >= 25 <span class="highlight">and</span> 소득 > 3000000:</div>
+                                <div class="code-line indent">print(<span class="string">"대출 기본 조건을 충족합니다."</span>)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># OR 연산자 - 하나라도 참이면 참</span></div>
+                                <div class="code-line"><span class="highlight">if</span> 신용점수 > 800 <span class="highlight">or</span> 소득 > 5000000:</div>
+                                <div class="code-line indent">print(<span class="string">"우대 금리를 적용합니다."</span>)</div>
+                                <div class="code-line"><span class="highlight">else</span>:</div>
+                                <div class="code-line indent">print(<span class="string">"일반 금리가 적용됩니다."</span>)</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># NOT 연산자 - 조건의 결과를 반전</span></div>
+                                <div class="code-line"><span class="highlight">if not</span> (나이 < 20):</div>
+                                <div class="code-line indent">print(<span class="string">"성인입니다."</span>)</div>
+                            </div>
+                            
+                            <div class="note">
+                                <div class="note-title">진릿값 평가</div>
+                                <p>파이썬에서는 <code>0</code>, <code>None</code>, <code>""</code>(빈 문자열), <code>[]</code>(빈 리스트) 등은 False로 평가되고, 그 외의 값들은 True로 평가됩니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">
+                            <i class="fas fa-table section-icon"></i>
+                            데이터프레임에서의 조건문 활용
+                        </div>
+                        <div class="section-content">
+                            <p>데이터프레임 처리 자동화에서 조건문은 데이터 필터링이나 값 변환에 중요하게 사용됩니다.</p>
+                            
+                            <div class="code-block">
+                                <div class="code-prompt">
+                                    <i class="fas fa-robot"></i>판다스 데이터프레임에서 조건문을 활용한 코드 예시
+                                </div>
+                                <div class="code-line"><span class="highlight">import</span> pandas <span class="highlight">as</span> pd</div>
+                                <div class="code-line"></div>
+                                <div class="code-line">직원_df = pd.DataFrame({</div>
+                                <div class="code-line">    <span class="string">'이름'</span>: [<span class="string">'김철수'</span>, <span class="string">'이영희'</span>, <span class="string">'박지민'</span>, <span class="string">'최동욱'</span>],</div>
+                                <div class="code-line">    <span class="string">'부서'</span>: [<span class="string">'영업'</span>, <span class="string">'개발'</span>, <span class="string">'개발'</span>, <span class="string">'영업'</span>],</div>
+                                <div class="code-line">    <span class="string">'실적'</span>: [90, 85, 92, 78]</div>
+                                <div class="code-line">})</div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 조건부 컬럼 추가</span></div>
+                                <div class="code-line">직원_df[<span class="string">'성과급'</span>] = <span class="string">'없음'</span></div>
+                                <div class="code-line"></div>
+                                <div class="code-line"><span class="comment"># 조건에 따라 값 할당</span></div>
+                                <div class="code-line"><span class="highlight">for</span> i <span class="highlight">in</span> range(len(직원_df)):</div>
+                                <div class="code-line indent"><span class="highlight">if</span> 직원_df.loc[i, <span class="string">'실적'</span>] >= 90:</div>
+                                <div class="code-line indent indent">직원_df.loc[i, <span class="string">'성과급'</span>] = <span class="string">'상'</span></div>
+                                <div class="code-line indent"><span class="highlight">elif</span> 직원_df.loc[i, <span class="string">'실적'</span>] >= 80:</div>
+                                <div class="code-line indent indent">직원_df.loc[i, <span class="string">'성과급'</span>] = <span class="string">'중'</span></div>
+                                <div class="code-line indent"><span class="highlight">else</span>:</div>
+                                <div class="code-line indent indent">직원_df.loc[i, <span class="string">'성과급'</span>] = <span class="string">'하'</span></div>
+                            </div>
+                            
+                            <div class="output-preview">
+                                <div class="output-title">결과 데이터프레임:</div>
+                                &nbsp;&nbsp;이름&nbsp;&nbsp;부서&nbsp;실적&nbsp;성과급<br>
+                                0 김철수&nbsp;영업&nbsp;&nbsp;90&nbsp;&nbsp;&nbsp;상<br>
+                                1 이영희&nbsp;개발&nbsp;&nbsp;85&nbsp;&nbsp;&nbsp;중<br>
+                                2 박지민&nbsp;개발&nbsp;&nbsp;92&nbsp;&nbsp;&nbsp;상<br>
+                                3 최동욱&nbsp;영업&nbsp;&nbsp;78&nbsp;&nbsp;&nbsp;하
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                "조건문은 프로그램에 '지능'을 부여하는 첫 번째 단계입니다"
+            </div>
+        </div>
+    </div>
+</body>
+    

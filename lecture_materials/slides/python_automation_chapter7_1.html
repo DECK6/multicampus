@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 7</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 44px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .intro {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: #e2e8f0;
+            max-width: 90%;
+        }
+        .behavior-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .behavior-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .behavior-card:hover {
+            transform: translateY(-5px);
+            background-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+        }
+        .behavior-icon {
+            background: linear-gradient(45deg, #4B8BBE, #306998);
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        .behavior-icon i {
+            font-size: 30px;
+            color: #FFD43B;
+        }
+        .behavior-number {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #FFD43B;
+            color: #1a365d;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .behavior-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #e2e8f0;
+        }
+        .behavior-desc {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #cbd5e0;
+        }
+        .stats-section {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            background-color: rgba(75, 139, 190, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+        }
+        .stat-item {
+            text-align: center;
+            padding: 0 20px;
+        }
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #FFD43B;
+            margin-bottom: 8px;
+        }
+        .stat-label {
+            font-size: 14px;
+            color: #e2e8f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">2</div>
+                <div class="title">인터넷 제어에 필요한 인간의 행동 7가지</div>
+            </div>
+            
+            <p class="intro">
+                웹브라우저를 자동화하기 위해서는 인간이 웹사이트를 탐색할 때 수행하는 기본적인 행동들을 이해하고 코드로 구현해야 합니다. 이러한 행동들을 파이썬으로 자동화하면 반복적인 웹 작업을 효율적으로 처리할 수 있습니다.
+            </p>
+            
+            <div class="behavior-grid">
+                <div class="behavior-card">
+                    <div class="behavior-icon" style="position: relative;">
+                        <i class="fas fa-window-maximize"></i>
+                        <div class="behavior-number">1</div>
+                    </div>
+                    <h3 class="behavior-title">브라우저 열기</h3>
+                    <p class="behavior-desc">웹 브라우저 창을 시작하고 제어할 수 있도록 설정하는 과정</p>
+                </div>
+                
+                <div class="behavior-card">
+                    <div class="behavior-icon" style="position: relative;">
+                        <i class="fas fa-globe"></i>
+                        <div class="behavior-number">2</div>
+                    </div>
+                    <h3 class="behavior-title">웹사이트 접속</h3>
+                    <p class="behavior-desc">URL을 통해 웹사이트로 이동하고 페이지 로딩 완료를 확인</p>
+                </div>
+                
+                <div class="behavior-card">
+                    <div class="behavior-icon" style="position: relative;">
+                        <i class="fas fa-search"></i>
+                        <div class="behavior-number">3</div>
+                    </div>
+                    <h3 class="behavior-title">요소 위치찾기</h3>
+                    <p class="behavior-desc">웹페이지에서 원하는 버튼, 링크, 텍스트 등의 요소를 찾는 방법</p>
+                </div>
+                
+                <div class="behavior-card">
+                    <div class="behavior-icon" style="position: relative;">
+                        <i class="fas fa-mouse-pointer"></i>
+                        <div class="behavior-number">4</div>
+                    </div>
+                    <h3 class="behavior-title">클릭하기</h3>
+                    <p class="behavior-desc">찾은 요소를 클릭하여 상호작용하는 방법</p>
+                </div>
+                
+                <div class="behavior-card">
+                    <div class="behavior-icon" style="position: relative;">
+                        <i class="fas fa-keyboard"></i>
+                        <div class="behavior-number">5</div>
+                    </div>
+                    <h3 class="behavior-title">데이터 넣기</h3>
+                    <p class="behavior-desc">입력 필드에 텍스트를 입력하고 폼을 작성하는 방법</p>
+                </div>
+                
+                <div class="behavior-card">
+                    <div class="behavior-icon" style="position: relative;">
+                        <i class="fas fa-arrows-alt"></i>
+                        <div class="behavior-number">6</div>
+                    </div>
+                    <h3 class="behavior-title">페이지 스크롤</h3>
+                    <p class="behavior-desc">웹페이지 내에서 위아래로 이동하는 방법</p>
+                </div>
+                
+                <div class="behavior-card">
+                    <div class="behavior-icon" style="position: relative;">
+                        <i class="fas fa-download"></i>
+                        <div class="behavior-number">7</div>
+                    </div>
+                    <h3 class="behavior-title">데이터 수집</h3>
+                    <p class="behavior-desc">웹페이지에서 원하는 정보를 추출하고 저장하는 방법</p>
+                </div>
+                
+                <div class="behavior-card" style="background-color: rgba(75, 139, 190, 0.2);">
+                    <div class="behavior-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="behavior-title">파이썬 코드로 구현</h3>
+                    <p class="behavior-desc">위 7가지 행동을 파이썬과 웹 자동화 라이브러리를 통해 코드로 구현</p>
+                </div>
+            </div>
+            
+            <div class="stats-section">
+                <div class="stat-item">
+                    <div class="stat-value">85%</div>
+                    <div class="stat-label">시간 절약 효과</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">90%</div>
+                    <div class="stat-label">오류 감소율</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">24/7</div>
+                    <div class="stat-label">연속 실행 가능</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">+300%</div>
+                    <div class="stat-label">작업 처리량 증가</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+    

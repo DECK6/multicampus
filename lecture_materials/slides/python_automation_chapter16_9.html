@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 16</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 40px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #FFD43B;
+        }
+        .extension-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .extension-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .extension-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        .extension-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .extension-icon {
+            width: 40px;
+            height: 40px;
+            background: #4B8BBE;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+        .extension-icon i {
+            font-size: 20px;
+            color: #FFD43B;
+        }
+        .extension-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #4B8BBE;
+        }
+        .extension-desc {
+            font-size: 15px;
+            color: #e2e8f0;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+        .code-example {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 15px;
+            font-family: 'Consolas', monospace;
+            font-size: 14px;
+            color: #a0aec0;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">10</div>
+                <div class="title">프로그램 기능 확장하기</div>
+            </div>
+
+            <div class="extension-grid">
+                <div class="extension-card">
+                    <div class="extension-header">
+                        <div class="extension-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3 class="extension-title">자동 스케줄링</h3>
+                    </div>
+                    <p class="extension-desc">특정 시간에 자동으로 프로그램을 실행하여 정기적인 보고서를 생성합니다.</p>
+                    <div class="code-example">
+                        from schedule import every, repeat<br>
+                        @repeat(every().day.at('09:00'))<br>
+                        def scheduled_job(): ...
+                    </div>
+                </div>
+
+                <div class="extension-card">
+                    <div class="extension-header">
+                        <div class="extension-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="extension-title">데이터 시각화 강화</h3>
+                    </div>
+                    <p class="extension-desc">matplotlib을 활용하여 트렌드 분석 그래프를 추가합니다.</p>
+                    <div class="code-example">
+                        import matplotlib.pyplot as plt<br>
+                        plt.plot(dates, frequencies)<br>
+                        plt.savefig('trend.png')
+                    </div>
+                </div>
+
+                <div class="extension-card">
+                    <div class="extension-header">
+                        <div class="extension-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <h3 class="extension-title">데이터베이스 연동</h3>
+                    </div>
+                    <p class="extension-desc">수집된 데이터를 SQLite 데이터베이스에 저장하여 히스토리를 관리합니다.</p>
+                    <div class="code-example">
+                        import sqlite3<br>
+                        conn = sqlite3.connect('news.db')<br>
+                        df.to_sql('news_data', conn)
+                    </div>
+                </div>
+
+                <div class="extension-card">
+                    <div class="extension-header">
+                        <div class="extension-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h3 class="extension-title">자연어 처리 강화</h3>
+                    </div>
+                    <p class="extension-desc">KoNLPy를 활용하여 더 정교한 텍스트 분석을 수행합니다.</p>
+                    <div class="code-example">
+                        from konlpy.tag import Okt<br>
+                        okt = Okt()<br>
+                        keywords = okt.nouns(text)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+    

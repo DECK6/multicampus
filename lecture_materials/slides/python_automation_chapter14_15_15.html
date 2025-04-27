@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 업무 자동화 교육 교안 - 챕터 14 & 15</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .slide-container {
+            width: 100%; max-width: 1920px;
+            min-height: 720px;
+            margin: 0 auto;
+            overflow: visible;
+            position: relative;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 40px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .page-number {
+            background: #4B8BBE;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        .code-block {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Consolas', monospace;
+        }
+        .example-card {
+            background: rgba(75, 139, 190, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        .example-card:hover {
+            transform: translateY(-5px);
+            background: rgba(75, 139, 190, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="pattern-bg"></div>
+        <div class="content">
+            <div class="header">
+                <div class="page-number">16</div>
+                <h2 class="text-2xl font-bold text-yellow-400">이메일 자동화 시스템 예제 구현</h2>
+            </div>
+
+            <div class="code-block">
+                <div class="text-yellow-400 text-lg mb-4">
+                    <i class="fas fa-code mr-2"></i>완성된 이메일 자동화 시스템 예제
+                </div>
+                <pre class="text-gray-300 text-sm">
+from email_system import EmailTemplate, CustomerData, EmailSender
+import pandas as pd
+import logging
+from datetime import datetime
+
+class MarketingAutomation:
+    def __init__(self, config_path):
+        self.template = EmailTemplate(config_path)
+        self.customer_data = CustomerData()
+        self.sender = EmailSender()
+        self.setup_logging()
+    
+    def setup_logging(self):
+        logging.basicConfig(
+            filename=f'email_automation_{datetime.now():%Y%m%d}.log',
+            level=logging.INFO,
+            format='%(asctime)s - %(levelname)s - %(message)s'
+        )
+    
+    def process_customer_segment(self, segment_name):
+        customers = self.customer_data.get_segment(segment_name)
+        for customer in customers:
+            try:
+                html_content = self.template.render(
+                    customer_name=customer['name'],
+                    product_recommendations=customer['recommendations']
+                )
+                
+                success = self.sender.send_email(
+                    to_email=customer['email'],
+                    subject=f"Special Offer for {customer['name']}",
+                    html_content=html_content
+                )
+                
+                if success:
+                    logging.info(f"Email sent to {customer['email']}")
+                else:
+                    logging.error(f"Failed to send email to {customer['email']}")
+                    
+            except Exception as e:
+                logging.error(f"Error processing {customer['email']}: {str(e)}")
+</pre>
+            </div>
+
+            <div class="grid grid-cols-2 gap-6 mt-6">
+                <div class="example-card">
+                    <h3 class="text-yellow-400 text-lg font-semibold mb-3">
+                        <i class="fas fa-cogs mr-2"></i>시스템 구성 요소
+                    </h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><i class="fas fa-check-circle text-green-400 mr-2"></i>EmailTemplate: HTML 템플릿 관리</li>
+                        <li><i class="fas fa-check-circle text-green-400 mr-2"></i>CustomerData: 고객 데이터 처리</li>
+                        <li><i class="fas fa-check-circle text-green-400 mr-2"></i>EmailSender: 이메일 발송 처리</li>
+                        <li><i class="fas fa-check-circle text-green-400 mr-2"></i>로깅 시스템 통합</li>
+                    </ul>
+                </div>
+
+                <div class="example-card">
+                    <h3 class="text-yellow-400 text-lg font-semibold mb-3">
+                        <i class="fas fa-shield-alt mr-2"></i>오류 처리 및 모니터링
+                    </h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><i class="fas fa-check-circle text-green-400 mr-2"></i>세부적인 예외 처리</li>
+                        <li><i class="fas fa-check-circle text-green-400 mr-2"></i>실시간 로그 기록</li>
+                        <li><i class="fas fa-check-circle text-green-400 mr-2"></i>발송 결과 추적</li>
+                        <li><i class="fas fa-check-circle text-green-400 mr-2"></i>문제 발생 시 자동 알림</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-6 bg-yellow-900 bg-opacity-20 p-4 rounded-lg">
+                <h3 class="text-yellow-400 font-semibold mb-3">
+                    <i class="fas fa-lightbulb mr-2"></i>구현 시 고려사항
+                </h3>
+                <div class="grid grid-cols-3 gap-4 text-sm">
+                    <div class="p-3 bg-blue-900 bg-opacity-20 rounded">
+                        <h4 class="font-semibold text-blue-300 mb-2">확장성</h4>
+                        <p>모듈화된 설계로 새로운 기능 추가가 용이한 구조</p>
+                    </div>
+                    <div class="p-3 bg-blue-900 bg-opacity-20 rounded">
+                        <h4 class="font-semibold text-blue-300 mb-2">유지보수</h4>
+                        <p>명확한 코드 구조와 문서화로 유지보수 편의성 확보</p>
+                    </div>
+                    <div class="p-3 bg-blue-900 bg-opacity-20 rounded">
+                        <h4 class="font-semibold text-blue-300 mb-2">성능</h4>
+                        <p>대량 발송 시 메모리 관리와 처리 속도 최적화</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+    
